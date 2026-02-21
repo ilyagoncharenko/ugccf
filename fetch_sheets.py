@@ -15,14 +15,16 @@ from googleapiclient.discovery import build
 # ─── КОНФИГ ПРОЕКТОВ ───────────────────────────────────────────────────────────
 PROJECTS = [
     {
-        "name": "TwinBee",
+        "name": "Twinby",
         "spreadsheet_id": "1DqVJAwEvxw7HoUrTNZNCw4jVAeK7_ow_beRiEiGVcHM",
         "color": "#a78bfa",   # фиолетовый
+        "budget": 500000,     # бюджет кампании в рублях
     },
     {
-        "name": "Louvoo",
+        "name": "Luvu",
         "spreadsheet_id": "1j9DS35rRRmVjYGKBH3iEox1Ldk60k79qqSe2uyWL6-Y",
         "color": "#34d399",   # зелёный
+        "budget": 1000000,    # бюджет кампании в рублях
     },
 ]
 # ────────────────────────────────────────────────────────────────────────────────
