@@ -1,0 +1,10 @@
+# Секретные файлы — никогда не заливать!
+credentials.json
+token.json
+client_secret_*.json
+
+# Старые файлы
+daily_data.json
+
+# macOS
+.DS_Store
