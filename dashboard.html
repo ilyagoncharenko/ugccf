@@ -214,12 +214,17 @@ function buildCards(p){
   const budget = p.budget || 0;
   const cpvKop = (budget > 0 && total > 0) ? (budget / total * 100).toFixed(2) : '—';
   const budgetStr = budget > 0 ? budget.toLocaleString('ru') + ' ₽' : '—';
+  const totalVideos = p.channels_data.reduce((s,c)=>s+c.total_videos,0);
+  const igVid = p.channels_data.filter(c=>c.social_network==='INSTAGRAM').reduce((s,c)=>s+c.total_videos,0);
+  const ttVid = p.channels_data.filter(c=>c.social_network==='TIKTOK').reduce((s,c)=>s+c.total_videos,0);
+  const ytVid = p.channels_data.filter(c=>c.social_network==='YOUTUBE').reduce((s,c)=>s+c.total_videos,0);
 
   document.getElementById('cards-'+p.name).innerHTML = [
-    {label:'Бюджет кампании',  value:budgetStr,                  sub:`CPV: ${cpvKop} коп. за просмотр`},
-    {label:'Всего просмотров', value:total.toLocaleString('ru'), sub:`на ${last.date||'—'}`},
-    {label:'Каналов',          value:channels,                   sub:`${ig} ig · ${tt} tt · ${yt} yt`},
-    {label:'Дней данных',      value:dd.length,                  sub:`${dd[0]?.date||'—'} — ${last.date||'—'}`},
+    {label:'Всего просмотров', value:total.toLocaleString('ru'),         sub:`на ${last.date||'—'}`},
+    {label:'Всего видео',      value:totalVideos.toLocaleString('ru'),   sub:`${igVid} ig · ${ttVid} tt · ${ytVid} yt`},
+    {label:'Каналов',          value:channels,                           sub:`${ig} ig · ${tt} tt · ${yt} yt`},
+    {label:'Бюджет кампании',  value:budgetStr,                          sub:`CPV: ${cpvKop} коп. за просмотр`},
+    {label:'Дней данных',      value:dd.length,                          sub:`${dd[0]?.date||'—'} — ${last.date||'—'}`},
   ].map(c=>`<div class="card">
     <div class="label">${c.label}</div>
     <div class="value" style="color:${p.color}">${c.value}</div>
