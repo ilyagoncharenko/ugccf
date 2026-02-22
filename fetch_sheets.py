@@ -26,6 +26,12 @@ PROJECTS = [
         "color": "#34d399",   # зелёный
         "budget": 1000000,    # бюджет кампании в рублях
     },
+    {
+        "name": "Ocomplex",
+        "spreadsheet_id": "1YNe0e2EI_IzAjLDALptEa9ok3eAPb24cgnhTTwy1ikU",
+        "color": "#f59e0b",   # оранжевый
+        "budget": 500000,     # бюджет кампании в рублях
+    },
 ]
 # ────────────────────────────────────────────────────────────────────────────────
 
@@ -170,6 +176,7 @@ def process_project(service, project):
         'name':           name,
         'spreadsheet_id': sid,
         'color':          project.get('color', '#a78bfa'),
+        'budget':         project.get('budget', 0),
         'channels_data':  channels_data,
         'daily_data':     daily_data,
         'updated_at':     datetime.datetime.now().isoformat(),
