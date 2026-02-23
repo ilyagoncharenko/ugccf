@@ -848,16 +848,33 @@ function exportPdf(period){
       </table>
     </div>`;
 
-  // Оборачиваем в полноценный HTML-документ и передаём строкой — html2pdf сам создаст контейнер
-  const fullHtml = `<div style="width:680px;padding:20px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-sizing:border-box;">${html}</div>`;
+  // Открываем чистое popup-окно без стилей дашборда — единственный надёжный способ
+  const popup = window.open('', '_blank', 'width=760,height=600,left=100,top=100');
+  if (!popup) {
+    alert('Разрешите всплывающие окна в браузере для скачивания PDF');
+    return;
+  }
 
+  const safeFilename = filename.replace(/'/g, "\\'");
+  popup.document.write(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
+</head>
+<body style="margin:0;padding:0;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<div id="pdfContent" style="width:680px;padding:20px;box-sizing:border-box;">${html}</div>
+<script>
+window.onload = function() {
   html2pdf().set({
-    margin: [8, 8, 8, 8],
-    filename,
+    margin: 10,
+    filename: '${safeFilename}',
     image: {type:'jpeg', quality:0.98},
-    html2canvas: {scale:2, useCORS:true, windowWidth:720, logging:false},
+    html2canvas: {scale:2, useCORS:true},
     jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
-  }).from(fullHtml).save();
+  }).from(document.getElementById('pdfContent')).save().then(function(){ window.close(); });
+};
+<\/script>
+</body></html>`);
+  popup.document.close();
 }
 
 // ─── INIT ───
