@@ -652,23 +652,43 @@ function closePdfModal(){
 function exportPdf(period){
   closePdfModal();
   const p = PROJECTS_DATA[pdfProject];
-  const monthNames = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
+  const MN = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
 
   let subtitle = 'Вся кампания';
   let filename = `${pdfProject}_вся_кампания.pdf`;
   if(period !== 'all'){
     const [y,mo] = period.split('-');
-    subtitle = `${monthNames[mo]} ${y}`;
-    filename = `${pdfProject}_${monthNames[mo]}_${y}.pdf`;
+    subtitle = `${MN[mo]} ${y}`;
+    filename = `${pdfProject}_${MN[mo]}_${y}.pdf`;
   }
 
-  // Строим HTML для PDF
-  const dd = period === 'all' ? p.daily_data : p.daily_data.filter(r=>r.date.startsWith(period));
-  const last = dd[dd.length-1] || {};
-  const total = last.total_views || 0;
+  const allDd  = p.daily_data;
+  const dd     = period === 'all' ? allDd : allDd.filter(r=>r.date.startsWith(period));
+  const last   = dd[dd.length-1] || {};
   const budget = p.budget || 0;
-  const cpv = (budget>0 && total>0) ? (budget/total).toFixed(2)+' руб.' : '—';
-  const totalVideos = p.channels_data.reduce((s,c)=>s+c.total_videos,0);
+  const total  = last.total_views || 0;
+  const cpv    = (budget>0 && total>0) ? (budget/total).toFixed(2)+' руб.' : '—';
+
+  // Каналы
+  const chAll = p.channels_data;
+  const ig  = chAll.filter(c=>c.social_network==='INSTAGRAM');
+  const tt  = chAll.filter(c=>c.social_network==='TIKTOK');
+  const yt  = chAll.filter(c=>c.social_network==='YOUTUBE');
+  const sumV   = arr=>arr.reduce((s,c)=>s+c.total_views,0);
+  const sumVid = arr=>arr.reduce((s,c)=>s+c.total_videos,0);
+  const igV=sumV(ig), ttV=sumV(tt), ytV=sumV(yt);
+  const totalViews = igV+ttV+ytV || 1;
+  const pct = v=>totalViews>0?Math.round(v/totalViews*100):0;
+
+  // WoW + daily stats (по всем данным)
+  const todayD  = (allDd[allDd.length-1]?.delta)||0;
+  const prevD   = (allDd[allDd.length-2]?.delta)||0;
+  const diff    = todayD - prevD;
+  const diffPct = prevD ? Math.round(diff/prevD*100) : 0;
+  const week7   = allDd.slice(-7).reduce((s,r)=>s+(r.delta||0),0);
+  const prevWk  = allDd.slice(-14,-7).reduce((s,r)=>s+(r.delta||0),0);
+  const wow     = prevWk ? Math.round((week7-prevWk)/prevWk*100) : 0;
+  const fmtN    = v=>v.toLocaleString('ru');
 
   // Месячная таблица
   const byMonth = {};
@@ -684,49 +704,144 @@ function exportPdf(period){
   const mRows = Object.keys(byMonth).sort().map(m=>{
     const d=byMonth[m]; const[y,mo]=m.split('-');
     const mcpv=(budget>0&&d.cum>0)?(budget/d.cum).toFixed(2)+' руб.':'—';
-    return `<tr>
-      <td><b>${monthNames[mo]} ${y}</b></td>
-      <td>${d.total.toLocaleString('ru')}</td>
-      <td>${d.IG.toLocaleString('ru')}</td>
-      <td>${d.TT.toLocaleString('ru')}</td>
-      <td>${d.YT.toLocaleString('ru')}</td>
-      <td>${mcpv}</td>
+    return `<tr style="border-bottom:1px solid #eee">
+      <td style="padding:7px 8px;font-weight:600">${MN[mo]} ${y}</td>
+      <td style="padding:7px 8px;text-align:right;font-weight:700;color:${p.color}">${fmtN(d.total)}</td>
+      <td style="padding:7px 8px;text-align:right;color:#c0004e">${fmtN(d.IG)}</td>
+      <td style="padding:7px 8px;text-align:right;color:#007a80">${fmtN(d.TT)}</td>
+      <td style="padding:7px 8px;text-align:right;color:#c00000">${fmtN(d.YT)}</td>
+      ${budget>0?`<td style="padding:7px 8px;text-align:right;color:#666">${mcpv}</td>`:''}
     </tr>`;
   }).join('');
 
+  // Таблица каналов
+  const sorted = [...chAll].sort((a,b)=>b.total_views-a.total_views);
+  const chRows = sorted.map((c,i)=>{
+    const platColor = c.social_network==='INSTAGRAM'?'#c0004e':c.social_network==='TIKTOK'?'#007a80':'#c00000';
+    const name = channelName(c.channel_url);
+    const shareW = chAll.length>0 ? Math.round(c.total_views/(Math.max(...chAll.map(x=>x.total_views))||1)*80) : 0;
+    return `<tr style="border-bottom:1px solid #eee">
+      <td style="padding:6px 8px;color:#aaa;font-size:11px">${i+1}</td>
+      <td style="padding:6px 8px"><span style="display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;background:${platColor}22;color:${platColor}">${c.social_network}</span></td>
+      <td style="padding:6px 8px;font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name}</td>
+      <td style="padding:6px 8px;text-align:right;font-size:12px;color:#666">${fmtN(c.total_videos)}</td>
+      <td style="padding:6px 8px;text-align:right;font-size:12px;font-weight:600">${fmtN(c.total_views)}</td>
+      <td style="padding:6px 8px"><div style="height:5px;background:#eee;border-radius:3px"><div style="height:5px;width:${shareW}%;background:${platColor};border-radius:3px"></div></div></td>
+    </tr>`;
+  }).join('');
+
+  const card = (label,value,sub='',color='#111')=>`
+    <div style="border:1px solid #e0e0e0;border-radius:10px;padding:14px 16px">
+      <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">${label}</div>
+      <div style="font-size:20px;font-weight:700;color:${color};line-height:1.1">${value}</div>
+      ${sub?`<div style="font-size:11px;color:#aaa;margin-top:3px">${sub}</div>`:''}
+    </div>`;
+
+  const statBox = (label,value,trend='',cls='')=>`
+    <div style="border:1px solid #e0e0e0;border-radius:10px;padding:12px 14px">
+      <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div>
+      <div style="font-size:18px;font-weight:700;color:${cls==='up'?'#16a34a':cls==='down'?'#dc2626':'#111'}">${value}</div>
+      ${trend?`<div style="font-size:11px;color:#aaa;margin-top:2px">${trend}</div>`:''}
+    </div>`;
+
   const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:32px;color:#111">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:2px solid ${p.color};padding-bottom:16px">
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:32px 36px;color:#111;background:#fff">
+
+      <!-- Заголовок -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;border-bottom:3px solid ${p.color};padding-bottom:14px">
         <div>
-          <div style="font-size:22px;font-weight:800">Content Factory</div>
-          <div style="font-size:16px;font-weight:700;color:${p.color};margin-top:4px">${pdfProject}</div>
-          <div style="font-size:12px;color:#888;margin-top:2px">${subtitle}</div>
+          <div style="font-size:24px;font-weight:800;color:#111">Content Factory</div>
+          <div style="font-size:17px;font-weight:700;color:${p.color};margin-top:4px">${pdfProject}</div>
+          <div style="font-size:12px;color:#999;margin-top:2px">${subtitle}</div>
         </div>
-        <div style="text-align:right;font-size:12px;color:#888">Данные на ${last.date||'—'}</div>
+        <div style="text-align:right;font-size:12px;color:#999;padding-top:4px">Данные на ${last.date||'—'}</div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px">
-        ${[
-          ['Всего просмотров', total.toLocaleString('ru')],
-          ['Всего видео', totalVideos.toLocaleString('ru')],
-          ['Бюджет', budget>0?budget.toLocaleString('ru')+' ₽':'—'],
-          ['CPV', cpv],
-        ].map(([l,v])=>`<div style="border:1px solid #ddd;border-radius:8px;padding:12px">
-          <div style="font-size:10px;color:#888;text-transform:uppercase;margin-bottom:4px">${l}</div>
-          <div style="font-size:18px;font-weight:700;color:${p.color}">${v}</div>
-        </div>`).join('')}
+
+      <!-- Карточки (5 штук) -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px">
+        ${card('Всего просмотров', fmtN(total), `на ${last.date||'—'}`, p.color)}
+        ${card('Всего видео', fmtN(sumVid(chAll)), `${sumVid(ig)} ig · ${sumVid(tt)} tt · ${sumVid(yt)} yt`, p.color)}
+        ${card('Каналов', chAll.length, `${ig.length} ig · ${tt.length} tt · ${yt.length} yt`, p.color)}
+        ${card('Бюджет кампании', budget>0?fmtN(budget)+' ₽':'—', `CPV: ${cpv}`, p.color)}
+        ${card('Дней данных', dd.length, `${dd[0]?.date||'—'} — ${last.date||'—'}`, p.color)}
       </div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
+
+      <!-- Статистика активности -->
+      <div style="font-size:12px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Динамика</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">
+        ${statBox('Итого (нарастающим)', fmtN(total), last.date||'')}
+        ${statBox('Новых за последний день', fmtN(todayD), `${diff>=0?'+':''}${fmtN(diff)} vs пред. день (${diff>=0?'+':''}${diffPct}%)`, diff>=0?'up':'down')}
+        ${statBox('Среднее за 7 дней', fmtN(Math.round(week7/7)), `сумма за неделю: ${fmtN(week7)}`)}
+        ${statBox('Скорость роста (WoW)', `${wow>=0?'+':''}${wow}%`, 'эта неделя vs прошлая', wow>=0?'up':'down')}
+      </div>
+
+      <!-- Разбивка по платформам -->
+      <div style="font-size:12px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Просмотры по платформам</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px">
         <thead>
-          <tr style="background:#f5f5f5">
-            <th style="padding:8px;text-align:left;border-bottom:1px solid #ddd">Месяц</th>
-            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd">Просмотров</th>
-            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#c0004e">Instagram</th>
-            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#007a80">TikTok</th>
-            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#c00000">YouTube</th>
-            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd">CPV</th>
+          <tr style="background:#f7f7f7">
+            <th style="padding:8px;text-align:left;border-bottom:2px solid #e0e0e0">Платформа</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Просмотров</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Доля</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Каналов</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Видео</th>
           </tr>
         </thead>
-        <tbody style="font-size:12px">${mRows}</tbody>
+        <tbody>
+          <tr style="border-bottom:1px solid #eee">
+            <td style="padding:7px 8px;font-weight:600;color:#c0004e">Instagram</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(igV)}</td>
+            <td style="padding:7px 8px;text-align:right;color:#999">${pct(igV)}%</td>
+            <td style="padding:7px 8px;text-align:right">${ig.length}</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(ig))}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee">
+            <td style="padding:7px 8px;font-weight:600;color:#007a80">TikTok</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(ttV)}</td>
+            <td style="padding:7px 8px;text-align:right;color:#999">${pct(ttV)}%</td>
+            <td style="padding:7px 8px;text-align:right">${tt.length}</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(tt))}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee">
+            <td style="padding:7px 8px;font-weight:600;color:#c00000">YouTube</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(ytV)}</td>
+            <td style="padding:7px 8px;text-align:right;color:#999">${pct(ytV)}%</td>
+            <td style="padding:7px 8px;text-align:right">${yt.length}</td>
+            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(yt))}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Таблица по месяцам -->
+      <div style="font-size:12px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">По месяцам</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px">
+        <thead>
+          <tr style="background:#f7f7f7">
+            <th style="padding:8px;text-align:left;border-bottom:2px solid #e0e0e0">Месяц</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Новых просмотров</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#c0004e">Instagram</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#007a80">TikTok</th>
+            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#c00000">YouTube</th>
+            ${budget>0?'<th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">CPV</th>':''}
+          </tr>
+        </thead>
+        <tbody>${mRows}</tbody>
+      </table>
+
+      <!-- Таблица каналов -->
+      <div style="font-size:12px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Каналы (${chAll.length})</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:#f7f7f7">
+            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">#</th>
+            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">Платформа</th>
+            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">Канал</th>
+            <th style="padding:7px 8px;text-align:right;border-bottom:2px solid #e0e0e0">Видео</th>
+            <th style="padding:7px 8px;text-align:right;border-bottom:2px solid #e0e0e0">Просмотры</th>
+            <th style="padding:7px 8px;border-bottom:2px solid #e0e0e0">Охват</th>
+          </tr>
+        </thead>
+        <tbody>${chRows}</tbody>
       </table>
     </div>`;
 
@@ -738,7 +853,7 @@ function exportPdf(period){
     margin: 0,
     filename,
     image: {type:'jpeg', quality:0.98},
-    html2canvas: {scale:2, useCORS:true},
+    html2canvas: {scale:2, useCORS:true, windowWidth:1000},
     jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
   }).from(el).save().then(()=> document.body.removeChild(el));
 }
