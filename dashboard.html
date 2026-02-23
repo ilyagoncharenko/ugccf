@@ -154,6 +154,12 @@
     .pw-box button:hover{opacity:.85}
     .pw-box .pw-err{font-size:12px;color:#f87171;margin-top:10px;min-height:18px}
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+    /* Adesk internal section */
+    .adesk-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .adesk-badge{background:#1e1e10;border:1px solid #3a3a10;color:#b8b840;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px}
+    .adesk-sep{margin-top:40px;padding-top:28px;border-top:1px solid #2a2a38}
+    .adesk-note{margin-top:8px;font-size:11px;color:#333;text-align:right}
   </style>
 </head>
 <body>
@@ -299,7 +305,8 @@ function renderProject(name){
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
-    </div>`;
+    </div>
+    <div id="adeskSection-${name}"></div>`;
   document.getElementById('projectContent').innerHTML = html;
 
   buildCards(p);
@@ -309,6 +316,7 @@ function renderProject(name){
   buildCPVChart(p);
   buildMonthly(p);
   renderTable(p.channels_data);
+  if(!_clientProject) buildAdeskSection(p);
 }
 
 // ─── CARDS ───
@@ -917,6 +925,125 @@ window.onload = function() {
 <\/script>
 </body></html>`);
   popup.document.close();
+}
+
+// ─── ADESK ФИНАНСЫ (ВНУТРЕННЕЕ) ───
+const ADESK_DATA = {
+  'Twinby': {
+    updated_at: '2026-02-23',
+    transactions: [
+      {date:'2026-01-14', type:2, category:'UGC-креаторы',              amount:20100, desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-01-14', type:2, category:'UGC-креаторы',              amount:8400,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-01-14', type:2, category:'UGC-креаторы',              amount:1500,  desc:'Газизова Аделя Азатовна'},
+      {date:'2026-01-19', type:1, category:'Выручка от оказания услуг', amount:250000,desc:'Оплата по Счет №3 от 16 января 2026 г.'},
+      {date:'2026-01-19', type:2, category:'Налог на прибыль',          amount:15000, desc:'Фонд налогов'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:13300, desc:'Зияудинова Лаура Муслимовна'},
+    ]
+  },
+  'Luvu': {
+    updated_at: '2026-02-23',
+    transactions: [
+      {date:'2025-11-27', type:1, category:'Выручка от оказания услуг', amount:500000, desc:'Оплата по договору 07-11-2025-1'},
+      {date:'2026-01-12', type:2, category:'UGC-креаторы',              amount:39500,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-01-12', type:2, category:'UGC-креаторы',              amount:30600,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-01-12', type:2, category:'UGC-креаторы',              amount:31000,  desc:'Бочкарёва Ева Маратовна'},
+      {date:'2026-01-12', type:2, category:'UGC-креаторы',              amount:30100,  desc:'Оплата по договору'},
+      {date:'2026-01-12', type:2, category:'UGC-креаторы',              amount:30100,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-01-16', type:2, category:'UGC-креаторы',              amount:9500,   desc:'Оплата по счету 3 за услуги специалиста'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:19500,  desc:'Оплата по счету 8 за услуги специалиста'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:18700,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:20000,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:18500,  desc:'Оплата по договору'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:30100,  desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:25000,  desc:'Выплата самозанятому (НПД)'},
+    ]
+  },
+  'Ocomplex': {
+    updated_at: '2026-02-23',
+    transactions: [
+      {date:'2025-12-29', type:1, category:'Выручка от оказания услуг', amount:460000, desc:'Перевод собственных средств'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:2000,   desc:'Оплата по счету 8 за услуги специалиста'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:4500,   desc:'Выплата самозанятому (НПД)'},
+      {date:'2026-02-12', type:2, category:'UGC-креаторы',              amount:18500,  desc:'Выплата самозанятому (НПД)'},
+    ]
+  }
+};
+
+function buildAdeskSection(p){
+  const container = document.getElementById('adeskSection-'+p.name);
+  if(!container) return;
+  const ad = ADESK_DATA[p.name];
+  if(!ad) return; // нет данных для этого проекта
+
+  const txns    = ad.transactions;
+  const income  = txns.filter(t=>t.type===1).reduce((s,t)=>s+t.amount, 0);
+  const allCost = txns.filter(t=>t.type===2).reduce((s,t)=>s+t.amount, 0);
+  const budget  = p.budget || 0;
+
+  const dd = p.daily_data;
+  const totalViews = dd.length ? dd[dd.length-1].total_views : 0;
+  const factCPV   = (allCost>0 && totalViews>0) ? (allCost/totalViews).toFixed(2)  : '—';
+  const clientCPV = (budget>0  && totalViews>0) ? (budget/totalViews).toFixed(2)   : '—';
+  const profit    = income - allCost;
+
+  const fmtN = n => n.toLocaleString('ru');
+
+  const txRows = [...txns].sort((a,b)=>b.date.localeCompare(a.date)).map(t=>{
+    const isInc = t.type===1;
+    const clr   = isInc ? '#4ade80' : '#f87171';
+    const bg    = isInc ? '#0d2e1a' : '#2e0d0d';
+    const sign  = isInc ? '+' : '−';
+    return `<tr style="border-bottom:1px solid #1e1e28">
+      <td style="padding:8px 10px;color:#555;font-size:12px">${t.date}</td>
+      <td style="padding:8px 10px"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:${bg};color:${clr}">${isInc?'доход':'расход'}</span></td>
+      <td style="padding:8px 10px;font-size:12px;color:#888">${t.category}</td>
+      <td style="padding:8px 10px;text-align:right;font-size:14px;font-weight:700;color:${clr}">${sign}${fmtN(t.amount)} ₽</td>
+      <td style="padding:8px 10px;font-size:11px;color:#444;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.desc}</td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="adesk-sep">
+      <div class="adesk-header">
+        <div class="section-title" style="margin:0">Финансы <span style="color:#666">(Adesk)</span></div>
+        <span class="adesk-badge">ВНУТРЕННЕЕ</span>
+      </div>
+      <div class="cards" style="margin-bottom:18px">
+        <div class="card">
+          <div class="label">Расходы на проект</div>
+          <div class="value" style="color:#f87171;font-size:22px">${fmtN(allCost)} ₽</div>
+          <div class="sub">из ${fmtN(budget)} ₽ бюджета</div>
+        </div>
+        <div class="card">
+          <div class="label">Поступление от клиента</div>
+          <div class="value" style="color:#4ade80;font-size:22px">${fmtN(income)} ₽</div>
+          <div class="sub">фактически оплачено</div>
+        </div>
+        <div class="card">
+          <div class="label">Себестоимость CPV</div>
+          <div class="value" style="color:#a78bfa;font-size:22px">${factCPV} ₽</div>
+          <div class="sub">за 1 просмотр · клиент видит: ${clientCPV} ₽</div>
+        </div>
+        <div class="card">
+          <div class="label">Прибыль с проекта <span style="color:#444;font-size:10px;font-weight:400">(без пост. расходов)</span></div>
+          <div class="value" style="color:${profit>=0?'#4ade80':'#f87171'};font-size:22px">${profit>=0?'+':''}${fmtN(profit)} ₽</div>
+          <div class="sub">${fmtN(income)} − ${fmtN(allCost)}</div>
+        </div>
+      </div>
+      <div class="table-box">
+        <h3>Транзакции (Adesk · ${p.name})</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Дата</th><th>Тип</th><th>Категория</th>
+              <th style="text-align:right">Сумма</th><th>Описание</th>
+            </tr>
+          </thead>
+          <tbody>${txRows}</tbody>
+        </table>
+      </div>
+      <div class="adesk-note">Данные из Adesk · обновлено ${ad.updated_at}</div>
+    </div>`;
 }
 
 // ─── PASSWORD ───
