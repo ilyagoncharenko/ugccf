@@ -307,6 +307,7 @@ function renderProject(name){
             <th class="sort-th" onclick="sortTable('channel')">Канал ↕</th>
             <th class="sort-th" onclick="sortTable('total_videos')">Видео ↕</th>
             <th class="sort-th" onclick="sortTable('total_views')">Просмотры ↕</th>
+            <th class="sort-th" onclick="sortTable('avg_views')">Ср. охват/пост ↕</th>
             <th>Охват</th>
           </tr>
         </thead>
@@ -604,12 +605,15 @@ function sortTable(f){
 function renderTable(data){
   const max = Math.max(...data.map(r=>r.total_views));
   const sorted = [...data].sort((a,b)=>{
-    const av = sortField==='channel' ? channelName(a.channel_url) : a[sortField]||0;
-    const bv = sortField==='channel' ? channelName(b.channel_url) : b[sortField]||0;
+    const avgA = a.total_videos>0 ? a.total_views/a.total_videos : 0;
+    const avgB = b.total_videos>0 ? b.total_views/b.total_videos : 0;
+    const av = sortField==='channel' ? channelName(a.channel_url) : sortField==='avg_views' ? avgA : a[sortField]||0;
+    const bv = sortField==='channel' ? channelName(b.channel_url) : sortField==='avg_views' ? avgB : b[sortField]||0;
     return typeof av==='string' ? (sortAsc?av.localeCompare(bv):bv.localeCompare(av)) : (sortAsc?av-bv:bv-av);
   });
   document.getElementById('tableBody').innerHTML = sorted.map((r,i)=>{
     const pct = Math.round(r.total_views/max*100);
+    const avg = r.total_videos>0 ? Math.round(r.total_views/r.total_videos) : 0;
     const url = r.channel_url?.startsWith('http') ? r.channel_url : 'https://'+r.channel_url;
     return `<tr>
       <td style="color:#333">${i+1}</td>
@@ -617,6 +621,7 @@ function renderTable(data){
       <td><a class="ch-link" href="${url}" target="_blank">${channelName(r.channel_url)}</a></td>
       <td class="num">${r.total_videos.toLocaleString('ru')}</td>
       <td class="num">${r.total_views.toLocaleString('ru')}</td>
+      <td class="num" style="color:#888">${avg.toLocaleString('ru')}</td>
       <td><div style="display:flex;align-items:center;gap:7px">
         <div class="bar-track"><div class="bar-fill bar-${r.social_network}" style="width:${pct}%"></div></div>
         <span style="font-size:11px;color:#444;min-width:28px">${pct}%</span>
