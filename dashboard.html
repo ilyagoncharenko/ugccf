@@ -745,7 +745,7 @@ function exportPdf(period){
     </div>`;
 
   const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:0;color:#111;background:#fff">
+    <div style="padding:0;color:#111;background:#fff">
 
       <!-- Заголовок -->
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;border-bottom:3px solid ${p.color};padding-bottom:14px">
@@ -848,32 +848,16 @@ function exportPdf(period){
       </table>
     </div>`;
 
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'width:700px;padding:24px;background:#fff;box-sizing:border-box;';
-  wrapper.innerHTML = html;
-
-  // Сохраняем и временно убираем все стили body, которые мешают рендеру
-  const origBodyStyle = document.body.getAttribute('style') || '';
-  document.body.style.cssText = 'margin:0;padding:0;background:#fff;overflow:hidden;';
-
-  // Скрываем все остальные дочерние элементы body
-  const otherChildren = Array.from(document.body.children);
-  otherChildren.forEach(c => c.style.display = 'none');
-
-  document.body.appendChild(wrapper);
-  window.scrollTo(0, 0);
+  // Оборачиваем в полноценный HTML-документ и передаём строкой — html2pdf сам создаст контейнер
+  const fullHtml = `<div style="width:680px;padding:20px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-sizing:border-box;">${html}</div>`;
 
   html2pdf().set({
-    margin: 10,
+    margin: [8, 8, 8, 8],
     filename,
     image: {type:'jpeg', quality:0.98},
-    html2canvas: {scale:2, useCORS:true, windowWidth:700},
+    html2canvas: {scale:2, useCORS:true, windowWidth:720, logging:false},
     jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
-  }).from(wrapper).save().then(()=>{
-    document.body.removeChild(wrapper);
-    document.body.setAttribute('style', origBodyStyle);
-    otherChildren.forEach(c => c.style.display = '');
-  });
+  }).from(fullHtml).save();
 }
 
 // ─── INIT ───
