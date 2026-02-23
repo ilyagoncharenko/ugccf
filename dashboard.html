@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Content Factory</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d0d11;color:#e0e0e0;min-height:100vh;padding:28px 24px}
@@ -86,18 +87,76 @@
     .sort-th{cursor:pointer;user-select:none}
     .sort-th:hover{color:#aaa}
     .num{font-variant-numeric:tabular-nums}
+
+    /* Subtitle */
+    .subtitle{font-size:12px;color:#444;margin-top:4px}
+
+    /* PDF button */
+    .pdf-btn{padding:7px 16px;font-size:12px;font-weight:700;background:transparent;border:1px solid #3a3a50;color:#888;border-radius:8px;cursor:pointer;transition:all .15s}
+    .pdf-btn:hover{border-color:#a78bfa;color:#a78bfa}
+
+    /* PDF modal */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
+    .modal-overlay.open{display:flex}
+    .modal{background:#1a1a22;border:1px solid #2a2a38;border-radius:16px;padding:28px;min-width:320px;max-width:460px;width:90%}
+    .modal h2{font-size:16px;font-weight:700;margin-bottom:6px}
+    .modal p{font-size:12px;color:#555;margin-bottom:20px}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+    .modal-opt{padding:10px 14px;background:#12121a;border:1px solid #2a2a38;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;text-align:center;transition:all .15s}
+    .modal-opt:hover{border-color:var(--proj-color,#a78bfa);color:var(--proj-color,#a78bfa)}
+    .modal-opt.full{grid-column:1/-1;color:var(--proj-color,#a78bfa);border-color:var(--proj-color,#a78bfa)}
+    .modal-cancel{width:100%;padding:8px;background:transparent;border:none;color:#444;font-size:12px;cursor:pointer;margin-top:4px}
+    .modal-cancel:hover{color:#888}
+
+    /* Print styles */
+    @media print{
+      body{background:#fff!important;color:#111!important;padding:12px!important}
+      .header,.project-tabs,.timeline-controls,.pdf-btn,.modal-overlay{display:none!important}
+      .card{border:1px solid #ddd!important;background:#f9f9f9!important}
+      .card .label{color:#666!important}
+      .card .sub{color:#999!important}
+      .chart-box,.timeline-box,.table-box{border:1px solid #ddd!important;background:#f9f9f9!important}
+      .chart-box h3{color:#666!important}
+      .section-title{color:#333!important}
+      .stats-row{display:none}
+      .stat-mini{border:1px solid #ddd!important;background:#f9f9f9!important}
+      .stat-mini .label{color:#666!important}
+      .stat-mini .trend{color:#999!important}
+      thead th{color:#666!important;border-bottom:1px solid #ddd!important}
+      tbody tr{border-bottom:1px solid #eee!important}
+      .badge-INSTAGRAM{background:#ffe0ea!important;color:#c0004e!important}
+      .badge-TIKTOK{background:#d0f5f6!important;color:#007a80!important}
+      .badge-YOUTUBE{background:#ffe0de!important;color:#c00000!important}
+      .print-hidden{display:none!important}
+      .print-header{display:block!important;font-size:20px;font-weight:800;margin-bottom:4px}
+      .print-sub{display:block!important;font-size:12px;color:#666;margin-bottom:20px}
+    }
+    .print-header,.print-sub{display:none}
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">Content Factory <span id="headerMeta"></span></div>
+  <div>
+    <div class="logo">Content Factory <span id="headerMeta"></span></div>
+    <div class="subtitle">Обновляется каждый день в 23:30 по МСК</div>
+  </div>
   <div class="updated" id="updatedAt"></div>
 </div>
 
 <div class="project-tabs" id="projectTabs"></div>
 
 <div id="projectContent"></div>
+
+<!-- PDF Modal -->
+<div class="modal-overlay" id="pdfModal">
+  <div class="modal">
+    <h2>Экспорт в PDF</h2>
+    <p>Выберите период для выгрузки</p>
+    <div class="modal-grid" id="pdfOptions"></div>
+    <button class="modal-cancel" onclick="closePdfModal()">Отмена</button>
+  </div>
+</div>
 
 <script>
 const PROJECTS_DATA = {"Twinby":{"name":"Twinby","spreadsheet_id":"1DqVJAwEvxw7HoUrTNZNCw4jVAeK7_ow_beRiEiGVcHM","color":"#a78bfa","budget":500000,"channels_data":[{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/chrisveum9?igsh=MWRrYWRlZTJjbnNkaQ%3D%3D&utm_source=qr","total_videos":85,"total_views":1908304},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@user9247771846859?_r=1&_t=ZM-92FbGVelETc","total_videos":28,"total_views":393},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@ronaldpinegar?si=UK-BEXcZvhXFAcRW","total_videos":83,"total_views":36243},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/by_laura.zi?igsh=MTcyem1wamIzdWhjNg%3D%3D&utm_source=qr","total_videos":82,"total_views":14926},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@user9247771846859?_r=1&_t=ZM-92FbChl09WO","total_videos":28,"total_views":393},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@louisjustice-j4z?si=q1YFwNlPfQriVmkD","total_videos":84,"total_views":38853},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/jenny_twin_by","total_videos":62,"total_views":84779},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nora_twin","total_videos":51,"total_views":33891},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nora_twin_/","total_videos":62,"total_views":136839},{"social_network":"TIKTOK","channel_url":"www.tiktok.com/@jenny_twinby","total_videos":50,"total_views":20860},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/julia_pokeda?igsh=aGNienozZ25zZ3Zo&utm_source=qr","total_videos":41,"total_views":16951},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@julia_winslet?_r=1&_t=ZP-93PWYMveyH0","total_videos":42,"total_views":73479},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/julia_wins1et?igsh=MW1pMTN6OTlsaGdraw%3D%3D&utm_source=qr","total_videos":46,"total_views":38050},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastasiaaaa__?igsh=NnAyZDQzOGpvd2Ex&utm_source=qr","total_videos":8,"total_views":964},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nastasiaa111?_r=1&_t=ZS-93aGhE9vsYv","total_videos":8,"total_views":6360},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@nastasia_a-a?si=IQq_9xEmyVSMplBw","total_videos":8,"total_views":7581},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@by.laura_zi?_r=1&_t=ZS-93nrQBs7Qn3","total_videos":48,"total_views":187386},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@laura_znak?_r=1&_t=ZS-93nrYPVlDdJ","total_videos":17,"total_views":7712},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/love_patterns1","total_videos":38,"total_views":1852},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/conscious_dating1","total_videos":24,"total_views":602},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/love_without_games","total_videos":39,"total_views":2507},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/date_mindset","total_videos":24,"total_views":1336},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@realtalkdating4","total_videos":37,"total_views":24602},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@heartlogic12","total_videos":38,"total_views":22837},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@moderndates4","total_videos":37,"total_views":20686},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@datingdecoded12","total_videos":38,"total_views":8465},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@LoveDynamics12","total_videos":14,"total_views":33}],"daily_data":[{"date":"2025-12-18","total_views":11294,"by_platform":{"INSTAGRAM":10510,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":11294,"delta_by_platform":{"INSTAGRAM":10510,"TIKTOK":784,"YOUTUBE":0}},{"date":"2025-12-19","total_views":9120,"by_platform":{"INSTAGRAM":8336,"TIKTOK":784,"YOUTUBE":0},"channels":3,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-20","total_views":9316,"by_platform":{"INSTAGRAM":8532,"TIKTOK":784,"YOUTUBE":0},"channels":3,"delta":196,"delta_by_platform":{"INSTAGRAM":196,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-21","total_views":12100,"by_platform":{"INSTAGRAM":11316,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":2784,"delta_by_platform":{"INSTAGRAM":2784,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-22","total_views":16160,"by_platform":{"INSTAGRAM":15376,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":4060,"delta_by_platform":{"INSTAGRAM":4060,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-23","total_views":76354,"by_platform":{"INSTAGRAM":75570,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":60194,"delta_by_platform":{"INSTAGRAM":60194,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-24","total_views":87110,"by_platform":{"INSTAGRAM":86326,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":10756,"delta_by_platform":{"INSTAGRAM":10756,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-25","total_views":99178,"by_platform":{"INSTAGRAM":93918,"TIKTOK":784,"YOUTUBE":4476},"channels":7,"delta":12068,"delta_by_platform":{"INSTAGRAM":7592,"TIKTOK":0,"YOUTUBE":4476}},{"date":"2025-12-26","total_views":105907,"by_platform":{"INSTAGRAM":105123,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":6729,"delta_by_platform":{"INSTAGRAM":11205,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-27","total_views":173937,"by_platform":{"INSTAGRAM":173153,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":68030,"delta_by_platform":{"INSTAGRAM":68030,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-28","total_views":279520,"by_platform":{"INSTAGRAM":278736,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":105583,"delta_by_platform":{"INSTAGRAM":105583,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-29","total_views":325603,"by_platform":{"INSTAGRAM":324819,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":46083,"delta_by_platform":{"INSTAGRAM":46083,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-30","total_views":441507,"by_platform":{"INSTAGRAM":436205,"TIKTOK":784,"YOUTUBE":4518},"channels":7,"delta":115904,"delta_by_platform":{"INSTAGRAM":111386,"TIKTOK":0,"YOUTUBE":4518}},{"date":"2025-12-31","total_views":524494,"by_platform":{"INSTAGRAM":523710,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":82987,"delta_by_platform":{"INSTAGRAM":87505,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-01","total_views":540902,"by_platform":{"INSTAGRAM":540902,"TIKTOK":0,"YOUTUBE":0},"channels":4,"delta":16408,"delta_by_platform":{"INSTAGRAM":17192,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-02","total_views":562046,"by_platform":{"INSTAGRAM":562038,"TIKTOK":8,"YOUTUBE":0},"channels":6,"delta":21144,"delta_by_platform":{"INSTAGRAM":21136,"TIKTOK":8,"YOUTUBE":0}},{"date":"2026-01-03","total_views":614278,"by_platform":{"INSTAGRAM":598097,"TIKTOK":786,"YOUTUBE":15395},"channels":7,"delta":52232,"delta_by_platform":{"INSTAGRAM":36059,"TIKTOK":778,"YOUTUBE":15395}},{"date":"2026-01-04","total_views":644222,"by_platform":{"INSTAGRAM":643436,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":29944,"delta_by_platform":{"INSTAGRAM":45339,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-05","total_views":682342,"by_platform":{"INSTAGRAM":681556,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":38120,"delta_by_platform":{"INSTAGRAM":38120,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-06","total_views":706854,"by_platform":{"INSTAGRAM":706068,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":24512,"delta_by_platform":{"INSTAGRAM":24512,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-07","total_views":729358,"by_platform":{"INSTAGRAM":728572,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":22504,"delta_by_platform":{"INSTAGRAM":22504,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-08","total_views":751751,"by_platform":{"INSTAGRAM":750965,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":22393,"delta_by_platform":{"INSTAGRAM":22393,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-09","total_views":783223,"by_platform":{"INSTAGRAM":782437,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":31472,"delta_by_platform":{"INSTAGRAM":31472,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-10","total_views":834032,"by_platform":{"INSTAGRAM":813436,"TIKTOK":786,"YOUTUBE":19810},"channels":7,"delta":50809,"delta_by_platform":{"INSTAGRAM":30999,"TIKTOK":0,"YOUTUBE":19810}},{"date":"2026-01-11","total_views":831219,"by_platform":{"INSTAGRAM":830433,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":0,"delta_by_platform":{"INSTAGRAM":16997,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-12","total_views":661217,"by_platform":{"INSTAGRAM":660431,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-13","total_views":868181,"by_platform":{"INSTAGRAM":867395,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":206964,"delta_by_platform":{"INSTAGRAM":206964,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-14","total_views":886861,"by_platform":{"INSTAGRAM":886075,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":18680,"delta_by_platform":{"INSTAGRAM":18680,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-15","total_views":918788,"by_platform":{"INSTAGRAM":918002,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":31927,"delta_by_platform":{"INSTAGRAM":31927,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-16","total_views":1031718,"by_platform":{"INSTAGRAM":1030934,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":112930,"delta_by_platform":{"INSTAGRAM":112932,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-17","total_views":1070276,"by_platform":{"INSTAGRAM":1069492,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":38558,"delta_by_platform":{"INSTAGRAM":38558,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-18","total_views":1185670,"by_platform":{"INSTAGRAM":1104185,"TIKTOK":784,"YOUTUBE":80701},"channels":10,"delta":115394,"delta_by_platform":{"INSTAGRAM":34693,"TIKTOK":0,"YOUTUBE":80701}},{"date":"2026-01-19","total_views":1250519,"by_platform":{"INSTAGRAM":1167947,"TIKTOK":784,"YOUTUBE":81788},"channels":10,"delta":64849,"delta_by_platform":{"INSTAGRAM":63762,"TIKTOK":0,"YOUTUBE":1087}},{"date":"2026-01-20","total_views":1321605,"by_platform":{"INSTAGRAM":1234627,"TIKTOK":784,"YOUTUBE":86194},"channels":10,"delta":71086,"delta_by_platform":{"INSTAGRAM":66680,"TIKTOK":0,"YOUTUBE":4406}},{"date":"2026-01-21","total_views":1351658,"by_platform":{"INSTAGRAM":1264078,"TIKTOK":784,"YOUTUBE":86796},"channels":10,"delta":30053,"delta_by_platform":{"INSTAGRAM":29451,"TIKTOK":0,"YOUTUBE":602}},{"date":"2026-01-22","total_views":1387955,"by_platform":{"INSTAGRAM":1297090,"TIKTOK":784,"YOUTUBE":90081},"channels":10,"delta":36297,"delta_by_platform":{"INSTAGRAM":33012,"TIKTOK":0,"YOUTUBE":3285}},{"date":"2026-01-23","total_views":1445279,"by_platform":{"INSTAGRAM":1349904,"TIKTOK":784,"YOUTUBE":94591},"channels":10,"delta":57324,"delta_by_platform":{"INSTAGRAM":52814,"TIKTOK":0,"YOUTUBE":4510}},{"date":"2026-01-24","total_views":1490001,"by_platform":{"INSTAGRAM":1390658,"TIKTOK":784,"YOUTUBE":98559},"channels":10,"delta":44722,"delta_by_platform":{"INSTAGRAM":40754,"TIKTOK":0,"YOUTUBE":3968}},{"date":"2026-01-25","total_views":1460559,"by_platform":{"INSTAGRAM":1430914,"TIKTOK":784,"YOUTUBE":28861},"channels":7,"delta":0,"delta_by_platform":{"INSTAGRAM":40256,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-26","total_views":1559827,"by_platform":{"INSTAGRAM":1455876,"TIKTOK":3255,"YOUTUBE":100696},"channels":11,"delta":99268,"delta_by_platform":{"INSTAGRAM":24962,"TIKTOK":2471,"YOUTUBE":71835}},{"date":"2026-01-28","total_views":1600251,"by_platform":{"INSTAGRAM":1488902,"TIKTOK":6808,"YOUTUBE":104541},"channels":11,"delta":40424,"delta_by_platform":{"INSTAGRAM":33026,"TIKTOK":3553,"YOUTUBE":3845}},{"date":"2026-01-29","total_views":1617558,"by_platform":{"INSTAGRAM":1502364,"TIKTOK":8887,"YOUTUBE":106307},"channels":11,"delta":17307,"delta_by_platform":{"INSTAGRAM":13462,"TIKTOK":2079,"YOUTUBE":1766}},{"date":"2026-01-30","total_views":1636557,"by_platform":{"INSTAGRAM":1516937,"TIKTOK":11857,"YOUTUBE":107763},"channels":11,"delta":18999,"delta_by_platform":{"INSTAGRAM":14573,"TIKTOK":2970,"YOUTUBE":1456}},{"date":"2026-01-31","total_views":1605606,"by_platform":{"INSTAGRAM":1534380,"TIKTOK":13165,"YOUTUBE":58061},"channels":10,"delta":0,"delta_by_platform":{"INSTAGRAM":17443,"TIKTOK":1308,"YOUTUBE":0}},{"date":"2026-02-01","total_views":1623539,"by_platform":{"INSTAGRAM":1550722,"TIKTOK":14283,"YOUTUBE":58534},"channels":10,"delta":17933,"delta_by_platform":{"INSTAGRAM":16342,"TIKTOK":1118,"YOUTUBE":473}},{"date":"2026-02-02","total_views":1668117,"by_platform":{"INSTAGRAM":1584172,"TIKTOK":22565,"YOUTUBE":61380},"channels":16,"delta":44578,"delta_by_platform":{"INSTAGRAM":33450,"TIKTOK":8282,"YOUTUBE":2846}},{"date":"2026-02-03","total_views":1696850,"by_platform":{"INSTAGRAM":1608783,"TIKTOK":24638,"YOUTUBE":63429},"channels":16,"delta":28733,"delta_by_platform":{"INSTAGRAM":24611,"TIKTOK":2073,"YOUTUBE":2049}},{"date":"2026-02-04","total_views":1750018,"by_platform":{"INSTAGRAM":1652760,"TIKTOK":30991,"YOUTUBE":66267},"channels":25,"delta":53168,"delta_by_platform":{"INSTAGRAM":43977,"TIKTOK":6353,"YOUTUBE":2838}},{"date":"2026-02-05","total_views":1803267,"by_platform":{"INSTAGRAM":1699362,"TIKTOK":36650,"YOUTUBE":67255},"channels":25,"delta":53249,"delta_by_platform":{"INSTAGRAM":46602,"TIKTOK":5659,"YOUTUBE":988}},{"date":"2026-02-06","total_views":1834681,"by_platform":{"INSTAGRAM":1721687,"TIKTOK":45269,"YOUTUBE":67725},"channels":25,"delta":31414,"delta_by_platform":{"INSTAGRAM":22325,"TIKTOK":8619,"YOUTUBE":470}},{"date":"2026-02-07","total_views":1846442,"by_platform":{"INSTAGRAM":1724891,"TIKTOK":52629,"YOUTUBE":68922},"channels":25,"delta":11761,"delta_by_platform":{"INSTAGRAM":3204,"TIKTOK":7360,"YOUTUBE":1197}},{"date":"2026-02-08","total_views":1876787,"by_platform":{"INSTAGRAM":1750826,"TIKTOK":56866,"YOUTUBE":69095},"channels":25,"delta":30345,"delta_by_platform":{"INSTAGRAM":25935,"TIKTOK":4237,"YOUTUBE":173}},{"date":"2026-02-09","total_views":1896408,"by_platform":{"INSTAGRAM":1761889,"TIKTOK":64798,"YOUTUBE":69721},"channels":25,"delta":19621,"delta_by_platform":{"INSTAGRAM":11063,"TIKTOK":7932,"YOUTUBE":626}},{"date":"2026-02-10","total_views":2086737,"by_platform":{"INSTAGRAM":1779654,"TIKTOK":236055,"YOUTUBE":71028},"channels":27,"delta":190329,"delta_by_platform":{"INSTAGRAM":17765,"TIKTOK":171257,"YOUTUBE":1307}},{"date":"2026-02-11","total_views":2284745,"by_platform":{"INSTAGRAM":1928910,"TIKTOK":283217,"YOUTUBE":72618},"channels":27,"delta":198008,"delta_by_platform":{"INSTAGRAM":149256,"TIKTOK":47162,"YOUTUBE":1590}},{"date":"2026-02-12","total_views":2385271,"by_platform":{"INSTAGRAM":2002556,"TIKTOK":309097,"YOUTUBE":73618},"channels":27,"delta":100526,"delta_by_platform":{"INSTAGRAM":73646,"TIKTOK":25880,"YOUTUBE":1000}},{"date":"2026-02-13","total_views":2438682,"by_platform":{"INSTAGRAM":2029484,"TIKTOK":334247,"YOUTUBE":74951},"channels":27,"delta":53411,"delta_by_platform":{"INSTAGRAM":26928,"TIKTOK":25150,"YOUTUBE":1333}},{"date":"2026-02-14","total_views":2465675,"by_platform":{"INSTAGRAM":2051062,"TIKTOK":339583,"YOUTUBE":75030},"channels":27,"delta":26993,"delta_by_platform":{"INSTAGRAM":21578,"TIKTOK":5336,"YOUTUBE":79}},{"date":"2026-02-16","total_views":2521565,"by_platform":{"INSTAGRAM":2093164,"TIKTOK":352734,"YOUTUBE":75667},"channels":27,"delta":55890,"delta_by_platform":{"INSTAGRAM":42102,"TIKTOK":13151,"YOUTUBE":637}},{"date":"2026-02-17","total_views":2555286,"by_platform":{"INSTAGRAM":2116109,"TIKTOK":362529,"YOUTUBE":76648},"channels":27,"delta":33721,"delta_by_platform":{"INSTAGRAM":22945,"TIKTOK":9795,"YOUTUBE":981}},{"date":"2026-02-18","total_views":2602307,"by_platform":{"INSTAGRAM":2148812,"TIKTOK":375845,"YOUTUBE":77650},"channels":27,"delta":47021,"delta_by_platform":{"INSTAGRAM":32703,"TIKTOK":13316,"YOUTUBE":1002}},{"date":"2026-02-19","total_views":2636258,"by_platform":{"INSTAGRAM":2169822,"TIKTOK":386789,"YOUTUBE":79647},"channels":27,"delta":33951,"delta_by_platform":{"INSTAGRAM":21010,"TIKTOK":10944,"YOUTUBE":1997}},{"date":"2026-02-20","total_views":2675611,"by_platform":{"INSTAGRAM":2192991,"TIKTOK":400841,"YOUTUBE":81779},"channels":27,"delta":39353,"delta_by_platform":{"INSTAGRAM":23169,"TIKTOK":14052,"YOUTUBE":2132}},{"date":"2026-02-21","total_views":2696884,"by_platform":{"INSTAGRAM":2207110,"TIKTOK":407064,"YOUTUBE":82710},"channels":27,"delta":21273,"delta_by_platform":{"INSTAGRAM":14119,"TIKTOK":6223,"YOUTUBE":931}}],"updated_at":"2026-02-23T09:45:10.128076"},"Luvu":{"name":"Luvu","spreadsheet_id":"1j9DS35rRRmVjYGKBH3iEox1Ldk60k79qqSe2uyWL6-Y","color":"#34d399","budget":1000000,"channels_data":[{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@justinmiles7318","total_videos":9,"total_views":3885},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@nancyhicks-z2k","total_videos":9,"total_views":8849},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvubeauty?igsh=OXZ0Z2drcjNjYWE2","total_videos":84,"total_views":75228},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@lina.probeauty?si=RXUbTaE2SqmXbZp0","total_videos":144,"total_views":664534},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/_beautyliana_?igsh=MXB4dmRwOHVwd3ZpYw%3D%3D&utm_source=qr","total_videos":119,"total_views":22096},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@_beautyliana_?_r=1&_t=ZN-91du6WrZV3e","total_videos":137,"total_views":68415},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyliana046?si=b3q13VNaV7PWfBug","total_videos":30,"total_views":14450},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/t.martynova__?igsh=ajBvazVmZGgzYnJq&utm_source=qr","total_videos":18,"total_views":2367},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@fuluwokuhayuga4679?_r=1&_t=ZN-92FBKEavTpG","total_videos":6,"total_views":3282},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@tatiana_b-l6w?si=igwL0rxGIy0BK82a","total_videos":5,"total_views":5789},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/amalliiyyaaa__aa?igsh=cXN4aXAyMzgycTV0&utm_source=qr","total_videos":165,"total_views":60448},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@amalliiyyaaluvu?si=BYSNdzuznco9KqoS","total_videos":116,"total_views":73005},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/evaluvu1?igsh=czAwcG5hZmg1OHc%3D&utm_source=qr","total_videos":103,"total_views":32825},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@evaluvu1?_r=1&_t=ZS-91usW1r7XN2","total_videos":102,"total_views":75266},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evaluvu2?si=F9hBY3GGb4eZ7WtG","total_videos":63,"total_views":15238},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@dariabeautylifestyle?si=Arn-P59H8TqPP4cx","total_videos":91,"total_views":137383},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/evaluvu2?igsh=MWVicWM3dDBncXNpOQ%3D%3D&utm_source=qr","total_videos":103,"total_views":8600},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@evaluvu2?_r=1&_t=ZS-91y53b8C4HY","total_videos":103,"total_views":54086},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evaluvu1?si=nsuJ-g20_a3XURR5","total_videos":103,"total_views":238050},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nataliehoward5766?_r=1&_t=ZS-92KgWutLoUq","total_videos":3,"total_views":1457},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautygirl_046?igsh=MWtuZ2o0b3NmNGlweg%3D%3D&utm_source=qr","total_videos":111,"total_views":45955},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautygirl_046?si=C4vdtxUtUun5NSK9","total_videos":32,"total_views":9256},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvubeauty2?igsh=MTlhdG93MXI0NzN1ag==","total_videos":43,"total_views":1142},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@linaluvubeauty2?_r=1&_t=ZN-92HCNKN0hBG","total_videos":107,"total_views":82018},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@lina.probeauty2?si=I7871GNCwynHftFc","total_videos":16,"total_views":1257},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/anneberge692?igsh=MW9lOGYxOTZlbWR2bA%3D%3D&utm_source=qr","total_videos":19,"total_views":7915},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@jutaluyehucize5389?_r=1&_t=ZN-92FBLgly3IU","total_videos":9,"total_views":3474},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@tatianamartynova-b6h?si=v5FM8Gp_TSqoAANP","total_videos":7,"total_views":7221},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/amalliiyyaabyluvu?igsh=YWticTJzZTUzYngw&utm_source=qr","total_videos":149,"total_views":4423230},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@linaluvubeauty?_r=1&_t=ZN-92HCKXHOY5e","total_videos":110,"total_views":716142},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@linuvbeauty?si=kgHvyEG9ALbb1jCu","total_videos":61,"total_views":18404},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@amalliiyyaaa_luvu?_r=1&_t=ZS-92Lo5LRMnRZ","total_videos":147,"total_views":88981},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@amalliiyyaaaluvu?si=Kf8K6axre9wBJsOF","total_videos":115,"total_views":80263},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@amalliiyyaa_luvu?_r=1&_t=ZN-92RUqawQqve","total_videos":52,"total_views":22420},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/krisxbeauty_?igsh=bzF6ZHI2N2tydjRy","total_videos":82,"total_views":22893},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@krisprobeauty_?_r=1&_t=ZN-930RWRf481e","total_videos":81,"total_views":51445},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@kris.luv.makeup?si=VidDoEnB1gVyw3tM","total_videos":75,"total_views":49854},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/xristinaluv.beauty?igsh=bmR4eG4xcDllMmtu","total_videos":77,"total_views":17529},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@beauty_kriis?_r=1&_t=ZS-930RZRMy4yF","total_videos":84,"total_views":64087},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@kris.luvbeauty?si=ueIBhz2XH9ETAnVx","total_videos":7,"total_views":3343},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyliana045?si=W7j7-N0qSJC8W1fi","total_videos":112,"total_views":54725},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautygirl_045?si=pdK1scPPwZZYHn-K","total_videos":112,"total_views":31320},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@_beautygirl_046?_r=1&_t=ZM-935z7RzYcOm","total_videos":120,"total_views":91294},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@dariabeauty5?_r=1&_t=ZG-92uqhx41o37","total_videos":45,"total_views":22413},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@arianaluvu_b?_r=1&_t=ZG-93HYs7952Gm","total_videos":7,"total_views":11},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyaria_luvu?si=tpgub4_Eo3T8kDUw","total_videos":41,"total_views":38849},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@arialuvu2?_r=1&_t=ZG-93HYvXSlpaq","total_videos":25,"total_views":7000},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@arialuvu?si=YnPZAhlv2mvKwxxi","total_videos":27,"total_views":1493},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@krisxluvu?si=h2WC5kYtl40vMXdK","total_videos":69,"total_views":10664},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/alicecreateee?igsh=MWJrYTJ0bnNzenUzMg==","total_videos":5,"total_views":88523},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@alice.makeup96?_r=1&_t=ZN-943XaC8wRWc","total_videos":3,"total_views":81},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@alice.makeup.create?si=6fmOStuXcJyEE9pS","total_videos":4,"total_views":4711},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautyviksi?igsh=NXFmc2l2MWx5cG45&utm_source=qr","total_videos":89,"total_views":1394},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaloveyou01?_r=1&_t=ZP-93rfYaBCqIZ","total_videos":83,"total_views":29614},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikabeautycontent?si=vrkNmVmaXWXjlS9e","total_videos":82,"total_views":60724},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaaa_beauty?igsh=MWExMWhlbXBkbjdvcw==","total_videos":55,"total_views":16331},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vika.luvu?_r=1&_t=ZS-93o0eUHNsdl","total_videos":51,"total_views":24158},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaluvu?si=Iucsq_1x_iTzOHU3","total_videos":54,"total_views":58198},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/viictoria_luvu?igsh=MXNodXRsNmRuMmlzeA==","total_videos":52,"total_views":906},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@viictorialuvu?si=9vA0HdoNMp6JD4Id","total_videos":50,"total_views":16577},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvbeautyy?igsh=MWtic3BuYWhweTN3cg==","total_videos":12,"total_views":7020},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautyli_luvu?igsh=MTZucmRjcTR1eTBhaA%3D%3D&utm_source=qr","total_videos":30,"total_views":7889},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/liana_beauty45?igsh=bzdzeHdueWtrN2Fl&utm_source=qr","total_videos":30,"total_views":12273},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ale.aly_luvu?igsh=Y3prNGNnNHg1aWZt&utm_source=qr","total_videos":75,"total_views":9686},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@ale.alya_luvu?_r=1&_t=ZG-93ixigxJbPc","total_videos":36,"total_views":13203},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@ale.alya_luvu","total_videos":19,"total_views":57},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ale.alya_ugc.luvu?igsh=MW9leDd4MDMwdnFt&utm_source=qr","total_videos":75,"total_views":25155},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@ale.alya_ugc.luvu?_r=1&_t=ZG-93ixkSIaqBc","total_videos":36,"total_views":13759},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@ale.alya_ugc","total_videos":32,"total_views":9509},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/viktorilove22?igsh=ZjFjMmt4bTR1cDZn&utm_source=qr","total_videos":96,"total_views":4130},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@lovelovevika","total_videos":46,"total_views":36297},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@Vikaloveyou2213","total_videos":11,"total_views":19}],"daily_data":[{"date":"2025-11-29","total_views":31902,"by_platform":{"INSTAGRAM":3804,"TIKTOK":10367,"YOUTUBE":17731},"channels":10,"delta":31902,"delta_by_platform":{"INSTAGRAM":3804,"TIKTOK":10367,"YOUTUBE":17731}},{"date":"2025-11-30","total_views":26817,"by_platform":{"INSTAGRAM":3608,"TIKTOK":5478,"YOUTUBE":17731},"channels":8,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-01","total_views":32328,"by_platform":{"INSTAGRAM":3627,"TIKTOK":10970,"YOUTUBE":17731},"channels":9,"delta":5511,"delta_by_platform":{"INSTAGRAM":19,"TIKTOK":5492,"YOUTUBE":0}},{"date":"2025-12-02","total_views":32339,"by_platform":{"INSTAGRAM":3628,"TIKTOK":10979,"YOUTUBE":17732},"channels":9,"delta":11,"delta_by_platform":{"INSTAGRAM":1,"TIKTOK":9,"YOUTUBE":1}},{"date":"2025-12-03","total_views":34350,"by_platform":{"INSTAGRAM":4064,"TIKTOK":11389,"YOUTUBE":18897},"channels":10,"delta":2011,"delta_by_platform":{"INSTAGRAM":436,"TIKTOK":410,"YOUTUBE":1165}},{"date":"2025-12-04","total_views":41464,"by_platform":{"INSTAGRAM":4846,"TIKTOK":15608,"YOUTUBE":21010},"channels":16,"delta":7114,"delta_by_platform":{"INSTAGRAM":782,"TIKTOK":4219,"YOUTUBE":2113}},{"date":"2025-12-05","total_views":44946,"by_platform":{"INSTAGRAM":6559,"TIKTOK":20703,"YOUTUBE":17684},"channels":16,"delta":3482,"delta_by_platform":{"INSTAGRAM":1713,"TIKTOK":5095,"YOUTUBE":0}},{"date":"2025-12-06","total_views":71313,"by_platform":{"INSTAGRAM":14367,"TIKTOK":22487,"YOUTUBE":34459},"channels":19,"delta":26367,"delta_by_platform":{"INSTAGRAM":7808,"TIKTOK":1784,"YOUTUBE":16775}},{"date":"2025-12-07","total_views":68879,"by_platform":{"INSTAGRAM":8649,"TIKTOK":24229,"YOUTUBE":36001},"channels":20,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":1742,"YOUTUBE":1542}},{"date":"2025-12-08","total_views":77974,"by_platform":{"INSTAGRAM":11243,"TIKTOK":29345,"YOUTUBE":37386},"channels":22,"delta":9095,"delta_by_platform":{"INSTAGRAM":2594,"TIKTOK":5116,"YOUTUBE":1385}},{"date":"2025-12-09","total_views":92670,"by_platform":{"INSTAGRAM":10691,"TIKTOK":36729,"YOUTUBE":45250},"channels":22,"delta":14696,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":7384,"YOUTUBE":7864}},{"date":"2025-12-10","total_views":119294,"by_platform":{"INSTAGRAM":16205,"TIKTOK":45277,"YOUTUBE":57812},"channels":23,"delta":26624,"delta_by_platform":{"INSTAGRAM":5514,"TIKTOK":8548,"YOUTUBE":12562}},{"date":"2025-12-11","total_views":136561,"by_platform":{"INSTAGRAM":18338,"TIKTOK":51587,"YOUTUBE":66636},"channels":23,"delta":17267,"delta_by_platform":{"INSTAGRAM":2133,"TIKTOK":6310,"YOUTUBE":8824}},{"date":"2025-12-12","total_views":232240,"by_platform":{"INSTAGRAM":19912,"TIKTOK":56726,"YOUTUBE":155602},"channels":23,"delta":95679,"delta_by_platform":{"INSTAGRAM":1574,"TIKTOK":5139,"YOUTUBE":88966}},{"date":"2025-12-13","total_views":237232,"by_platform":{"INSTAGRAM":21090,"TIKTOK":29112,"YOUTUBE":187030},"channels":19,"delta":4992,"delta_by_platform":{"INSTAGRAM":1178,"TIKTOK":0,"YOUTUBE":31428}},{"date":"2025-12-14","total_views":247059,"by_platform":{"INSTAGRAM":21357,"TIKTOK":28889,"YOUTUBE":196813},"channels":19,"delta":9827,"delta_by_platform":{"INSTAGRAM":267,"TIKTOK":0,"YOUTUBE":9783}},{"date":"2025-12-15","total_views":273607,"by_platform":{"INSTAGRAM":28343,"TIKTOK":34626,"YOUTUBE":210638},"channels":23,"delta":26548,"delta_by_platform":{"INSTAGRAM":6986,"TIKTOK":5737,"YOUTUBE":13825}},{"date":"2025-12-16","total_views":290655,"by_platform":{"INSTAGRAM":30152,"TIKTOK":38126,"YOUTUBE":222377},"channels":23,"delta":17048,"delta_by_platform":{"INSTAGRAM":1809,"TIKTOK":3500,"YOUTUBE":11739}},{"date":"2025-12-18","total_views":326086,"by_platform":{"INSTAGRAM":36375,"TIKTOK":45709,"YOUTUBE":244002},"channels":23,"delta":35431,"delta_by_platform":{"INSTAGRAM":6223,"TIKTOK":7583,"YOUTUBE":21625}},{"date":"2025-12-19","total_views":374904,"by_platform":{"INSTAGRAM":38301,"TIKTOK":55762,"YOUTUBE":280841},"channels":31,"delta":48818,"delta_by_platform":{"INSTAGRAM":1926,"TIKTOK":10053,"YOUTUBE":36839}},{"date":"2025-12-20","total_views":404701,"by_platform":{"INSTAGRAM":46476,"TIKTOK":59034,"YOUTUBE":299191},"channels":31,"delta":29797,"delta_by_platform":{"INSTAGRAM":8175,"TIKTOK":3272,"YOUTUBE":18350}},{"date":"2025-12-21","total_views":321529,"by_platform":{"INSTAGRAM":66739,"TIKTOK":63006,"YOUTUBE":191784},"channels":30,"delta":0,"delta_by_platform":{"INSTAGRAM":20263,"TIKTOK":3972,"YOUTUBE":0}},{"date":"2025-12-22","total_views":532133,"by_platform":{"INSTAGRAM":89146,"TIKTOK":71575,"YOUTUBE":371412},"channels":31,"delta":210604,"delta_by_platform":{"INSTAGRAM":22407,"TIKTOK":8569,"YOUTUBE":179628}},{"date":"2025-12-23","total_views":1226534,"by_platform":{"INSTAGRAM":723595,"TIKTOK":82640,"YOUTUBE":420299},"channels":32,"delta":694401,"delta_by_platform":{"INSTAGRAM":634449,"TIKTOK":11065,"YOUTUBE":48887}},{"date":"2025-12-24","total_views":1914805,"by_platform":{"INSTAGRAM":1382113,"TIKTOK":57418,"YOUTUBE":475274},"channels":29,"delta":688271,"delta_by_platform":{"INSTAGRAM":658518,"TIKTOK":0,"YOUTUBE":54975}},{"date":"2025-12-25","total_views":2171966,"by_platform":{"INSTAGRAM":1531899,"TIKTOK":89210,"YOUTUBE":550857},"channels":33,"delta":257161,"delta_by_platform":{"INSTAGRAM":149786,"TIKTOK":31792,"YOUTUBE":75583}},{"date":"2025-12-26","total_views":2292780,"by_platform":{"INSTAGRAM":1613043,"TIKTOK":108524,"YOUTUBE":571213},"channels":34,"delta":120814,"delta_by_platform":{"INSTAGRAM":81144,"TIKTOK":19314,"YOUTUBE":20356}},{"date":"2025-12-27","total_views":2400592,"by_platform":{"INSTAGRAM":1707510,"TIKTOK":110325,"YOUTUBE":582757},"channels":34,"delta":107812,"delta_by_platform":{"INSTAGRAM":94467,"TIKTOK":1801,"YOUTUBE":11544}},{"date":"2025-12-28","total_views":2489070,"by_platform":{"INSTAGRAM":1802032,"TIKTOK":98300,"YOUTUBE":588738},"channels":33,"delta":88478,"delta_by_platform":{"INSTAGRAM":94522,"TIKTOK":0,"YOUTUBE":5981}},{"date":"2025-12-29","total_views":2589879,"by_platform":{"INSTAGRAM":1881468,"TIKTOK":114834,"YOUTUBE":593577},"channels":34,"delta":100809,"delta_by_platform":{"INSTAGRAM":79436,"TIKTOK":16534,"YOUTUBE":4839}},{"date":"2025-12-30","total_views":2668652,"by_platform":{"INSTAGRAM":1955084,"TIKTOK":117942,"YOUTUBE":595626},"channels":34,"delta":78773,"delta_by_platform":{"INSTAGRAM":73616,"TIKTOK":3108,"YOUTUBE":2049}},{"date":"2025-12-31","total_views":2750843,"by_platform":{"INSTAGRAM":2028419,"TIKTOK":122183,"YOUTUBE":600241},"channels":34,"delta":82191,"delta_by_platform":{"INSTAGRAM":73335,"TIKTOK":4241,"YOUTUBE":4615}},{"date":"2026-01-01","total_views":2798242,"by_platform":{"INSTAGRAM":2197118,"TIKTOK":0,"YOUTUBE":601124},"channels":23,"delta":47399,"delta_by_platform":{"INSTAGRAM":168699,"TIKTOK":0,"YOUTUBE":883}},{"date":"2026-01-02","total_views":2961343,"by_platform":{"INSTAGRAM":2317688,"TIKTOK":40053,"YOUTUBE":603602},"channels":34,"delta":163101,"delta_by_platform":{"INSTAGRAM":120570,"TIKTOK":40053,"YOUTUBE":2478}},{"date":"2026-01-03","total_views":3092708,"by_platform":{"INSTAGRAM":2389139,"TIKTOK":95740,"YOUTUBE":607829},"channels":34,"delta":131365,"delta_by_platform":{"INSTAGRAM":71451,"TIKTOK":55687,"YOUTUBE":4227}},{"date":"2026-01-04","total_views":3153496,"by_platform":{"INSTAGRAM":2445059,"TIKTOK":99097,"YOUTUBE":609340},"channels":34,"delta":60788,"delta_by_platform":{"INSTAGRAM":55920,"TIKTOK":3357,"YOUTUBE":1511}},{"date":"2026-01-05","total_views":3264765,"by_platform":{"INSTAGRAM":2508438,"TIKTOK":137917,"YOUTUBE":618410},"channels":34,"delta":111269,"delta_by_platform":{"INSTAGRAM":63379,"TIKTOK":38820,"YOUTUBE":9070}},{"date":"2026-01-06","total_views":3344418,"by_platform":{"INSTAGRAM":2565092,"TIKTOK":149705,"YOUTUBE":629621},"channels":34,"delta":79653,"delta_by_platform":{"INSTAGRAM":56654,"TIKTOK":11788,"YOUTUBE":11211}},{"date":"2026-01-07","total_views":3464124,"by_platform":{"INSTAGRAM":2634323,"TIKTOK":177779,"YOUTUBE":652022},"channels":34,"delta":119706,"delta_by_platform":{"INSTAGRAM":69231,"TIKTOK":28074,"YOUTUBE":22401}},{"date":"2026-01-08","total_views":3532204,"by_platform":{"INSTAGRAM":2689680,"TIKTOK":178112,"YOUTUBE":664412},"channels":34,"delta":68080,"delta_by_platform":{"INSTAGRAM":55357,"TIKTOK":333,"YOUTUBE":12390}},{"date":"2026-01-09","total_views":3628548,"by_platform":{"INSTAGRAM":2735807,"TIKTOK":206436,"YOUTUBE":686305},"channels":34,"delta":96344,"delta_by_platform":{"INSTAGRAM":46127,"TIKTOK":28324,"YOUTUBE":21893}},{"date":"2026-01-10","total_views":3682607,"by_platform":{"INSTAGRAM":2781136,"TIKTOK":212169,"YOUTUBE":689302},"channels":34,"delta":54059,"delta_by_platform":{"INSTAGRAM":45329,"TIKTOK":5733,"YOUTUBE":2997}},{"date":"2026-01-11","total_views":3738991,"by_platform":{"INSTAGRAM":2830716,"TIKTOK":217025,"YOUTUBE":691250},"channels":33,"delta":56384,"delta_by_platform":{"INSTAGRAM":49580,"TIKTOK":4856,"YOUTUBE":1948}},{"date":"2026-01-12","total_views":3795985,"by_platform":{"INSTAGRAM":2882919,"TIKTOK":218696,"YOUTUBE":694370},"channels":33,"delta":56994,"delta_by_platform":{"INSTAGRAM":52203,"TIKTOK":1671,"YOUTUBE":3120}},{"date":"2026-01-13","total_views":3869152,"by_platform":{"INSTAGRAM":2949543,"TIKTOK":221106,"YOUTUBE":698503},"channels":33,"delta":73167,"delta_by_platform":{"INSTAGRAM":66624,"TIKTOK":2410,"YOUTUBE":4133}},{"date":"2026-01-14","total_views":3978848,"by_platform":{"INSTAGRAM":3018776,"TIKTOK":242866,"YOUTUBE":717206},"channels":43,"delta":109696,"delta_by_platform":{"INSTAGRAM":69233,"TIKTOK":21760,"YOUTUBE":18703}},{"date":"2026-01-15","total_views":4115060,"by_platform":{"INSTAGRAM":3071576,"TIKTOK":301375,"YOUTUBE":742109},"channels":50,"delta":136212,"delta_by_platform":{"INSTAGRAM":52800,"TIKTOK":58509,"YOUTUBE":24903}},{"date":"2026-01-16","total_views":3476982,"by_platform":{"INSTAGRAM":3151089,"TIKTOK":325887,"YOUTUBE":6},"channels":33,"delta":0,"delta_by_platform":{"INSTAGRAM":79513,"TIKTOK":24512,"YOUTUBE":0}},{"date":"2026-01-17","total_views":4279323,"by_platform":{"INSTAGRAM":3175807,"TIKTOK":332966,"YOUTUBE":770550},"channels":52,"delta":802341,"delta_by_platform":{"INSTAGRAM":24718,"TIKTOK":7079,"YOUTUBE":770544}},{"date":"2026-01-18","total_views":4353140,"by_platform":{"INSTAGRAM":3240091,"TIKTOK":337468,"YOUTUBE":775581},"channels":53,"delta":73817,"delta_by_platform":{"INSTAGRAM":64284,"TIKTOK":4502,"YOUTUBE":5031}},{"date":"2026-01-19","total_views":4434720,"by_platform":{"INSTAGRAM":3305697,"TIKTOK":346514,"YOUTUBE":782509},"channels":55,"delta":81580,"delta_by_platform":{"INSTAGRAM":65606,"TIKTOK":9046,"YOUTUBE":6928}},{"date":"2026-01-20","total_views":4554149,"by_platform":{"INSTAGRAM":3382222,"TIKTOK":368677,"YOUTUBE":803250},"channels":55,"delta":119429,"delta_by_platform":{"INSTAGRAM":76525,"TIKTOK":22163,"YOUTUBE":20741}},{"date":"2026-01-21","total_views":4637643,"by_platform":{"INSTAGRAM":3420699,"TIKTOK":391417,"YOUTUBE":825527},"channels":55,"delta":83494,"delta_by_platform":{"INSTAGRAM":38477,"TIKTOK":22740,"YOUTUBE":22277}},{"date":"2026-01-22","total_views":4724279,"by_platform":{"INSTAGRAM":3471871,"TIKTOK":409049,"YOUTUBE":843359},"channels":55,"delta":86636,"delta_by_platform":{"INSTAGRAM":51172,"TIKTOK":17632,"YOUTUBE":17832}},{"date":"2026-01-23","total_views":4832864,"by_platform":{"INSTAGRAM":3533756,"TIKTOK":435248,"YOUTUBE":863860},"channels":55,"delta":108585,"delta_by_platform":{"INSTAGRAM":61885,"TIKTOK":26199,"YOUTUBE":20501}},{"date":"2026-01-24","total_views":4956121,"by_platform":{"INSTAGRAM":3621430,"TIKTOK":447589,"YOUTUBE":887102},"channels":55,"delta":123257,"delta_by_platform":{"INSTAGRAM":87674,"TIKTOK":12341,"YOUTUBE":23242}},{"date":"2026-01-25","total_views":5047577,"by_platform":{"INSTAGRAM":3699700,"TIKTOK":450203,"YOUTUBE":897674},"channels":55,"delta":91456,"delta_by_platform":{"INSTAGRAM":78270,"TIKTOK":2614,"YOUTUBE":10572}},{"date":"2026-01-26","total_views":5137254,"by_platform":{"INSTAGRAM":3750927,"TIKTOK":455794,"YOUTUBE":930533},"channels":61,"delta":89677,"delta_by_platform":{"INSTAGRAM":51227,"TIKTOK":5591,"YOUTUBE":32859}},{"date":"2026-01-27","total_views":5247160,"by_platform":{"INSTAGRAM":3815497,"TIKTOK":484672,"YOUTUBE":946991},"channels":61,"delta":109906,"delta_by_platform":{"INSTAGRAM":64570,"TIKTOK":28878,"YOUTUBE":16458}},{"date":"2026-01-28","total_views":5354940,"by_platform":{"INSTAGRAM":3862376,"TIKTOK":507822,"YOUTUBE":984742},"channels":61,"delta":107780,"delta_by_platform":{"INSTAGRAM":46879,"TIKTOK":23150,"YOUTUBE":37751}},{"date":"2026-01-29","total_views":5452474,"by_platform":{"INSTAGRAM":3918321,"TIKTOK":530684,"YOUTUBE":1003469},"channels":61,"delta":97534,"delta_by_platform":{"INSTAGRAM":55945,"TIKTOK":22862,"YOUTUBE":18727}},{"date":"2026-01-30","total_views":5562090,"by_platform":{"INSTAGRAM":3974979,"TIKTOK":556414,"YOUTUBE":1030697},"channels":61,"delta":109616,"delta_by_platform":{"INSTAGRAM":56658,"TIKTOK":25730,"YOUTUBE":27228}},{"date":"2026-01-31","total_views":5707582,"by_platform":{"INSTAGRAM":4037843,"TIKTOK":593727,"YOUTUBE":1076012},"channels":61,"delta":145492,"delta_by_platform":{"INSTAGRAM":62864,"TIKTOK":37313,"YOUTUBE":45315}},{"date":"2026-02-01","total_views":5802952,"by_platform":{"INSTAGRAM":4098049,"TIKTOK":604154,"YOUTUBE":1100749},"channels":61,"delta":95370,"delta_by_platform":{"INSTAGRAM":60206,"TIKTOK":10427,"YOUTUBE":24737}},{"date":"2026-02-02","total_views":5860769,"by_platform":{"INSTAGRAM":4139462,"TIKTOK":609858,"YOUTUBE":1111449},"channels":62,"delta":57817,"delta_by_platform":{"INSTAGRAM":41413,"TIKTOK":5704,"YOUTUBE":10700}},{"date":"2026-02-03","total_views":5912737,"by_platform":{"INSTAGRAM":4173434,"TIKTOK":617836,"YOUTUBE":1121467},"channels":62,"delta":51968,"delta_by_platform":{"INSTAGRAM":33972,"TIKTOK":7978,"YOUTUBE":10018}},{"date":"2026-02-04","total_views":5949069,"by_platform":{"INSTAGRAM":4191922,"TIKTOK":622840,"YOUTUBE":1134307},"channels":59,"delta":36332,"delta_by_platform":{"INSTAGRAM":18488,"TIKTOK":5004,"YOUTUBE":12840}},{"date":"2026-02-05","total_views":6072264,"by_platform":{"INSTAGRAM":4211675,"TIKTOK":713921,"YOUTUBE":1146668},"channels":58,"delta":123195,"delta_by_platform":{"INSTAGRAM":19753,"TIKTOK":91081,"YOUTUBE":12361}},{"date":"2026-02-06","total_views":6315137,"by_platform":{"INSTAGRAM":4323949,"TIKTOK":831771,"YOUTUBE":1159417},"channels":59,"delta":242873,"delta_by_platform":{"INSTAGRAM":112274,"TIKTOK":117850,"YOUTUBE":12749}},{"date":"2026-02-07","total_views":6485104,"by_platform":{"INSTAGRAM":4354750,"TIKTOK":961620,"YOUTUBE":1168734},"channels":58,"delta":169967,"delta_by_platform":{"INSTAGRAM":30801,"TIKTOK":129849,"YOUTUBE":9317}},{"date":"2026-02-08","total_views":6632149,"by_platform":{"INSTAGRAM":4420588,"TIKTOK":1023871,"YOUTUBE":1187690},"channels":58,"delta":147045,"delta_by_platform":{"INSTAGRAM":65838,"TIKTOK":62251,"YOUTUBE":18956}},{"date":"2026-02-09","total_views":6726765,"by_platform":{"INSTAGRAM":4456574,"TIKTOK":1064109,"YOUTUBE":1206082},"channels":58,"delta":94616,"delta_by_platform":{"INSTAGRAM":35986,"TIKTOK":40238,"YOUTUBE":18392}},{"date":"2026-02-10","total_views":6794253,"by_platform":{"INSTAGRAM":4470312,"TIKTOK":1101096,"YOUTUBE":1222845},"channels":55,"delta":67488,"delta_by_platform":{"INSTAGRAM":13738,"TIKTOK":36987,"YOUTUBE":16763}},{"date":"2026-02-11","total_views":6985589,"by_platform":{"INSTAGRAM":4507332,"TIKTOK":1173302,"YOUTUBE":1304955},"channels":55,"delta":191336,"delta_by_platform":{"INSTAGRAM":37020,"TIKTOK":72206,"YOUTUBE":82110}},{"date":"2026-02-12","total_views":7347460,"by_platform":{"INSTAGRAM":4594371,"TIKTOK":1277662,"YOUTUBE":1475427},"channels":74,"delta":361871,"delta_by_platform":{"INSTAGRAM":87039,"TIKTOK":104360,"YOUTUBE":170472}},{"date":"2026-02-13","total_views":7412400,"by_platform":{"INSTAGRAM":4629098,"TIKTOK":1269581,"YOUTUBE":1513721},"channels":74,"delta":64940,"delta_by_platform":{"INSTAGRAM":34727,"TIKTOK":0,"YOUTUBE":38294}},{"date":"2026-02-14","total_views":7582015,"by_platform":{"INSTAGRAM":4681704,"TIKTOK":1302296,"YOUTUBE":1598015},"channels":74,"delta":169615,"delta_by_platform":{"INSTAGRAM":52606,"TIKTOK":32715,"YOUTUBE":84294}},{"date":"2026-02-16","total_views":7747668,"by_platform":{"INSTAGRAM":4757341,"TIKTOK":1345513,"YOUTUBE":1644814},"channels":74,"delta":165653,"delta_by_platform":{"INSTAGRAM":75637,"TIKTOK":43217,"YOUTUBE":46799}},{"date":"2026-02-17","total_views":7815333,"by_platform":{"INSTAGRAM":4785620,"TIKTOK":1372062,"YOUTUBE":1657651},"channels":74,"delta":67665,"delta_by_platform":{"INSTAGRAM":28279,"TIKTOK":26549,"YOUTUBE":12837}},{"date":"2026-02-18","total_views":7874039,"by_platform":{"INSTAGRAM":4809739,"TIKTOK":1396380,"YOUTUBE":1667920},"channels":74,"delta":58706,"delta_by_platform":{"INSTAGRAM":24119,"TIKTOK":24318,"YOUTUBE":10269}},{"date":"2026-02-19","total_views":7821333,"by_platform":{"INSTAGRAM":4830939,"TIKTOK":1411684,"YOUTUBE":1578710},"channels":73,"delta":0,"delta_by_platform":{"INSTAGRAM":21200,"TIKTOK":15304,"YOUTUBE":0}},{"date":"2026-02-20","total_views":7876750,"by_platform":{"INSTAGRAM":4858204,"TIKTOK":1443735,"YOUTUBE":1574811},"channels":72,"delta":55417,"delta_by_platform":{"INSTAGRAM":27265,"TIKTOK":32051,"YOUTUBE":0}},{"date":"2026-02-21","total_views":7980065,"by_platform":{"INSTAGRAM":4893535,"TIKTOK":1472788,"YOUTUBE":1613742},"channels":72,"delta":103315,"delta_by_platform":{"INSTAGRAM":35331,"TIKTOK":29053,"YOUTUBE":38931}}],"updated_at":"2026-02-23T09:46:59.801135"},"Ocomplex":{"name":"Ocomplex","spreadsheet_id":"1YNe0e2EI_IzAjLDALptEa9ok3eAPb24cgnhTTwy1ikU","color":"#f59e0b","budget":500000,"channels_data":[{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/rezultat.na.lizo_?igsh=bGpyY3R0cnhsYjI2&utm_source=qr","total_videos":10,"total_views":1330},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastia_pro_zozh?igsh=ZmU4OWdibDR2NW1z&utm_source=qr","total_videos":64,"total_views":7639},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@timkuffuzph?_r=1&_t=ZS-93GaGLacjWk","total_videos":62,"total_views":36870},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastyazdorov_e?igsh=MTB1ajlrN2pyMWZ1eQ%3D%3D&utm_source=qr","total_videos":63,"total_views":2343},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nastyzncogs?_r=1&_t=ZS-93GXBDqfCok","total_videos":63,"total_views":24797},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaprooteki","total_videos":57,"total_views":9196},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaxydeyu","total_videos":54,"total_views":33893},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaprooteki","total_videos":37,"total_views":17838},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaxydeyu","total_videos":57,"total_views":8073},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaprooteki","total_videos":55,"total_views":22478},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaxydeyu","total_videos":54,"total_views":21279},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/o.zdorov.di?igsh=MTBsN3Zqa2RkMnZraQ==","total_videos":9,"total_views":1073},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.zdorov?_r=1&_t=ZG-93rLXVbRTcX","total_videos":9,"total_views":2637},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.zdorov?si=oPudC9WSJkGXeYvM","total_videos":3,"total_views":3},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/mari_zdorovie?igsh=cWMyZmw0emQ2ejNy&utm_source=qr","total_videos":42,"total_views":6362},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@mari_zdorovie?si=CnEXhS3-L8WamrYY","total_videos":41,"total_views":26229},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@dasha_zdorovie?_r=1&_t=ZG-93S9QLVaAW9","total_videos":11,"total_views":112},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@dasha_zdorovie?si=CsW5xFxPvdpVh65f","total_videos":47,"total_views":12574},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@daria_zdorovie?_r=1&_t=ZG-93S9SKNchPc","total_videos":11,"total_views":0},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@daria_zdorovie?si=KF1ukeidrpOFoODC","total_videos":35,"total_views":5280},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/megankzgr?igsh=cHdzdHBpMXpxOGI4&utm_source=qr","total_videos":44,"total_views":10292},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@annfran826?_r=1&_t=ZT-93TEYGvwNJ1","total_videos":45,"total_views":13395},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@brucecosta-u7h?si=hMoLB-CxoVI3UC5O","total_videos":7,"total_views":11},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@jon-d3j4r?si=QopZxeWgcZ0tYtx8","total_videos":12,"total_views":1217},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/eva__wellness1?igsh=MXMweWIxN2hsNW90dg%3D%3D&utm_source=qr","total_videos":29,"total_views":3085},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@eva_wellness15?_r=1&_t=ZN-93U4qmN15VO","total_videos":29,"total_views":13771},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evawellness15?si=1e-Ctj6-mwu305Hr","total_videos":20,"total_views":14843},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ohhh.juli?igsh=NXBmZmdvOG41b3I4&utm_source=qr","total_videos":13,"total_views":37},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.poleznom6?_r=1&_t=ZN-93UyJGd4ES6","total_videos":13,"total_views":5420},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.poleznom4?si=Jzp06WQznmayXSsA","total_videos":12,"total_views":5755},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/o.polze13?igsh=MXMwZXc2ZTFjaWs3aA%3D%3D&utm_source=qr","total_videos":13,"total_views":2030},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.poleznom4?_r=1&_t=ZN-93UyLPEarI6","total_videos":13,"total_views":3882},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.poleznom6?si=5ge-Ejcrz_JdF-0q","total_videos":11,"total_views":4048},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/_sspalagina_o?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr","total_videos":7,"total_views":476},{"social_network":"TIKTOK","channel_url":"www.tiktok.com/@sspalagina_o","total_videos":6,"total_views":0},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@is_a_zeolite?_r=1&_t=ZG-93dYie252bg","total_videos":1,"total_views":1},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@valensiya.zeolite?si=pIFKJPoTr30-pL7r","total_videos":5,"total_views":4771},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/zeolite_o_complex?igsh=MXNya2xkN2l0NDFzNw%3D%3D&utm_source=qr","total_videos":5,"total_views":1600},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@zeolite_o_complex?_r=1&_t=ZG-93dYmwu6Lyr","total_videos":1,"total_views":1}],"daily_data":[{"date":"2026-01-28","total_views":21052,"by_platform":{"INSTAGRAM":3027,"TIKTOK":15627,"YOUTUBE":2398},"channels":8,"delta":21052,"delta_by_platform":{"INSTAGRAM":3027,"TIKTOK":15627,"YOUTUBE":2398}},{"date":"2026-01-29","total_views":27593,"by_platform":{"INSTAGRAM":4349,"TIKTOK":19208,"YOUTUBE":4036},"channels":13,"delta":6541,"delta_by_platform":{"INSTAGRAM":1322,"TIKTOK":3581,"YOUTUBE":1638}},{"date":"2026-01-30","total_views":37310,"by_platform":{"INSTAGRAM":6093,"TIKTOK":26970,"YOUTUBE":4247},"channels":18,"delta":9717,"delta_by_platform":{"INSTAGRAM":1744,"TIKTOK":7762,"YOUTUBE":211}},{"date":"2026-01-31","total_views":54488,"by_platform":{"INSTAGRAM":8763,"TIKTOK":39364,"YOUTUBE":6361},"channels":22,"delta":17178,"delta_by_platform":{"INSTAGRAM":2670,"TIKTOK":12394,"YOUTUBE":2114}},{"date":"2026-02-01","total_views":62369,"by_platform":{"INSTAGRAM":10441,"TIKTOK":44404,"YOUTUBE":7524},"channels":23,"delta":7881,"delta_by_platform":{"INSTAGRAM":1678,"TIKTOK":5040,"YOUTUBE":1163}},{"date":"2026-02-02","total_views":67965,"by_platform":{"INSTAGRAM":11368,"TIKTOK":48612,"YOUTUBE":7985},"channels":24,"delta":5596,"delta_by_platform":{"INSTAGRAM":927,"TIKTOK":4208,"YOUTUBE":461}},{"date":"2026-02-03","total_views":74518,"by_platform":{"INSTAGRAM":12460,"TIKTOK":52502,"YOUTUBE":9556},"channels":26,"delta":6553,"delta_by_platform":{"INSTAGRAM":1092,"TIKTOK":3890,"YOUTUBE":1571}},{"date":"2026-02-04","total_views":81690,"by_platform":{"INSTAGRAM":14472,"TIKTOK":55769,"YOUTUBE":11449},"channels":28,"delta":7172,"delta_by_platform":{"INSTAGRAM":2012,"TIKTOK":3267,"YOUTUBE":1893}},{"date":"2026-02-05","total_views":94006,"by_platform":{"INSTAGRAM":16114,"TIKTOK":62518,"YOUTUBE":15374},"channels":28,"delta":12316,"delta_by_platform":{"INSTAGRAM":1642,"TIKTOK":6749,"YOUTUBE":3925}},{"date":"2026-02-06","total_views":109999,"by_platform":{"INSTAGRAM":17790,"TIKTOK":70596,"YOUTUBE":21613},"channels":28,"delta":15993,"delta_by_platform":{"INSTAGRAM":1676,"TIKTOK":8078,"YOUTUBE":6239}},{"date":"2026-02-07","total_views":115510,"by_platform":{"INSTAGRAM":18924,"TIKTOK":71358,"YOUTUBE":25228},"channels":28,"delta":5511,"delta_by_platform":{"INSTAGRAM":1134,"TIKTOK":762,"YOUTUBE":3615}},{"date":"2026-02-08","total_views":117918,"by_platform":{"INSTAGRAM":19053,"TIKTOK":73033,"YOUTUBE":25832},"channels":28,"delta":2408,"delta_by_platform":{"INSTAGRAM":129,"TIKTOK":1675,"YOUTUBE":604}},{"date":"2026-02-09","total_views":124312,"by_platform":{"INSTAGRAM":19704,"TIKTOK":77217,"YOUTUBE":27391},"channels":28,"delta":6394,"delta_by_platform":{"INSTAGRAM":651,"TIKTOK":4184,"YOUTUBE":1559}},{"date":"2026-02-10","total_views":137512,"by_platform":{"INSTAGRAM":22049,"TIKTOK":85178,"YOUTUBE":30285},"channels":28,"delta":13200,"delta_by_platform":{"INSTAGRAM":2345,"TIKTOK":7961,"YOUTUBE":2894}},{"date":"2026-02-11","total_views":186550,"by_platform":{"INSTAGRAM":30416,"TIKTOK":115324,"YOUTUBE":40810},"channels":31,"delta":49038,"delta_by_platform":{"INSTAGRAM":8367,"TIKTOK":30146,"YOUTUBE":10525}},{"date":"2026-02-12","total_views":211285,"by_platform":{"INSTAGRAM":34007,"TIKTOK":124715,"YOUTUBE":52563},"channels":38,"delta":24735,"delta_by_platform":{"INSTAGRAM":3591,"TIKTOK":9391,"YOUTUBE":11753}},{"date":"2026-02-13","total_views":225302,"by_platform":{"INSTAGRAM":35188,"TIKTOK":131763,"YOUTUBE":58351},"channels":38,"delta":14017,"delta_by_platform":{"INSTAGRAM":1181,"TIKTOK":7048,"YOUTUBE":5788}},{"date":"2026-02-14","total_views":236775,"by_platform":{"INSTAGRAM":39894,"TIKTOK":129971,"YOUTUBE":66910},"channels":37,"delta":11473,"delta_by_platform":{"INSTAGRAM":4706,"TIKTOK":0,"YOUTUBE":8559}},{"date":"2026-02-16","total_views":241892,"by_platform":{"INSTAGRAM":42556,"TIKTOK":121322,"YOUTUBE":78014},"channels":36,"delta":5117,"delta_by_platform":{"INSTAGRAM":2662,"TIKTOK":0,"YOUTUBE":11104}},{"date":"2026-02-17","total_views":259960,"by_platform":{"INSTAGRAM":44970,"TIKTOK":129794,"YOUTUBE":85196},"channels":40,"delta":18068,"delta_by_platform":{"INSTAGRAM":2414,"TIKTOK":8472,"YOUTUBE":7182}},{"date":"2026-02-18","total_views":276868,"by_platform":{"INSTAGRAM":51929,"TIKTOK":133564,"YOUTUBE":91375},"channels":40,"delta":16908,"delta_by_platform":{"INSTAGRAM":6959,"TIKTOK":3770,"YOUTUBE":6179}},{"date":"2026-02-19","total_views":304239,"by_platform":{"INSTAGRAM":59426,"TIKTOK":144186,"YOUTUBE":100627},"channels":40,"delta":27371,"delta_by_platform":{"INSTAGRAM":7497,"TIKTOK":10622,"YOUTUBE":9252}},{"date":"2026-02-20","total_views":317150,"by_platform":{"INSTAGRAM":63208,"TIKTOK":148809,"YOUTUBE":105133},"channels":40,"delta":12911,"delta_by_platform":{"INSTAGRAM":3782,"TIKTOK":4623,"YOUTUBE":4506}},{"date":"2026-02-21","total_views":324641,"by_platform":{"INSTAGRAM":53536,"TIKTOK":157257,"YOUTUBE":113848},"channels":39,"delta":7491,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":8448,"YOUTUBE":8715}}],"updated_at":"2026-02-23T09:47:32.657394"}};
@@ -158,6 +217,11 @@ function switchProject(name){
 function renderProject(name){
   const p = PROJECTS_DATA[name];
   const html = `
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+      <button class="pdf-btn" onclick="openPdfModal('${name}')">⬇ Скачать PDF</button>
+    </div>
+    <div class="print-header">Content Factory — ${name}</div>
+    <div class="print-sub" id="printSub-${name}"></div>
     <div class="cards" id="cards-${name}"></div>
     <div class="charts-grid" id="charts-${name}"></div>
     <div class="section-title">Динамика по дням</div>
@@ -175,6 +239,8 @@ function renderProject(name){
       </div>
     </div>
     <div class="timeline-box"><canvas id="chartTimeline"></canvas></div>
+    <div class="section-title">CPV в динамике</div>
+    <div id="cpvSection-${name}"></div>
     <div class="section-title">По месяцам</div>
     <div id="monthlySection-${name}"></div>
     <div class="section-title">Каналы</div>
@@ -198,6 +264,7 @@ function renderProject(name){
   buildMiniCharts(p);
   buildTLStats(p);
   buildTimeline(p);
+  buildCPVChart(p);
   buildMonthly(p);
   renderTable(p.channels_data);
 }
@@ -212,7 +279,7 @@ function buildCards(p){
   const tt = p.channels_data.filter(c=>c.social_network==='TIKTOK').length;
   const yt = p.channels_data.filter(c=>c.social_network==='YOUTUBE').length;
   const budget = p.budget || 0;
-  const cpvKop = (budget > 0 && total > 0) ? (budget / total * 100).toFixed(2) : '—';
+  const cpvRub = (budget > 0 && total > 0) ? (budget / total).toFixed(2) : '—';
   const budgetStr = budget > 0 ? budget.toLocaleString('ru') + ' ₽' : '—';
   const totalVideos = p.channels_data.reduce((s,c)=>s+c.total_videos,0);
   const igVid = p.channels_data.filter(c=>c.social_network==='INSTAGRAM').reduce((s,c)=>s+c.total_videos,0);
@@ -223,7 +290,7 @@ function buildCards(p){
     {label:'Всего просмотров', value:total.toLocaleString('ru'),         sub:`на ${last.date||'—'}`},
     {label:'Всего видео',      value:totalVideos.toLocaleString('ru'),   sub:`${igVid} ig · ${ttVid} tt · ${ytVid} yt`},
     {label:'Каналов',          value:channels,                           sub:`${ig} ig · ${tt} tt · ${yt} yt`},
-    {label:'Бюджет кампании',  value:budgetStr,                          sub:`CPV: ${cpvKop} коп. за просмотр`},
+    {label:'Бюджет кампании',  value:budgetStr,                          sub:`CPV: ${cpvRub} руб. за просмотр`},
     {label:'Дней данных',      value:dd.length,                          sub:`${dd[0]?.date||'—'} — ${last.date||'—'}`},
   ].map(c=>`<div class="card">
     <div class="label">${c.label}</div>
@@ -285,6 +352,13 @@ function buildTLStats(p){
   const sign   = diff>=0?'+':'';
   const cls    = diff>=0?'up':'down';
 
+  // Week-over-week growth
+  const thisWeek = dd.slice(-7).reduce((s,r)=>s+(r.delta||0),0);
+  const prevWeek = dd.slice(-14,-7).reduce((s,r)=>s+(r.delta||0),0);
+  const wowPct   = prevWeek ? Math.round((thisWeek-prevWeek)/prevWeek*100) : 0;
+  const wowSign  = wowPct>=0?'+':'';
+  const wowCls   = wowPct>=0?'up':'down';
+
   document.getElementById('tlStats-'+p.name).innerHTML = `
     <div class="stat-mini">
       <div class="label">Итого (нарастающим)</div>
@@ -300,6 +374,11 @@ function buildTLStats(p){
       <div class="label">Среднее за 7 дней</div>
       <div class="value">${fmt(Math.round(week7/7))}</div>
       <div class="trend">сумма за неделю: ${fmt(week7)}</div>
+    </div>
+    <div class="stat-mini">
+      <div class="label">Скорость роста (WoW)</div>
+      <div class="value ${wowCls}">${wowSign}${wowPct}%</div>
+      <div class="trend">эта неделя vs прошлая</div>
     </div>`;
 }
 
@@ -379,16 +458,18 @@ function buildMonthly(p){
     '09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'
   };
 
-  // Агрегируем дельты по месяцам
+  // Агрегируем дельты по месяцам + последний cumulative для CPV
   const byMonth = {};
   for (const row of p.daily_data) {
     const month = row.date.slice(0, 7); // YYYY-MM
-    if (!byMonth[month]) byMonth[month] = { total:0, INSTAGRAM:0, TIKTOK:0, YOUTUBE:0 };
+    if (!byMonth[month]) byMonth[month] = { total:0, INSTAGRAM:0, TIKTOK:0, YOUTUBE:0, cumulative:0 };
     byMonth[month].total      += row.delta || 0;
     byMonth[month].INSTAGRAM  += (row.delta_by_platform?.INSTAGRAM) || 0;
     byMonth[month].TIKTOK     += (row.delta_by_platform?.TIKTOK)    || 0;
     byMonth[month].YOUTUBE    += (row.delta_by_platform?.YOUTUBE)   || 0;
+    byMonth[month].cumulative  = row.total_views; // перезаписываем — остаётся последний день месяца
   }
+  const budget = p.budget || 0;
 
   const months = Object.keys(byMonth).sort();
   const labels = months.map(m => {
@@ -413,18 +494,21 @@ function buildMonthly(p){
             <th style="text-align:right;color:#e1306c">Instagram</th>
             <th style="text-align:right;color:#69c9d0">TikTok</th>
             <th style="text-align:right;color:#ff4e45">YouTube</th>
+            ${budget>0?'<th style="text-align:right;color:#aaa">CPV</th>':''}
           </tr>
         </thead>
         <tbody>
           ${months.map((m, i) => {
             const d = byMonth[m];
             const label = labels[i];
+            const cpv = (budget>0 && d.cumulative>0) ? (budget/d.cumulative).toFixed(2)+' руб.' : '—';
             return `<tr>
               <td style="font-weight:600">${label}</td>
               <td class="num" style="text-align:right;color:${p.color};font-weight:700">${d.total.toLocaleString('ru')}</td>
               <td class="num" style="text-align:right;color:#888">${d.INSTAGRAM.toLocaleString('ru')}</td>
               <td class="num" style="text-align:right;color:#888">${d.TIKTOK.toLocaleString('ru')}</td>
               <td class="num" style="text-align:right;color:#888">${d.YOUTUBE.toLocaleString('ru')}</td>
+              ${budget>0?`<td class="num" style="text-align:right;color:#666;font-size:12px">${cpv}</td>`:''}
             </tr>`;
           }).join('')}
         </tbody>
@@ -482,6 +566,181 @@ function renderTable(data){
       </div></td>
     </tr>`;
   }).join('');
+}
+
+// ─── CPV CHART ───
+function buildCPVChart(p){
+  const container = document.getElementById('cpvSection-'+p.name);
+  if(!container || !p.budget) return;
+  const budget = p.budget;
+
+  // CPV по неделям: группируем по 7 дней, берём последний total_views недели
+  const mn = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+  const weeks = [];
+  const dd = p.daily_data;
+  for(let i=0; i<dd.length; i+=7){
+    const chunk = dd.slice(i, i+7);
+    const last = chunk[chunk.length-1];
+    const d = new Date(chunk[0].date);
+    weeks.push({
+      label: `${d.getDate()} ${mn[d.getMonth()]}`,
+      total_views: last.total_views
+    });
+  }
+  const labels = weeks.map(w=>w.label);
+  const cpvData = weeks.map(w=>
+    w.total_views>0 ? +(budget/w.total_views).toFixed(2) : null
+  );
+
+  container.innerHTML = `<div class="timeline-box"><canvas id="chartCPV-${p.name}" style="max-height:220px"></canvas></div>`;
+  new Chart(document.getElementById('chartCPV-'+p.name),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'CPV',
+        data:cpvData,
+        borderColor:p.color,
+        backgroundColor:p.color+'22',
+        fill:true,
+        tension:0.4,
+        pointRadius:5,
+        pointBackgroundColor:p.color,
+        borderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>` CPV: ${ctx.parsed.y} руб.`}}
+      },
+      scales:{
+        x:{ticks:{color:'#555'},grid:{color:'#181820'}},
+        y:{
+          type:'logarithmic',
+          ticks:{color:'#555',callback:v=>v+' руб.'},
+          grid:{color:'#181820'}
+        }
+      }
+    }
+  });
+}
+
+// ─── PDF EXPORT ───
+let pdfProject = null;
+function openPdfModal(name){
+  pdfProject = name;
+  const p = PROJECTS_DATA[name];
+  document.body.style.setProperty('--proj-color', p.color);
+
+  // Собираем месяцы
+  const months = [...new Set(p.daily_data.map(r=>r.date.slice(0,7)))].sort();
+  const monthNames = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
+
+  let opts = `<div class="modal-opt full" onclick="exportPdf('all')">Вся кампания</div>`;
+  for(const m of months){
+    const [y,mo] = m.split('-');
+    opts += `<div class="modal-opt" onclick="exportPdf('${m}')">${monthNames[mo]} ${y}</div>`;
+  }
+  document.getElementById('pdfOptions').innerHTML = opts;
+  document.getElementById('pdfModal').classList.add('open');
+}
+function closePdfModal(){
+  document.getElementById('pdfModal').classList.remove('open');
+}
+function exportPdf(period){
+  closePdfModal();
+  const p = PROJECTS_DATA[pdfProject];
+  const monthNames = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
+
+  let subtitle = 'Вся кампания';
+  let filename = `${pdfProject}_вся_кампания.pdf`;
+  if(period !== 'all'){
+    const [y,mo] = period.split('-');
+    subtitle = `${monthNames[mo]} ${y}`;
+    filename = `${pdfProject}_${monthNames[mo]}_${y}.pdf`;
+  }
+
+  // Строим HTML для PDF
+  const dd = period === 'all' ? p.daily_data : p.daily_data.filter(r=>r.date.startsWith(period));
+  const last = dd[dd.length-1] || {};
+  const total = last.total_views || 0;
+  const budget = p.budget || 0;
+  const cpv = (budget>0 && total>0) ? (budget/total).toFixed(2)+' руб.' : '—';
+  const totalVideos = p.channels_data.reduce((s,c)=>s+c.total_videos,0);
+
+  // Месячная таблица
+  const byMonth = {};
+  for(const row of dd){
+    const m = row.date.slice(0,7);
+    if(!byMonth[m]) byMonth[m]={total:0,IG:0,TT:0,YT:0,cum:0};
+    byMonth[m].total += row.delta||0;
+    byMonth[m].IG    += row.delta_by_platform?.INSTAGRAM||0;
+    byMonth[m].TT    += row.delta_by_platform?.TIKTOK||0;
+    byMonth[m].YT    += row.delta_by_platform?.YOUTUBE||0;
+    byMonth[m].cum    = row.total_views;
+  }
+  const mRows = Object.keys(byMonth).sort().map(m=>{
+    const d=byMonth[m]; const[y,mo]=m.split('-');
+    const mcpv=(budget>0&&d.cum>0)?(budget/d.cum).toFixed(2)+' руб.':'—';
+    return `<tr>
+      <td><b>${monthNames[mo]} ${y}</b></td>
+      <td>${d.total.toLocaleString('ru')}</td>
+      <td>${d.IG.toLocaleString('ru')}</td>
+      <td>${d.TT.toLocaleString('ru')}</td>
+      <td>${d.YT.toLocaleString('ru')}</td>
+      <td>${mcpv}</td>
+    </tr>`;
+  }).join('');
+
+  const html = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:32px;color:#111">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:2px solid ${p.color};padding-bottom:16px">
+        <div>
+          <div style="font-size:22px;font-weight:800">Content Factory</div>
+          <div style="font-size:16px;font-weight:700;color:${p.color};margin-top:4px">${pdfProject}</div>
+          <div style="font-size:12px;color:#888;margin-top:2px">${subtitle}</div>
+        </div>
+        <div style="text-align:right;font-size:12px;color:#888">Данные на ${last.date||'—'}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px">
+        ${[
+          ['Всего просмотров', total.toLocaleString('ru')],
+          ['Всего видео', totalVideos.toLocaleString('ru')],
+          ['Бюджет', budget>0?budget.toLocaleString('ru')+' ₽':'—'],
+          ['CPV', cpv],
+        ].map(([l,v])=>`<div style="border:1px solid #ddd;border-radius:8px;padding:12px">
+          <div style="font-size:10px;color:#888;text-transform:uppercase;margin-bottom:4px">${l}</div>
+          <div style="font-size:18px;font-weight:700;color:${p.color}">${v}</div>
+        </div>`).join('')}
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:#f5f5f5">
+            <th style="padding:8px;text-align:left;border-bottom:1px solid #ddd">Месяц</th>
+            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd">Просмотров</th>
+            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#c0004e">Instagram</th>
+            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#007a80">TikTok</th>
+            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd;color:#c00000">YouTube</th>
+            <th style="padding:8px;text-align:right;border-bottom:1px solid #ddd">CPV</th>
+          </tr>
+        </thead>
+        <tbody style="font-size:12px">${mRows}</tbody>
+      </table>
+    </div>`;
+
+  const el = document.createElement('div');
+  el.innerHTML = html;
+  document.body.appendChild(el);
+
+  html2pdf().set({
+    margin: 0,
+    filename,
+    image: {type:'jpeg', quality:0.98},
+    html2canvas: {scale:2, useCORS:true},
+    jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
+  }).from(el).save().then(()=> document.body.removeChild(el));
 }
 
 // ─── INIT ───
