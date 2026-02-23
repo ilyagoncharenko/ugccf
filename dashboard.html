@@ -140,9 +140,34 @@
       .print-sub{display:block!important;font-size:12px;color:#666;margin-bottom:20px}
     }
     .print-header,.print-sub{display:none}
+
+    /* Password screen */
+    .pw-screen{position:fixed;inset:0;background:#0d0d11;z-index:99999;display:flex;align-items:center;justify-content:center}
+    .pw-box{background:#1a1a22;border:1px solid #2a2a38;border-radius:20px;padding:40px 36px;width:320px;text-align:center}
+    .pw-box .pw-logo{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+    .pw-box .pw-sub{font-size:12px;color:#444;margin-bottom:28px}
+    .pw-box input{width:100%;background:#12121a;border:1px solid #2a2a38;border-radius:10px;padding:12px 16px;font-size:16px;color:#e0e0e0;text-align:center;letter-spacing:4px;outline:none;transition:border-color .15s;box-sizing:border-box}
+    .pw-box input:focus{border-color:#a78bfa}
+    .pw-box input.error{border-color:#f87171;animation:shake .3s}
+    .pw-box button{width:100%;margin-top:12px;padding:12px;background:#a78bfa;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s}
+    .pw-box button:hover{opacity:.85}
+    .pw-box .pw-err{font-size:12px;color:#f87171;margin-top:10px;min-height:18px}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   </style>
 </head>
 <body>
+
+<!-- Password screen (скрыт если client mode или уже авторизован) -->
+<div class="pw-screen" id="pwScreen">
+  <div class="pw-box">
+    <div class="pw-logo">Content Factory</div>
+    <div class="pw-sub">Введите пароль для входа</div>
+    <input type="password" id="pwInput" placeholder="••••" maxlength="20"
+      onkeydown="if(event.key==='Enter') checkPassword()"/>
+    <button onclick="checkPassword()">Войти</button>
+    <div class="pw-err" id="pwErr"></div>
+  </div>
+</div>
 
 <div class="header">
   <div>
@@ -888,6 +913,23 @@ window.onload = function() {
   popup.document.close();
 }
 
+// ─── PASSWORD ───
+const _PW = atob('MjAyMw=='); // 2023
+function checkPassword(){
+  const val = document.getElementById('pwInput').value;
+  if(val === _PW){
+    sessionStorage.setItem('cf_auth','1');
+    document.getElementById('pwScreen').style.display = 'none';
+    document.getElementById('pwInput').classList.remove('error');
+  } else {
+    const inp = document.getElementById('pwInput');
+    inp.classList.add('error');
+    document.getElementById('pwErr').textContent = 'Неверный пароль';
+    inp.value = '';
+    setTimeout(()=> inp.classList.remove('error'), 400);
+  }
+}
+
 // ─── ТОКЕНЫ ДЛЯ КЛИЕНТСКИХ ССЫЛОК ───
 // Каждый токен привязан к проекту. Менять не нужно — они стабильны.
 const CLIENT_TOKENS = {
@@ -922,7 +964,10 @@ document.getElementById('updatedAt').textContent = 'Обновлено: ' + genA
 const _urlParams = new URLSearchParams(window.location.search);
 const _token = _urlParams.get('t');
 const _clientProject = _token ? CLIENT_TOKENS[_token] : null;
+
 if(_clientProject && PROJECTS_DATA[_clientProject]){
+  // Клиентский режим — пароль не нужен
+  document.getElementById('pwScreen').style.display = 'none';
   document.getElementById('projectTabs').style.display = 'none';
   switchProject(_clientProject);
   setTimeout(()=>{
@@ -930,6 +975,11 @@ if(_clientProject && PROJECTS_DATA[_clientProject]){
     if(btn) btn.style.display = 'none';
   }, 50);
 } else {
+  // Основной режим — проверяем пароль
+  if(sessionStorage.getItem('cf_auth') === '1'){
+    document.getElementById('pwScreen').style.display = 'none';
+  }
+  // Если пароль не введён — экран уже виден (показан по умолчанию)
   buildTabs();
 }
 </script>
