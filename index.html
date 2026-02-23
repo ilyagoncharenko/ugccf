@@ -852,20 +852,27 @@ function exportPdf(period){
   wrapper.style.cssText = 'width:700px;padding:24px;background:#fff;box-sizing:border-box;';
   wrapper.innerHTML = html;
 
-  const origOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
-  document.body.insertBefore(wrapper, document.body.firstChild);
+  // Сохраняем и временно убираем все стили body, которые мешают рендеру
+  const origBodyStyle = document.body.getAttribute('style') || '';
+  document.body.style.cssText = 'margin:0;padding:0;background:#fff;overflow:hidden;';
+
+  // Скрываем все остальные дочерние элементы body
+  const otherChildren = Array.from(document.body.children);
+  otherChildren.forEach(c => c.style.display = 'none');
+
+  document.body.appendChild(wrapper);
   window.scrollTo(0, 0);
 
   html2pdf().set({
     margin: 10,
     filename,
     image: {type:'jpeg', quality:0.98},
-    html2canvas: {scale:2, useCORS:true, windowWidth:700, scrollX:0, scrollY:0},
+    html2canvas: {scale:2, useCORS:true, windowWidth:700},
     jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
   }).from(wrapper).save().then(()=>{
     document.body.removeChild(wrapper);
-    document.body.style.overflow = origOverflow;
+    document.body.setAttribute('style', origBodyStyle);
+    otherChildren.forEach(c => c.style.display = '');
   });
 }
 
