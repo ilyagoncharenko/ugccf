@@ -33,6 +33,11 @@ jobs:
       - name: Fetch data from Google Sheets
         run: python fetch_sheets.py
 
+      - name: Fetch financial data from Adesk
+        env:
+          ADESK_TOKEN: ${{ secrets.ADESK_TOKEN }}
+        run: python fetch_adesk.py
+
       - name: Rebuild dashboard HTML
         run: python rebuild_html.py
 
@@ -40,6 +45,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add projects_data.json index.html dashboard.html
-          git diff --staged --quiet || git commit -m "Auto-update dashboard $(date +'%Y-%m-%d %H:%M MSK')"
+          git add projects_data.json adesk_data.json index.html dashboard.html
+          git diff --staged --quiet || git commit -m "Auto-update dashboard $(date +'%d.%m.%Y %H:%M MSK')"
           git push
