@@ -99,7 +99,7 @@ def parse_channels(rows):
             continue
         channels.append({
             'social_network': net,
-            'channel_url':    d.get('channel_url', '').strip(),
+            'channel_url':    d.get('channel_url', '').split('\n')[0].strip(),
             'total_videos':   parse_int(d.get('total_videos', 0)),
             'total_views':    parse_int(d.get('total_views', 0)),
         })
