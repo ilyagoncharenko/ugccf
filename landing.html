@@ -3,850 +3,430 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Names — Виральные UGC-охваты для брендов</title>
-  <link rel="icon" type="image/svg+xml" href="names_logo.svg"/>
+  <title>Names — UGC-контент в промышленных масштабах</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --accent:#a78bfa;--accent2:#7c3aed;
-      --green:#4ade80;--blue:#60a5fa;--yellow:#fbbf24;
-      --bg:#0a0a0f;--bg2:#111118;--bg3:#17171f;--bg4:#1e1e28;
-      --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
-      --text:#f0f0f8;--muted:#6b7280;--muted2:#9ca3af;
+      --red:#E8000A;--red2:#ff2020;--red-dim:rgba(232,0,10,.1);--red-border:rgba(232,0,10,.28);
+      --bg:#0A0A0A;--bg2:#111111;--bg3:#181818;
+      --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);
+      --text:#F0F0F0;--muted:#6B7280;--muted2:#9CA3AF;
     }
     html{scroll-behavior:smooth}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 
     /* NAV */
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:200;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 48px;height:68px;
-      background:rgba(10,10,15,.88);backdrop-filter:blur(24px);
-      border-bottom:1px solid var(--border);
-    }
-    .nav-left{display:flex;align-items:center;gap:16px}
-    .nav-logo-names svg path{fill:#fff}
-    .nav-sep{display:none}
-    .nav-cta{
-      padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;
-      background:var(--accent);color:#0a0a0f;text-decoration:none;
-      transition:all .15s;white-space:nowrap;
-    }
-    .nav-cta:hover{background:#c4b5fd;transform:translateY(-1px)}
-    @media(max-width:600px){nav{padding:0 20px}.nav-sep,.nav-brand{display:none}}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:60px;background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-size:20px;font-weight:900;letter-spacing:-1px;color:#fff;text-transform:uppercase}
+    .nav-logo span{color:var(--red)}
+    .nav-right{display:flex;align-items:center;gap:20px}
+    .nav-platforms{display:flex;gap:12px}
+    .nav-platform{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+    .nav-cta{padding:9px 22px;border-radius:5px;font-size:13px;font-weight:700;background:var(--red);color:#fff;text-decoration:none;transition:all .15s}
+    .nav-cta:hover{background:var(--red2)}
+    @media(max-width:768px){nav{padding:0 20px}.nav-platforms{display:none}}
+
+    /* SECTIONS */
+    section{width:100%;padding:80px 48px;max-width:1200px;margin:0 auto}
+    @media(max-width:768px){section{padding:60px 24px}}
 
     /* HERO */
-    .hero{
-      min-height:100vh;display:grid;
-      grid-template-columns:1fr 1fr;
-      align-items:center;
-      padding:100px 80px 60px;gap:60px;
-      position:relative;overflow:hidden;
-      max-width:1300px;margin:0 auto;
-    }
-    @media(max-width:960px){.hero{grid-template-columns:1fr;text-align:center;padding:100px 24px 60px}.hero-visual{display:none}}
-    .hero-bg-glow{
-      position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
-      background:radial-gradient(ellipse 60% 50% at 30% 30%,rgba(124,58,237,.12) 0%,transparent 60%),
-                 radial-gradient(ellipse 40% 40% at 70% 70%,rgba(52,211,153,.06) 0%,transparent 60%);
-    }
-    .hero-grid-bg{
-      position:absolute;inset:0;pointer-events:none;
-      background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
-      background-size:72px 72px;
-      mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 20%,transparent 100%);
-    }
-    .hero-text{position:relative;z-index:1}
-    .hero-badge{
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);
-      color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-      padding:7px 16px;border-radius:100px;margin-bottom:28px;
-    }
-    .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s infinite}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
-    h1{font-size:clamp(38px,5vw,66px);font-weight:900;line-height:1.02;letter-spacing:-2.5px;margin-bottom:24px}
-    .h1-grad{
-      background:linear-gradient(135deg,var(--accent) 0%,var(--blue) 60%,var(--green) 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      background-size:200%;animation:gradMove 5s ease infinite;
-    }
-    @keyframes gradMove{0%,100%{background-position:0%}50%{background-position:100%}}
-    .hero-sub{font-size:18px;color:var(--muted2);line-height:1.65;max-width:480px;margin-bottom:40px}
-    @media(max-width:960px){.hero-sub{margin:0 auto 40px}}
-    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
-    @media(max-width:960px){.hero-btns{justify-content:center}}
-    .btn-primary{
-      padding:15px 34px;border-radius:10px;font-size:15px;font-weight:800;
-      background:var(--accent);color:#0a0a0f;text-decoration:none;
-      box-shadow:0 0 32px rgba(167,139,250,.25);
-      transition:all .2s;display:inline-flex;align-items:center;gap:8px;
-    }
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 40px rgba(167,139,250,.4)}
-    .btn-secondary{
-      padding:15px 34px;border-radius:10px;font-size:15px;font-weight:700;
-      background:rgba(255,255,255,.04);border:1px solid var(--border2);
-      color:var(--text);text-decoration:none;
-      transition:all .2s;display:inline-flex;align-items:center;gap:8px;
-    }
-    .btn-secondary:hover{background:rgba(255,255,255,.08);transform:translateY(-1px)}
-    .hero-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-    .hs{background:var(--bg3);padding:20px 16px;text-align:center}
-    .hs-n{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px}
-    .hs-n sup{font-size:.55em;color:var(--accent)}
-    .hs-l{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px;line-height:1.3}
-    @media(max-width:600px){.hero-stats-row{grid-template-columns:repeat(2,1fr)}}
+    .hero{min-height:100vh;display:grid;grid-template-columns:56% 44%;align-items:center;padding-top:110px;padding-bottom:60px;gap:48px;position:relative}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:96px}}
+    .hero-glow{position:absolute;top:5%;left:-20%;width:700px;height:700px;background:radial-gradient(circle,rgba(232,0,10,.055),transparent 70%);pointer-events:none;z-index:0}
+    .hero-grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 40% 30%,black 0%,transparent 80%);opacity:.35}
+    .hero-left{position:relative;z-index:1}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red-dim);border:1px solid var(--red-border);color:var(--red);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:4px;margin-bottom:32px}
+    .live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:blink 2s infinite;flex-shrink:0}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+    .hero h1{font-size:clamp(40px,5.8vw,76px);font-weight:900;line-height:1.0;letter-spacing:-3px;text-transform:uppercase;margin-bottom:24px;color:#fff}
+    .hero h1 .red{color:var(--red)}
+    .hero-sub{font-size:17px;color:var(--muted2);line-height:1.65;max-width:510px;margin-bottom:16px}
+    .hero-note{font-size:13px;color:var(--muted);margin-bottom:40px;display:flex;align-items:center;gap:6px}
+    .hero-note::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.7;flex-shrink:0}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px}
+    .btn-primary{padding:15px 34px;border-radius:6px;font-size:15px;font-weight:800;background:var(--red);color:#fff;text-decoration:none;box-shadow:0 0 40px rgba(232,0,10,.3);transition:all .18s;display:inline-flex;align-items:center;gap:8px}
+    .btn-primary:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 0 60px rgba(232,0,10,.4)}
+    .btn-secondary{padding:15px 34px;border-radius:6px;font-size:15px;font-weight:700;background:transparent;border:1px solid var(--border2);color:var(--text);text-decoration:none;transition:all .18s;display:inline-flex;align-items:center;gap:8px}
+    .btn-secondary:hover{background:rgba(255,255,255,.05)}
 
-    /* HERO VISUAL (phone mockup) */
-    .hero-visual{position:relative;z-index:1;display:flex;justify-content:center;align-items:center}
-    .phone-wrap{position:relative;width:280px}
-    .phone-wrap::before{
-      content:'';position:absolute;top:10%;left:10%;right:10%;bottom:10%;
-      background:radial-gradient(circle,rgba(167,139,250,.25),transparent 70%);
-      filter:blur(40px);z-index:-1;animation:glowPulse 3s ease-in-out infinite;
-    }
-    @keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
-    /* Floating cards */
-    .float-card{
-      position:absolute;background:var(--bg3);border:1px solid var(--border2);
-      border-radius:14px;padding:12px 16px;white-space:nowrap;
-      animation:floatCard 4s ease-in-out infinite;font-size:13px;font-weight:700;
-      box-shadow:0 8px 32px rgba(0,0,0,.4);
-    }
-    .fc1{top:-20px;right:-60px;animation-delay:0s}
-    .fc2{bottom:40px;left:-70px;animation-delay:-2s}
-    .fc3{top:50%;right:-80px;animation-delay:-1s}
-    @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .fc-ico{display:inline-block;margin-right:6px}
-    .fc-val{color:var(--green)}
-    .fc-label{color:var(--muted);font-size:11px;font-weight:400;margin-left:4px}
+    /* HERO STATS */
+    .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg2)}
+    .hs{padding:20px 16px;text-align:center;border-right:1px solid var(--border)}
+    .hs:last-child{border-right:none}
+    .hs-n{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1.5px}
+    .hs-n sup{font-size:.5em;color:var(--red)}
+    .hs-l{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.5px;text-transform:uppercase;line-height:1.3}
+    @media(max-width:768px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs:nth-child(2){border-right:none}.hs:nth-child(3){border-right:1px solid var(--border);border-top:1px solid var(--border)}.hs:nth-child(4){border-top:1px solid var(--border)}}
 
-    /* SECTION SHARED */
-    .s{padding:100px 24px}
-    .s-dark{background:var(--bg2)}
-    .container{max-width:1100px;margin:0 auto}
-    .s-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-    .s-tag::before{content:'';width:18px;height:2px;background:var(--accent);border-radius:1px}
-    h2{font-size:clamp(30px,4.5vw,50px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:18px}
-    .s-sub{font-size:17px;color:var(--muted2);line-height:1.65;max-width:520px}
+    /* HERO IMAGE */
+    .hero-right{position:relative;z-index:1}
+    .hero-img-wrap{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(232,0,10,.15)}
+    .hero-img-wrap img{width:100%;display:block}
+    .hero-img-fade{position:absolute;inset:0;border-radius:16px;background:linear-gradient(to right,var(--bg) 0%,transparent 22%);pointer-events:none}
+    @media(max-width:900px){.hero-right{display:none}}
 
-    /* PLATFORMS VISUAL */
-    .plat-visual{display:flex;justify-content:center;gap:24px;margin-top:64px;flex-wrap:wrap}
-    .plat-card{
-      background:var(--bg3);border:1px solid var(--border);border-radius:20px;
-      padding:36px 40px;display:flex;flex-direction:column;align-items:center;gap:16px;
-      transition:all .25s;min-width:180px;
-    }
-    .plat-card:hover{transform:translateY(-6px);border-color:var(--border2);box-shadow:0 20px 60px rgba(0,0,0,.3)}
-    .plat-icon-wrap{
-      width:72px;height:72px;border-radius:20px;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .plat-name{font-size:15px;font-weight:800;letter-spacing:-.2px}
-    .plat-stat{font-size:12px;color:var(--muted);text-align:center;line-height:1.4}
-    .plat-views{font-size:22px;font-weight:900;letter-spacing:-1px}
+    /* IL BLOCK */
+    .il-block{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    .il-block.reverse{direction:rtl}.il-block.reverse>*{direction:ltr}
+    @media(max-width:768px){.il-block{grid-template-columns:1fr}.il-block.reverse{direction:ltr}}
+    .il-wrap{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(232,0,10,.1)}
+    .il-wrap img{width:100%;display:block}
+    .il-wrap-fade-l{position:absolute;inset:0;border-radius:16px;background:linear-gradient(to left,var(--bg) 0%,transparent 22%);pointer-events:none}
 
-    /* HOW IT WORKS */
-    .steps-wrap{margin-top:64px;position:relative}
-    .steps-line{
-      position:absolute;top:36px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);height:2px;
-      background:linear-gradient(90deg,var(--accent),var(--blue),var(--green));opacity:.3;
-    }
-    @media(max-width:768px){.steps-line{display:none}}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:1}
-    @media(max-width:768px){.steps{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:480px){.steps{grid-template-columns:1fr}}
-    .step{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:32px 24px;transition:all .2s}
-    .step:hover{border-color:rgba(167,139,250,.3);transform:translateY(-4px)}
-    .step-ico{
-      width:56px;height:56px;border-radius:16px;margin-bottom:20px;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .step-n{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-    .step h3{font-size:17px;font-weight:800;margin-bottom:10px;letter-spacing:-.2px}
-    .step p{font-size:14px;color:var(--muted);line-height:1.6}
+    /* LABELS / HEADINGS */
+    .sec-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:16px}
+    .sec-h{font-size:clamp(28px,3.5vw,44px);font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:20px}
+    .sec-p{font-size:16px;color:var(--muted2);line-height:1.65;margin-bottom:16px}
+    .sec-p:last-child{margin-bottom:0}
 
-    /* DASHBOARD MOCKUP */
-    .dash-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-    @media(max-width:900px){.dash-section{grid-template-columns:1fr}}
-    .dash-text .s-sub{max-width:420px}
-    .dash-perks{display:flex;flex-direction:column;gap:16px;margin-top:36px}
-    .dp{display:flex;align-items:flex-start;gap:14px}
-    .dp-ico{
-      width:40px;height:40px;border-radius:10px;flex-shrink:0;
-      background:rgba(167,139,250,.1);display:flex;align-items:center;justify-content:center;
-    }
-    .dp-ico svg{width:18px;height:18px}
-    .dp h4{font-size:15px;font-weight:800;margin-bottom:4px}
-    .dp p{font-size:13px;color:var(--muted);line-height:1.5}
+    /* DIVIDER */
+    .divider{width:100%;height:1px;background:var(--border);max-width:1200px;margin:0 auto}
 
-    /* CASES */
-    .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
-    @media(max-width:900px){.cases-grid{grid-template-columns:1fr}}
-    .case-card{
-      background:var(--bg);border:1px solid var(--border);border-radius:22px;
-      overflow:hidden;transition:all .25s;
-    }
-    .case-card:hover{transform:translateY(-6px);border-color:var(--border2);box-shadow:0 24px 60px rgba(0,0,0,.3)}
-    .case-top{padding:28px 28px 0;position:relative}
-    .case-mockup{margin:0 -4px;position:relative}
-    .case-bottom{padding:24px 28px 28px;border-top:1px solid var(--border)}
-    .case-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px}
-    .case-h{font-size:22px;font-weight:900;letter-spacing:-.8px;margin-bottom:4px}
-    .case-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
-    .case-nums{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-    .cn{background:var(--bg2);border-radius:10px;padding:13px}
-    .cn-v{font-size:22px;font-weight:900;letter-spacing:-1px;line-height:1}
-    .cn-l{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
-    .case-plats{display:flex;gap:6px}
-    .cp{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid}
-    .cp-ig{border-color:rgba(225,48,108,.3);color:#e1306c;background:rgba(225,48,108,.07)}
-    .cp-tt{border-color:rgba(105,201,208,.3);color:#69c9d0;background:rgba(105,201,208,.07)}
-    .cp-yt{border-color:rgba(255,78,69,.3);color:#ff4e45;background:rgba(255,78,69,.07)}
+    /* WHY UGC */
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+    @media(max-width:768px){.why-grid{grid-template-columns:1fr}}
+    .why-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:32px 28px;transition:border-color .2s}
+    .why-card:hover{border-color:var(--red-border)}
+    .why-card-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+    .why-num{font-size:44px;font-weight:900;color:#fff;letter-spacing:-2.5px;line-height:1}
+    .why-num .red{color:var(--red)}
+    .why-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
+    .why-card p{font-size:14px;color:var(--muted2);line-height:1.6}
+    .why-tag{display:inline-block;background:var(--red-dim);border:1px solid var(--red-border);color:var(--red);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:20px}
 
-    /* WHY UGC — split */
-    .why-split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-    @media(max-width:900px){.why-split{grid-template-columns:1fr}}
-    .why-col h2{margin-bottom:24px}
-    .why-list{display:flex;flex-direction:column;gap:14px;margin-top:40px}
-    .wi{display:flex;align-items:flex-start;gap:14px}
-    .wi-dot{
-      width:36px;height:36px;border-radius:10px;flex-shrink:0;
-      background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.15);
-      display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:14px;font-weight:800;
-    }
-    .wi-text h4{font-size:15px;font-weight:800;margin-bottom:4px}
-    .wi-text p{font-size:13px;color:var(--muted);line-height:1.5}
-    /* Compare table */
-    .cmp-table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
-    .cmp-table th{background:var(--bg3);padding:14px 18px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
-    .cmp-table td{padding:16px 18px;font-size:14px;border-bottom:1px solid var(--border)}
-    .cmp-table tr:last-child td{border-bottom:none}
-    .cmp-table tr.hl td{background:rgba(167,139,250,.05)}
-    .cpv-bar-wrap{display:flex;align-items:center;gap:10px}
-    .cpv-bg{flex:1;background:var(--bg3);border-radius:3px;height:6px;max-width:160px;overflow:hidden}
-    .cpv-fill{height:100%;border-radius:3px;transition:width .8s ease}
-    .cpv-v{font-weight:800;font-size:13px;min-width:60px}
+    /* PIPELINE */
+    .pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:40px}
+    @media(max-width:768px){.pipeline{grid-template-columns:1fr}}
+    .pipe-step{padding:28px 24px;border-right:1px solid var(--border);background:var(--bg2)}
+    .pipe-step:last-child{border-right:none}
+    @media(max-width:768px){.pipe-step{border-right:none;border-bottom:1px solid var(--border)}.pipe-step:last-child{border-bottom:none}}
+    .pipe-n{font-size:32px;font-weight:900;color:var(--red);opacity:.2;letter-spacing:-2px;line-height:1;margin-bottom:14px}
+    .pipe-step h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fff;margin-bottom:8px}
+    .pipe-step p{font-size:13px;color:var(--muted2);line-height:1.55}
 
-    /* CTA */
-    .cta-outer{padding:80px 24px}
-    .cta-card{
-      max-width:800px;margin:0 auto;
-      background:var(--bg2);border:1px solid rgba(167,139,250,.2);border-radius:28px;
-      padding:72px 56px;text-align:center;position:relative;overflow:hidden;
-    }
-    .cta-card::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(124,58,237,.12),transparent 70%);pointer-events:none}
-    .cta-card h2{font-size:clamp(28px,4vw,46px);margin-bottom:16px;position:relative;z-index:1}
-    .cta-card p{font-size:17px;color:var(--muted2);margin-bottom:40px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.6;position:relative;z-index:1}
-    .cta-form{display:flex;gap:10px;max-width:440px;margin:0 auto;position:relative;z-index:1}
-    .cta-input{flex:1;padding:15px 18px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--border2);color:#fff;font-size:15px;outline:none;transition:border-color .15s}
-    .cta-input:focus{border-color:rgba(167,139,250,.4)}
-    .cta-input::placeholder{color:var(--muted)}
-    .cta-note{font-size:12px;color:var(--muted);margin-top:16px;position:relative;z-index:1}
-    .cta-note a{color:var(--accent);text-decoration:none}
-    @media(max-width:600px){.cta-card{padding:40px 24px}.cta-form{flex-direction:column}}
+    /* PLATFORMS STRIP */
+    .platforms{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+    .plat{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--muted2)}
+
+    /* CASE */
+    .case-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .case-head{padding:40px 48px 0;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
+    @media(max-width:768px){.case-head{grid-template-columns:1fr;padding:32px 24px 0}}
+    .case-badge{background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;display:inline-block;margin-bottom:16px}
+    .case-numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border);margin-top:32px}
+    @media(max-width:600px){.case-numbers{grid-template-columns:1fr}}
+    .cn{padding:32px 40px;border-right:1px solid var(--border);text-align:center}
+    .cn:last-child{border-right:none}
+    @media(max-width:600px){.cn{border-right:none;border-bottom:1px solid var(--border)}.cn:last-child{border-bottom:none}}
+    .cn-n{font-size:40px;font-weight:900;color:#fff;letter-spacing:-2px;line-height:1}
+    .cn-n .red{color:var(--red)}
+    .cn-l{font-size:12px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
+    .case-img-wrap{position:relative;overflow:hidden}
+    .case-img-wrap img{width:100%;display:block;max-height:340px;object-fit:cover;object-position:top}
+    .case-img-fade-t{position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,var(--bg2),transparent);pointer-events:none}
+    .case-img-fade-b{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--bg2),transparent);pointer-events:none}
+    .mini-stats{display:flex;flex-direction:column;gap:8px;min-width:156px}
+    .mini-stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 18px;text-align:center}
+    .mini-stat-n{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .mini-stat-l{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+    /* UGC GRID */
+    .grid-img-wrap{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(232,0,10,.08);margin-top:40px}
+    .grid-img-wrap img{width:100%;display:block}
+    .grid-img-fade-l{position:absolute;inset:0;border-radius:16px;background:linear-gradient(to right,var(--bg) 0%,transparent 8%,transparent 92%,var(--bg) 100%);pointer-events:none}
+
+    /* CLIENTS */
+    .clients-strip{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+    .client-pill{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:14px 28px;font-size:14px;font-weight:700;color:var(--muted2);letter-spacing:.5px;transition:all .15s}
+    .client-pill:hover{border-color:var(--red-border);color:#fff}
+
+    /* GUARANTEES */
+    .guar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+    @media(max-width:768px){.guar-grid{grid-template-columns:1fr}}
+    .guar-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:32px 28px;transition:border-color .2s}
+    .guar-card:hover{border-color:var(--red-border)}
+    .guar-num{font-size:44px;font-weight:900;color:#fff;letter-spacing:-2px;line-height:1;margin-bottom:12px}
+    .guar-num .red{color:var(--red)}
+    .guar-card h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+    .guar-card p{font-size:13px;color:var(--muted2);line-height:1.55}
+
+    /* CTA FINAL */
+    .cta-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:center}
+    @media(max-width:768px){.cta-wrap{grid-template-columns:1fr}}
+    .cta-left{padding:52px 56px}
+    @media(max-width:768px){.cta-left{padding:36px 28px}}
+    .cta-left h2{font-size:clamp(26px,3vw,40px);font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:16px}
+    .cta-left p{font-size:15px;color:var(--muted2);line-height:1.6;margin-bottom:32px;max-width:460px}
+    .cta-btns{display:flex;gap:12px;flex-wrap:wrap}
+    .cta-note{margin-top:16px;font-size:12px;color:var(--muted)}
+    .cta-img-wrap{width:320px;position:relative;overflow:hidden;align-self:stretch}
+    @media(max-width:768px){.cta-img-wrap{width:100%;height:240px}}
+    .cta-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+    .cta-img-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--bg2) 0%,transparent 32%);pointer-events:none}
 
     /* FOOTER */
-    footer{
-      border-top:1px solid var(--border);padding:36px 48px;
-      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
-    }
-    .footer-left{display:flex;align-items:center;gap:14px}
-    .footer-logo-names svg path{fill:rgba(255,255,255,.5)}
-    .footer-sep{width:1px;height:16px;background:var(--border2)}
-    .footer-brand{font-size:14px;color:var(--muted);font-weight:600}
+    footer{padding:32px 48px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+    @media(max-width:600px){footer{flex-direction:column;gap:12px;text-align:center;padding:28px 24px}}
     footer p{font-size:13px;color:var(--muted)}
-    @media(max-width:640px){footer{padding:28px 20px;flex-direction:column;text-align:center}.footer-left{flex-direction:column;gap:8px}}
+    footer a{color:var(--muted);text-decoration:none;font-size:13px}
+    footer a:hover{color:var(--red)}
   </style>
 </head>
 <body>
 
-<div class="hero-bg-glow"></div>
-
 <!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <div class="nav-logo-names">
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="11" viewBox="0 0 75 14" fill="none">
-        <path d="M72.2715 9.11621C73.5959 9.11622 74.6667 10.2515 74.667 11.5576C74.667 12.9207 73.596 14 72.2715 14C70.9469 14 69.876 12.9207 69.876 11.5576C69.8762 10.2515 70.9471 9.11621 72.2715 9.11621ZM19.0781 0C21.5652 5.93264e-05 23.9775 0.512708 24.835 2.98828C24.6123 4.58171 23.6328 5.81007 22.4092 6.04492L18.9424 6.67871C18.8213 6.69947 18.8213 6.88263 18.9424 6.90332L22.4502 7.61816C23.727 7.86347 24.7002 9.19089 24.8623 10.8652L25.1211 13.4893H21.5293V11.7285C21.1347 12.5237 19.8103 13.8584 17.3867 13.8584C14.8504 13.8584 12.9336 12.6086 12.9336 10.0527C12.9337 7.29824 14.0052 4.85573 21.5293 5.50879V5.19727C21.5293 3.91943 21.2759 2.81167 19.0781 2.81152C17.331 2.81152 16.8236 3.52129 16.6826 4.34473H13.4414C13.7515 1.13589 15.9782 0 19.0781 0ZM51.0605 0C54.1886 0.000227286 57.5697 2.24368 57.2598 7.89453H47.9316C48.2135 9.57003 49.2004 10.8193 51.0322 10.8193C52.6102 10.8192 53.427 10.0809 53.8779 9.03027H57.0908C56.4145 12.5515 53.7659 13.8582 51.0605 13.8584C47.9605 13.8584 44.6064 11.87 44.6064 6.92871C44.6067 1.95936 47.9606 0 51.0605 0ZM63.3037 0C67.6999 2.33363e-05 69.4188 1.90259 69.4189 4.34473H65.7275C65.7274 3.46446 64.8816 2.66992 63.2754 2.66992C61.6692 2.66993 60.9649 3.15215 60.9648 3.97559C60.9648 4.91266 62.5707 5.11156 64.4023 5.39551C67.1641 5.82147 69.9823 5.99203 69.9824 9.34277C69.9824 12.5234 67.5592 13.8584 63.501 13.8584C59.1891 13.8584 57.0752 12.2681 57.0752 9.22949L60.8799 9.25781C60.8799 10.7345 62.1766 11.1318 63.7266 11.1318C65.3608 11.1318 66.1502 10.7914 66.1504 9.85449C66.1504 8.66177 64.3459 8.63308 62.0068 8.17871C59.2734 7.66756 57.3857 7.04243 57.3857 4.34473C57.3858 1.64701 59.3583 0 63.3037 0ZM8.25098 0C11.0127 0 12.7322 1.84569 12.7324 4.79883V13.4893H9.09668V5.79297C9.09659 4.34484 8.36383 3.23738 6.72949 3.2373C5.12322 3.2373 3.60762 4.34479 3.60742 5.79297V13.4893H0V0.369141H3.60742V2.24316C4.03047 1.47635 5.99676 8.12363e-05 8.25098 0ZM40.1182 0C42.8799 0 44.4295 1.84569 44.4297 4.79883V13.4893H40.7949V5.79297C40.7948 3.86238 39.9211 3.23748 38.8223 3.2373C37.695 3.2373 36.7364 3.94729 36.7363 5.79297V13.4893H33.1006V5.79297C33.1005 3.8621 32.227 3.2373 31.1279 3.2373C30.0008 3.23738 29.0431 3.94738 29.043 5.79297V6.18262L28.2881 6.04492C26.9908 5.79988 25.9972 4.47314 25.835 2.77832L25.5996 0.369141H29.043V2.1582C29.4658 1.39141 30.5933 0 32.4531 0C34.3129 0.000143623 35.637 0.852516 36.2852 2.3291C36.567 1.78953 38.0327 4.83334e-06 40.1182 0ZM29.043 13.4893H25.5752L25.835 10.8652C25.9971 9.19081 26.9904 7.86339 28.2471 7.61816L29.043 7.45508V13.4893ZM21.5293 8.03711C18.1194 7.83834 16.457 8.00864 16.457 9.85449C16.4572 10.7914 17.1332 11.3877 18.373 11.3877C19.8103 11.3877 20.9374 10.5926 21.5293 9.57031V8.03711ZM51.0322 3.03906C49.4259 3.03906 48.4678 3.97582 48.0732 5.33887H53.8779C53.5398 3.97589 52.6665 3.03919 51.0322 3.03906Z" fill="white"/>
-      </svg>
+  <div class="nav-logo">Names<span>.</span></div>
+  <div class="nav-right">
+    <div class="nav-platforms">
+      <span class="nav-platform">Instagram Reels</span>
+      <span class="nav-platform">·</span>
+      <span class="nav-platform">TikTok</span>
+      <span class="nav-platform">·</span>
+      <span class="nav-platform">YouTube Shorts</span>
     </div>
+    <a href="https://t.me/ilya_goncharenko1" class="nav-cta">Получить расчёт →</a>
   </div>
-  <a href="#contact" class="nav-cta">Запустить кампанию →</a>
 </nav>
 
-<!-- HERO -->
-<div style="max-width:1300px;margin:0 auto">
-<section class="hero">
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero" style="max-width:1200px">
   <div class="hero-grid-bg"></div>
-
-  <div class="hero-text">
-    <div class="hero-badge">
-      <span class="live-dot"></span>
-      3 активных кампании прямо сейчас
-    </div>
-
-    <h1>Миллионы просмотров<br/>через <span class="h1-grad">UGC-контент</span></h1>
-
-    <p class="hero-sub">
-      Запускаем виральные UGC-кампании на Instagram, TikTok и YouTube. Нативно, масштабируемо — от&nbsp;2&nbsp;копеек за просмотр.
-    </p>
-
+  <div class="hero-glow"></div>
+  <div class="hero-left">
+    <div class="hero-badge"><div class="live-dot"></div>UGC-контент · Полный цикл · Гарантия в договоре</div>
+    <h1>Миллионы<br>просмотров<br>через<br><span class="red">UGC-контент</span></h1>
+    <p class="hero-sub">Запускаем массовые нативные охваты для брендов через сеть UGC-авторов на Instagram, TikTok и YouTube Shorts. Без рекламных пометок — только живой контент.</p>
+    <p class="hero-note">В 50–250 раз дешевле таргетированной рекламы. Гарантия CPV зафиксирована в договоре.</p>
     <div class="hero-btns">
-      <a href="#contact" class="btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
-        Запустить кампанию
-      </a>
-      <a href="#cases" class="btn-secondary">
-        Смотреть кейсы
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <a href="https://t.me/ilya_goncharenko1" class="btn-primary">Запустить кампанию →</a>
+      <a href="#case" class="btn-secondary">Смотреть кейс</a>
     </div>
-
-    <div class="hero-stats-row">
-      <div class="hs"><div class="hs-n">11<sup>М+</sup></div><div class="hs-l">Просмотров</div></div>
-      <div class="hs"><div class="hs-n">7К<sup>+</sup></div><div class="hs-l">Роликов</div></div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">11<sup>M+</sup></div><div class="hs-l">Просмотров</div></div>
+      <div class="hs"><div class="hs-n">7K<sup>+</sup></div><div class="hs-l">Роликов</div></div>
       <div class="hs"><div class="hs-n">138</div><div class="hs-l">Авторов</div></div>
-      <div class="hs"><div class="hs-n">3</div><div class="hs-l">Платформы</div></div>
+      <div class="hs"><div class="hs-n">0.028<sup>₽</sup></div><div class="hs-l">Мин. CPV</div></div>
     </div>
   </div>
-
-  <!-- PHONE MOCKUP ILLUSTRATION -->
-  <div class="hero-visual">
-    <div class="phone-wrap">
-
-      <!-- Floating cards -->
-      <div class="float-card fc1">
-        <span class="fc-ico">📈</span><span class="fc-val">+2.3М</span><span class="fc-label">просмотров</span>
-      </div>
-      <div class="float-card fc2">
-        <span class="fc-ico">🎬</span><span class="fc-val">47</span><span class="fc-label">роликов сегодня</span>
-      </div>
-      <div class="float-card fc3">
-        <span class="fc-ico" style="color:var(--green)">↓</span><span class="fc-val" style="color:var(--green)">0.04₽</span><span class="fc-label">CPV</span>
-      </div>
-
-      <!-- Phone SVG -->
-      <svg viewBox="0 0 280 540" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 40px 80px rgba(124,58,237,.3))">
-        <!-- Phone body -->
-        <rect x="1" y="1" width="278" height="538" rx="40" fill="#17171f" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-        <!-- Screen -->
-        <rect x="12" y="12" width="256" height="516" rx="32" fill="#0d0d14"/>
-        <!-- Notch -->
-        <rect x="100" y="18" width="80" height="8" rx="4" fill="#1a1a24"/>
-        <!-- Status bar dots -->
-        <circle cx="228" cy="28" r="3" fill="rgba(255,255,255,.3)"/>
-        <circle cx="240" cy="28" r="3" fill="rgba(255,255,255,.15)"/>
-
-        <!-- App header -->
-        <rect x="20" y="44" width="240" height="40" rx="10" fill="rgba(167,139,250,.08)"/>
-        <circle cx="42" cy="64" r="10" fill="rgba(167,139,250,.2)"/>
-        <rect x="60" y="58" width="80" height="8" rx="4" fill="rgba(255,255,255,.5)"/>
-        <rect x="60" y="70" width="50" height="6" rx="3" fill="rgba(255,255,255,.15)"/>
-        <rect x="210" y="56" width="40" height="16" rx="8" fill="rgba(74,222,128,.15)"/>
-        <rect x="218" y="60" width="24" height="8" rx="4" fill="rgba(74,222,128,.5)"/>
-
-        <!-- Stats cards row -->
-        <rect x="20" y="96" width="110" height="72" rx="12" fill="rgba(167,139,250,.08)" stroke="rgba(167,139,250,.15)" stroke-width="1"/>
-        <rect x="30" y="106" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-        <rect x="30" y="118" width="80" height="14" rx="4" fill="rgba(167,139,250,.6)"/>
-        <rect x="30" y="138" width="40" height="6" rx="3" fill="rgba(74,222,128,.4)"/>
-        <rect x="150" y="96" width="110" height="72" rx="12" fill="rgba(52,211,153,.06)" stroke="rgba(52,211,153,.15)" stroke-width="1"/>
-        <rect x="160" y="106" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-        <rect x="160" y="118" width="70" height="14" rx="4" fill="rgba(52,211,153,.6)"/>
-        <rect x="160" y="138" width="44" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-
-        <!-- Chart area -->
-        <rect x="20" y="180" width="240" height="120" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-        <rect x="32" y="190" width="80" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-        <!-- Chart line -->
-        <polyline points="32,270 60,250 90,258 120,230 150,240 180,210 210,215 240,190" stroke="url(#chartGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M32,270 60,250 90,258 120,230 150,240 180,210 210,215 240,190 240,290 32,290Z" fill="url(#chartFill)" opacity=".4"/>
-        <!-- Chart dot -->
-        <circle cx="240" cy="190" r="5" fill="#a78bfa" stroke="#0d0d14" stroke-width="2"/>
-        <defs>
-          <linearGradient id="chartGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
-          <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity=".3"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
-        </defs>
-
-        <!-- Video cards list -->
-        <!-- Card 1 -->
-        <rect x="20" y="314" width="240" height="62" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-        <rect x="32" y="325" width="38" height="38" rx="8" fill="rgba(225,48,108,.15)"/>
-        <rect x="36" y="333" width="14" height="6" rx="2" fill="rgba(225,48,108,.6)"/>
-        <rect x="36" y="343" width="26" height="4" rx="2" fill="rgba(225,48,108,.3)"/>
-        <rect x="80" y="328" width="100" height="6" rx="3" fill="rgba(255,255,255,.4)"/>
-        <rect x="80" y="340" width="68" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-        <rect x="80" y="352" width="44" height="4" rx="2" fill="rgba(74,222,128,.4)"/>
-        <rect x="210" y="330" width="36" height="6" rx="3" fill="rgba(167,139,250,.4)"/>
-        <rect x="216" y="342" width="24" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-
-        <!-- Card 2 -->
-        <rect x="20" y="386" width="240" height="62" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-        <rect x="32" y="397" width="38" height="38" rx="8" fill="rgba(105,201,208,.12)"/>
-        <rect x="36" y="405" width="14" height="6" rx="2" fill="rgba(105,201,208,.6)"/>
-        <rect x="36" y="415" width="26" height="4" rx="2" fill="rgba(105,201,208,.3)"/>
-        <rect x="80" y="400" width="110" height="6" rx="3" fill="rgba(255,255,255,.4)"/>
-        <rect x="80" y="412" width="76" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-        <rect x="80" y="424" width="52" height="4" rx="2" fill="rgba(74,222,128,.4)"/>
-        <rect x="210" y="402" width="36" height="6" rx="3" fill="rgba(52,211,153,.4)"/>
-        <rect x="216" y="414" width="24" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-
-        <!-- Card 3 -->
-        <rect x="20" y="458" width="240" height="62" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-        <rect x="32" y="469" width="38" height="38" rx="8" fill="rgba(255,78,69,.12)"/>
-        <rect x="36" y="477" width="14" height="6" rx="2" fill="rgba(255,78,69,.6)"/>
-        <rect x="36" y="487" width="26" height="4" rx="2" fill="rgba(255,78,69,.3)"/>
-        <rect x="80" y="472" width="90" height="6" rx="3" fill="rgba(255,255,255,.4)"/>
-        <rect x="80" y="484" width="60" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-        <rect x="80" y="496" width="36" height="4" rx="2" fill="rgba(74,222,128,.4)"/>
-        <rect x="210" y="474" width="36" height="6" rx="3" fill="rgba(251,146,60,.4)"/>
-        <rect x="216" y="486" width="24" height="5" rx="2.5" fill="rgba(255,255,255,.15)"/>
-
-        <!-- Home bar -->
-        <rect x="100" y="526" width="80" height="4" rx="2" fill="rgba(255,255,255,.2)"/>
-      </svg>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- PLATFORMS -->
-<section class="s s-dark" id="platforms">
-  <div class="container">
-    <div class="s-tag">Платформы</div>
-    <h2>Охватываем там,<br/>где живёт аудитория</h2>
-    <p class="s-sub">Три платформы одновременно. Один бриф — тройной охват.</p>
-
-    <div class="plat-visual">
-      <!-- Instagram -->
-      <div class="plat-card">
-        <div class="plat-icon-wrap" style="background:rgba(225,48,108,.1);border:1px solid rgba(225,48,108,.2)">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="6" stroke="#e1306c" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="4.5" stroke="#e1306c" stroke-width="1.8"/>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="#e1306c"/>
-          </svg>
-        </div>
-        <div class="plat-name" style="color:#e1306c">Instagram Reels</div>
-        <div class="plat-views" style="color:#fff">10М+</div>
-        <div class="plat-stat">просмотров<br/>по всем проектам</div>
-      </div>
-      <!-- TikTok -->
-      <div class="plat-card">
-        <div class="plat-icon-wrap" style="background:rgba(105,201,208,.1);border:1px solid rgba(105,201,208,.2)">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.26 8.26 0 004.84 1.55V6.89a4.85 4.85 0 01-1.07-.2z" stroke="#69c9d0" stroke-width="1.5" fill="none"/>
-          </svg>
-        </div>
-        <div class="plat-name" style="color:#69c9d0">TikTok</div>
-        <div class="plat-views" style="color:#fff">400К+</div>
-        <div class="plat-stat">просмотров<br/>в активных кампаниях</div>
-      </div>
-      <!-- YouTube -->
-      <div class="plat-card">
-        <div class="plat-icon-wrap" style="background:rgba(255,78,69,.1);border:1px solid rgba(255,78,69,.2)">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-            <path d="M22.54 6.42A2.78 2.78 0 0020.59 4.5C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.92A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.5C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.92A29 29 0 0023 12a29 29 0 00-.46-5.58z" stroke="#ff4e45" stroke-width="1.8"/>
-            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff4e45"/>
-          </svg>
-        </div>
-        <div class="plat-name" style="color:#ff4e45">YouTube Shorts</div>
-        <div class="plat-views" style="color:#fff">1М+</div>
-        <div class="plat-stat">просмотров<br/>по всем проектам</div>
-      </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="img/il_hero.jpg" alt="Контент-завод Names"/>
+      <div class="hero-img-fade"></div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="s" id="how">
-  <div class="container">
-    <div class="s-tag">Процесс</div>
-    <h2>От брифа до вирального<br/>охвата — за 2 недели</h2>
-    <p class="s-sub">Фабричный подход: поток контента без пауз, с полным контролем качества.</p>
+<div class="divider"></div>
 
-    <div class="steps-wrap">
-      <div class="steps-line"></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-ico" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2)">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-          </div>
-          <div class="step-n">Шаг 01</div>
-          <h3>Бриф и стратегия</h3>
-          <p>Изучаем бренд, ЦА, конкурентов. Формируем контент-стратегию с хуками и триггерами под каждую платформу.</p>
-        </div>
-        <div class="step">
-          <div class="step-ico" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2)">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-          </div>
-          <div class="step-n">Шаг 02</div>
-          <h3>Кастинг авторов</h3>
-          <p>Подбираем из базы 138+ UGC-авторов с органической аудиторией. Проверяем вовлечённость и нишевость.</p>
-        </div>
-        <div class="step">
-          <div class="step-ico" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2)">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="4"/><polygon points="10,8 16,12 10,16"/></svg>
-          </div>
-          <div class="step-n">Шаг 03</div>
-          <h3>Производство</h3>
-          <p>Авторы снимают по ТЗ. Многоуровневая проверка перед публикацией. 50–200 роликов в месяц. Правки включены.</p>
-        </div>
-        <div class="step">
-          <div class="step-ico" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2)">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-          </div>
-          <div class="step-n">Шаг 04</div>
-          <h3>Аналитика и рост</h3>
-          <p>Дашборд с охватами в реальном времени. Масштабируем лучшее, отключаем неэффективное.</p>
-        </div>
-      </div>
+<!-- ═══════════════════════════ WHY UGC ═══════════════════════════ -->
+<section>
+  <div class="sec-label">Почему UGC</div>
+  <h2 class="sec-h">Не реклама. Контент,<br>который хотят смотреть.</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-tag">Цена</div>
+      <div class="why-num">50–250<span class="red">×</span></div>
+      <h3>дешевле таргетированной рекламы</h3>
+      <p>Средний CPV в таргете — 1–5₽. Наш UGC-конвейер даёт 0.028₽ — подтверждено кейсом Biorepair.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-tag">Формат</div>
+      <div class="why-num">0<span class="red">%</span></div>
+      <h3>пометки «реклама» — не скипают</h3>
+      <p>UGC выглядит как органический контент. CTR в 3–5 раз выше, чем у стандартных рекламных форматов.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-tag">Долгосрочность</div>
+      <div class="why-num">∞</div>
+      <h3>работает месяцами после публикации</h3>
+      <p>Таргет выключается вместе с бюджетом. Органика от UGC накапливается и продолжает приносить просмотры.</p>
     </div>
   </div>
 </section>
 
-<!-- CASES -->
-<section class="s s-dark" id="cases">
-  <div class="container">
-    <div class="s-tag">Кейсы</div>
-    <h2>Реальные результаты<br/>активных кампаний</h2>
-    <p class="s-sub">Три проекта в работе прямо сейчас. Все данные — из живого дашборда.</p>
+<div class="divider"></div>
 
-    <div class="cases-grid">
-
-      <!-- Case 1 -->
-      <div class="case-card">
-        <div class="case-top">
-          <div class="case-tag" style="color:#34d399"><span style="width:8px;height:8px;border-radius:50%;background:#34d399;display:inline-block"></span> Fashion / Lifestyle</div>
-          <div class="case-h">8.2 млн просмотров</div>
-          <div class="case-sub">72 автора · 3 платформы</div>
-        </div>
-        <!-- Illustration: mini bar chart -->
-        <div style="padding:0 28px;margin:16px 0 0">
-          <svg viewBox="0 0 224 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%">
-            <rect x="0" y="40" width="18" height="24" rx="4" fill="rgba(52,211,153,.25)"/>
-            <rect x="22" y="32" width="18" height="32" rx="4" fill="rgba(52,211,153,.3)"/>
-            <rect x="44" y="24" width="18" height="40" rx="4" fill="rgba(52,211,153,.4)"/>
-            <rect x="66" y="28" width="18" height="36" rx="4" fill="rgba(52,211,153,.35)"/>
-            <rect x="88" y="16" width="18" height="48" rx="4" fill="rgba(52,211,153,.5)"/>
-            <rect x="110" y="8" width="18" height="56" rx="4" fill="rgba(52,211,153,.6)"/>
-            <rect x="132" y="4" width="18" height="60" rx="4" fill="rgba(52,211,153,.75)"/>
-            <rect x="154" y="0" width="18" height="64" rx="4" fill="rgba(52,211,153,.9)"/>
-            <rect x="176" y="2" width="18" height="62" rx="4" fill="rgba(52,211,153,.85)"/>
-            <rect x="198" y="0" width="18" height="64" rx="4" fill="#34d399"/>
-          </svg>
-        </div>
-        <div class="case-bottom">
-          <div class="case-nums">
-            <div class="cn"><div class="cn-v" style="color:#34d399">8.2М</div><div class="cn-l">Просмотров</div></div>
-            <div class="cn"><div class="cn-v">4 729</div><div class="cn-l">Роликов</div></div>
-            <div class="cn"><div class="cn-v" style="color:#4ade80">4 коп.</div><div class="cn-l">CPV</div></div>
-            <div class="cn"><div class="cn-v">72</div><div class="cn-l">Авторов</div></div>
-          </div>
-          <div class="case-plats">
-            <span class="cp cp-ig">📸 Instagram</span>
-            <span class="cp cp-tt">🎵 TikTok</span>
-            <span class="cp cp-yt">▶ YouTube</span>
-          </div>
-        </div>
+<!-- ═══════════════════════════ PIPELINE ═══════════════════════════ -->
+<section>
+  <div class="il-block">
+    <div>
+      <div class="sec-label">Как работаем</div>
+      <h2 class="sec-h">Завод полного цикла —<br>от брифа до аналитики</h2>
+      <p class="sec-p">Один поток вместо разрозненных задач. Анализируем, кастингуем, снимаем, размещаем и оптимизируем — каждый день, без выходных.</p>
+      <div class="platforms">
+        <div class="plat">Instagram Reels</div>
+        <div class="plat">TikTok</div>
+        <div class="plat">YouTube Shorts</div>
       </div>
-
-      <!-- Case 2 -->
-      <div class="case-card">
-        <div class="case-top">
-          <div class="case-tag" style="color:#a78bfa"><span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block"></span> Dating App</div>
-          <div class="case-h">2.7 млн просмотров</div>
-          <div class="case-sub">27 авторов · 3 платформы</div>
-        </div>
-        <div style="padding:0 28px;margin:16px 0 0">
-          <svg viewBox="0 0 224 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%">
-            <rect x="0" y="48" width="18" height="16" rx="4" fill="rgba(167,139,250,.2)"/>
-            <rect x="22" y="40" width="18" height="24" rx="4" fill="rgba(167,139,250,.25)"/>
-            <rect x="44" y="44" width="18" height="20" rx="4" fill="rgba(167,139,250,.3)"/>
-            <rect x="66" y="32" width="18" height="32" rx="4" fill="rgba(167,139,250,.4)"/>
-            <rect x="88" y="20" width="18" height="44" rx="4" fill="rgba(167,139,250,.5)"/>
-            <rect x="110" y="24" width="18" height="40" rx="4" fill="rgba(167,139,250,.45)"/>
-            <rect x="132" y="12" width="18" height="52" rx="4" fill="rgba(167,139,250,.6)"/>
-            <rect x="154" y="6" width="18" height="58" rx="4" fill="rgba(167,139,250,.75)"/>
-            <rect x="176" y="0" width="18" height="64" rx="4" fill="rgba(167,139,250,.9)"/>
-            <rect x="198" y="4" width="18" height="60" rx="4" fill="#a78bfa"/>
-          </svg>
-        </div>
-        <div class="case-bottom">
-          <div class="case-nums">
-            <div class="cn"><div class="cn-v" style="color:#a78bfa">2.7М</div><div class="cn-l">Просмотров</div></div>
-            <div class="cn"><div class="cn-v">1 159</div><div class="cn-l">Роликов</div></div>
-            <div class="cn"><div class="cn-v" style="color:#4ade80">2 коп.</div><div class="cn-l">CPV</div></div>
-            <div class="cn"><div class="cn-v">27</div><div class="cn-l">Авторов</div></div>
-          </div>
-          <div class="case-plats">
-            <span class="cp cp-ig">📸 Instagram</span>
-            <span class="cp cp-tt">🎵 TikTok</span>
-            <span class="cp cp-yt">▶ YouTube</span>
-          </div>
-        </div>
+      <div style="margin-top:32px">
+        <a href="https://t.me/ilya_goncharenko1" class="btn-primary">Обсудить запуск →</a>
       </div>
-
-      <!-- Case 3 -->
-      <div class="case-card">
-        <div class="case-top">
-          <div class="case-tag" style="color:#fbbf24"><span style="width:8px;height:8px;border-radius:50%;background:#fbbf24;display:inline-block"></span> Wellness</div>
-          <div class="case-h">334K просмотров</div>
-          <div class="case-sub">39 авторов · 3 платформы</div>
-        </div>
-        <div style="padding:0 28px;margin:16px 0 0">
-          <svg viewBox="0 0 224 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%">
-            <rect x="0" y="44" width="18" height="20" rx="4" fill="rgba(251,191,36,.2)"/>
-            <rect x="22" y="48" width="18" height="16" rx="4" fill="rgba(251,191,36,.25)"/>
-            <rect x="44" y="36" width="18" height="28" rx="4" fill="rgba(251,191,36,.3)"/>
-            <rect x="66" y="40" width="18" height="24" rx="4" fill="rgba(251,191,36,.35)"/>
-            <rect x="88" y="28" width="18" height="36" rx="4" fill="rgba(251,191,36,.45)"/>
-            <rect x="110" y="32" width="18" height="32" rx="4" fill="rgba(251,191,36,.4)"/>
-            <rect x="132" y="20" width="18" height="44" rx="4" fill="rgba(251,191,36,.55)"/>
-            <rect x="154" y="16" width="18" height="48" rx="4" fill="rgba(251,191,36,.65)"/>
-            <rect x="176" y="8" width="18" height="56" rx="4" fill="rgba(251,191,36,.8)"/>
-            <rect x="198" y="0" width="18" height="64" rx="4" fill="#fbbf24"/>
-          </svg>
-        </div>
-        <div class="case-bottom">
-          <div class="case-nums">
-            <div class="cn"><div class="cn-v" style="color:#fbbf24">334К</div><div class="cn-l">Просмотров</div></div>
-            <div class="cn"><div class="cn-v">1 092</div><div class="cn-l">Роликов</div></div>
-            <div class="cn"><div class="cn-v" style="color:#4ade80">7 коп.</div><div class="cn-l">CPV</div></div>
-            <div class="cn"><div class="cn-v">39</div><div class="cn-l">Авторов</div></div>
-          </div>
-          <div class="case-plats">
-            <span class="cp cp-ig">📸 Instagram</span>
-            <span class="cp cp-tt">🎵 TikTok</span>
-            <span class="cp cp-yt">▶ YouTube</span>
-          </div>
-        </div>
-      </div>
-
+    </div>
+    <div class="il-wrap">
+      <img src="img/il_factory.jpg" alt="Производство"/>
+      <div class="il-wrap-fade-l"></div>
+    </div>
+  </div>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-n">01</div>
+      <h3>Бриф</h3>
+      <p>Изучаем бренд, аудиторию, конкурентов. Определяем форматы, тональность и цели кампании.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-n">02</div>
+      <h3>Кастинг</h3>
+      <p>Подбираем авторов из базы 138+ creators под ваш продукт и целевую аудиторию.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-n">03</div>
+      <h3>Производство</h3>
+      <p>UGC-съёмки, монтаж, AI-обработка. До 5000 роликов в месяц в едином потоке.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-n">04</div>
+      <h3>Аналитика</h3>
+      <p>Отслеживаем CPV в реальном времени. Масштабируем рабочие форматы, итерируем слабые.</p>
     </div>
   </div>
 </section>
 
-<!-- WHY UGC + CPV TABLE -->
-<section class="s" id="compare">
-  <div class="container">
-    <div class="why-split">
-      <div class="why-col">
-        <div class="s-tag">Почему UGC</div>
-        <h2>В 50–250 раз<br/>дешевле таргета</h2>
-        <p class="s-sub">CPV таргетированной рекламы — 1–5₽. CPV через Content Factory — от 2 копеек.</p>
-        <div class="why-list">
-          <div class="wi">
-            <div class="wi-dot">✓</div>
-            <div class="wi-text"><h4>Нативно, без пометки «Реклама»</h4><p>Контент воспринимается как обычный пост. Доверие выше — конверсия выше.</p></div>
-          </div>
-          <div class="wi">
-            <div class="wi-dot">✓</div>
-            <div class="wi-text"><h4>Долгоживущий контент</h4><p>Ролики набирают просмотры месяцами. Таргет — заканчивается вместе с бюджетом.</p></div>
-          </div>
-          <div class="wi">
-            <div class="wi-dot">✓</div>
-            <div class="wi-text"><h4>138 авторов = 138 точек охвата</h4><p>Нет выгорания аудитории. Каждый автор — отдельная живая аудитория.</p></div>
-          </div>
-          <div class="wi">
-            <div class="wi-dot">✓</div>
-            <div class="wi-text"><h4>Масштаб без потолка</h4><p>Хорошие форматы масштабируем мгновенно. Бюджет идёт только туда, где работает.</p></div>
-          </div>
-        </div>
-      </div>
+<div class="divider"></div>
 
+<!-- ═══════════════════════════ CASE ═══════════════════════════ -->
+<section id="case">
+  <div class="sec-label">Кейс · Доказательство</div>
+  <h2 class="sec-h">Biorepair: снизили CPV в 7 раз</h2>
+</section>
+<section style="padding-top:0;padding-bottom:80px">
+  <div class="case-wrap">
+    <div class="case-head">
       <div>
-        <div class="s-tag">Сравнение CPV</div>
-        <h2 style="font-size:clamp(22px,3vw,34px)">Стоимость<br/>одного просмотра</h2>
-        <br/>
-        <table class="cmp-table">
-          <thead>
-            <tr>
-              <th>Канал</th>
-              <th>Средний CPV</th>
-              <th>На шкале</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Instagram Ads</td>
-              <td><span class="cpv-v" style="color:#f87171">2–5 ₽</span></td>
-              <td><div class="cpv-bar-wrap"><div class="cpv-bg"><div class="cpv-fill" style="width:100%;background:#f87171"></div></div></div></td>
-            </tr>
-            <tr>
-              <td>YouTube Ads</td>
-              <td><span class="cpv-v" style="color:#fb923c">1–3 ₽</span></td>
-              <td><div class="cpv-bar-wrap"><div class="cpv-bg"><div class="cpv-fill" style="width:65%;background:#fb923c"></div></div></div></td>
-            </tr>
-            <tr>
-              <td>TikTok Ads</td>
-              <td><span class="cpv-v" style="color:#fbbf24">0.5–2 ₽</span></td>
-              <td><div class="cpv-bar-wrap"><div class="cpv-bg"><div class="cpv-fill" style="width:40%;background:#fbbf24"></div></div></div></td>
-            </tr>
-            <tr>
-              <td>Блогеры</td>
-              <td><span class="cpv-v" style="color:#a3e635">0.3–1 ₽</span></td>
-              <td><div class="cpv-bar-wrap"><div class="cpv-bg"><div class="cpv-fill" style="width:22%;background:#a3e635"></div></div></div></td>
-            </tr>
-            <tr class="hl">
-              <td style="font-weight:800"><span style="color:var(--accent)">★ </span>Content Factory</td>
-              <td><span class="cpv-v" style="color:#4ade80;font-size:15px">0.02–0.07 ₽</span></td>
-              <td><div class="cpv-bar-wrap"><div class="cpv-bg"><div class="cpv-fill" style="width:3%;background:#4ade80"></div></div></div></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="case-badge">Реальный кейс · Biorepair</div>
+        <h3 style="font-size:clamp(20px,2.5vw,30px);font-weight:900;color:#fff;letter-spacing:-1px;line-height:1.1;margin-bottom:12px">С 0.20₽ до 0.028₽ за просмотр.<br>7+ миллионов охвата за кампанию.</h3>
+        <p style="font-size:15px;color:var(--muted2);line-height:1.65;max-width:460px">Предыдущее агентство давало CPV 0.20₽. Мы запустили конвейер UGC-контента и опустили стоимость просмотра до 0.028₽ — в 7 раз дешевле, с охватом 7+ миллионов человек.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- DASHBOARD SECTION -->
-<section class="s s-dark">
-  <div class="container">
-    <div class="dash-section">
-      <div class="dash-text">
-        <div class="s-tag">Прозрачность</div>
-        <h2>Дашборд с охватами<br/>в реальном времени</h2>
-        <p class="s-sub">Клиент видит все метрики 24/7. Никаких ежемесячных отчётов — только живые данные.</p>
-        <div class="dash-perks">
-          <div class="dp">
-            <div class="dp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
-            <div><h4>Просмотры и CPV по каждому ролику</h4><p style="font-size:13px;color:var(--muted);margin-top:3px">Видно что работает, а что нет</p></div>
-          </div>
-          <div class="dp">
-            <div class="dp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div><h4>Обновляется ежедневно в 23:30 МСК</h4><p style="font-size:13px;color:var(--muted);margin-top:3px">Автоматически, без участия менеджера</p></div>
-          </div>
-          <div class="dp">
-            <div class="dp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-            <div><h4>Экспорт в PDF одной кнопкой</h4><p style="font-size:13px;color:var(--muted);margin-top:3px">Для презентаций и внутренней отчётности</p></div>
-          </div>
+      <div class="mini-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-n">221</div>
+          <div class="mini-stat-l">UGC роликов</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-n">86</div>
+          <div class="mini-stat-l">Монтаж</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-n">39</div>
+          <div class="mini-stat-l">AI-ролики</div>
         </div>
       </div>
-
-      <!-- Dashboard illustration -->
-      <div>
-        <svg viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.4)">
-          <!-- BG -->
-          <rect width="480" height="320" rx="16" fill="#0d0d14"/>
-          <!-- Header -->
-          <rect width="480" height="44" rx="0" fill="#13131c"/>
-          <rect x="0" y="43" width="480" height="1" fill="rgba(255,255,255,.07)"/>
-          <!-- Logo area -->
-          <rect x="16" y="14" width="60" height="16" rx="4" fill="rgba(167,139,250,.3)"/>
-          <!-- Nav dots -->
-          <circle cx="400" cy="22" r="4" fill="rgba(255,255,255,.15)"/>
-          <circle cx="416" cy="22" r="4" fill="rgba(255,255,255,.15)"/>
-          <circle cx="432" cy="22" r="4" fill="rgba(255,255,255,.15)"/>
-          <rect x="444" y="14" width="22" height="16" rx="6" fill="rgba(167,139,250,.3)"/>
-          <!-- Tabs -->
-          <rect x="16" y="52" width="70" height="26" rx="8" fill="rgba(167,139,250,.15)" stroke="rgba(167,139,250,.3)" stroke-width="1"/>
-          <rect x="90" y="52" width="60" height="26" rx="8" fill="transparent"/>
-          <rect x="154" y="52" width="60" height="26" rx="8" fill="transparent"/>
-          <rect x="24" y="59" width="54" height="11" rx="3" fill="rgba(167,139,250,.7)"/>
-          <rect x="96" y="61" width="48" height="8" rx="3" fill="rgba(255,255,255,.2)"/>
-          <rect x="160" y="61" width="48" height="8" rx="3" fill="rgba(255,255,255,.2)"/>
-          <!-- Stats cards -->
-          <rect x="16" y="88" width="100" height="56" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-          <rect x="26" y="96" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-          <rect x="26" y="108" width="70" height="14" rx="4" fill="rgba(167,139,250,.6)"/>
-          <rect x="26" y="128" width="36" height="5" rx="2.5" fill="rgba(74,222,128,.4)"/>
-
-          <rect x="126" y="88" width="100" height="56" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-          <rect x="136" y="96" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-          <rect x="136" y="108" width="60" height="14" rx="4" fill="rgba(52,211,153,.6)"/>
-          <rect x="136" y="128" width="40" height="5" rx="2.5" fill="rgba(74,222,128,.4)"/>
-
-          <rect x="236" y="88" width="100" height="56" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-          <rect x="246" y="96" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-          <rect x="246" y="108" width="55" height="14" rx="4" fill="rgba(251,191,36,.6)"/>
-          <rect x="246" y="128" width="44" height="5" rx="2.5" fill="rgba(74,222,128,.4)"/>
-
-          <rect x="346" y="88" width="118" height="56" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-          <rect x="356" y="96" width="50" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
-          <rect x="356" y="108" width="75" height="14" rx="4" fill="rgba(96,165,250,.6)"/>
-          <rect x="356" y="128" width="36" height="5" rx="2.5" fill="rgba(74,222,128,.4)"/>
-
-          <!-- Chart -->
-          <rect x="16" y="154" width="300" height="150" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <rect x="26" y="164" width="80" height="7" rx="3" fill="rgba(255,255,255,.3)"/>
-          <!-- Chart line -->
-          <polyline points="30,270 70,255 110,260 150,240 190,245 230,220 270,225 295,205" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
-          <path d="M30,270 70,255 110,260 150,240 190,245 230,220 270,225 295,205 295,290 30,290Z" fill="url(#dashGrad)" opacity=".2"/>
-          <!-- Line 2 -->
-          <polyline points="30,280 70,272 110,268 150,260 190,255 230,248 270,242 295,236" stroke="#34d399" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>
-          <!-- Grid lines -->
-          <line x1="30" y1="210" x2="295" y2="210" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <line x1="30" y1="240" x2="295" y2="240" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <line x1="30" y1="270" x2="295" y2="270" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <defs>
-            <linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a78bfa" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Table -->
-          <rect x="326" y="154" width="138" height="150" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-          <rect x="336" y="164" width="70" height="6" rx="3" fill="rgba(255,255,255,.25)"/>
-          <!-- Table rows -->
-          <rect x="336" y="180" width="38" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="180" width="28" height="5" rx="2.5" fill="rgba(52,211,153,.5)"/>
-          <line x1="336" y1="192" x2="454" y2="192" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="198" width="42" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="198" width="24" height="5" rx="2.5" fill="rgba(167,139,250,.5)"/>
-          <line x1="336" y1="210" x2="454" y2="210" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="216" width="36" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="216" width="30" height="5" rx="2.5" fill="rgba(251,191,36,.5)"/>
-          <line x1="336" y1="228" x2="454" y2="228" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="234" width="44" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="234" width="26" height="5" rx="2.5" fill="rgba(96,165,250,.5)"/>
-          <line x1="336" y1="246" x2="454" y2="246" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="252" width="38" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="252" width="32" height="5" rx="2.5" fill="rgba(52,211,153,.5)"/>
-          <line x1="336" y1="264" x2="454" y2="264" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="270" width="40" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="270" width="22" height="5" rx="2.5" fill="rgba(167,139,250,.5)"/>
-          <line x1="336" y1="282" x2="454" y2="282" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-          <rect x="336" y="288" width="36" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
-          <rect x="392" y="288" width="28" height="5" rx="2.5" fill="rgba(74,222,128,.6)"/>
-        </svg>
+    </div>
+    <div class="case-numbers">
+      <div class="cn">
+        <div class="cn-n">0.20<span class="red">₽</span></div>
+        <div class="cn-l">CPV до Names</div>
       </div>
+      <div class="cn">
+        <div class="cn-n">0.028<span class="red">₽</span></div>
+        <div class="cn-l">CPV с Names</div>
+      </div>
+      <div class="cn">
+        <div class="cn-n">7<span class="red">млн+</span></div>
+        <div class="cn-l">Охват</div>
+      </div>
+    </div>
+    <div class="case-img-wrap">
+      <img src="img/il_case.jpg" alt="Результаты Biorepair"/>
+      <div class="case-img-fade-t"></div>
+      <div class="case-img-fade-b"></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<div class="cta-outer" id="contact">
-  <div class="cta-card">
-    <div style="margin-bottom:24px;opacity:.6">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="9" viewBox="0 0 75 14" fill="none">
-        <path d="M72.2715 9.11621C73.5959 9.11622 74.6667 10.2515 74.667 11.5576C74.667 12.9207 73.596 14 72.2715 14C70.9469 14 69.876 12.9207 69.876 11.5576C69.8762 10.2515 70.9471 9.11621 72.2715 9.11621ZM19.0781 0C21.5652 5.93264e-05 23.9775 0.512708 24.835 2.98828C24.6123 4.58171 23.6328 5.81007 22.4092 6.04492L18.9424 6.67871C18.8213 6.69947 18.8213 6.88263 18.9424 6.90332L22.4502 7.61816C23.727 7.86347 24.7002 9.19089 24.8623 10.8652L25.1211 13.4893H21.5293V11.7285C21.1347 12.5237 19.8103 13.8584 17.3867 13.8584C14.8504 13.8584 12.9336 12.6086 12.9336 10.0527C12.9337 7.29824 14.0052 4.85573 21.5293 5.50879V5.19727C21.5293 3.91943 21.2759 2.81167 19.0781 2.81152C17.331 2.81152 16.8236 3.52129 16.6826 4.34473H13.4414C13.7515 1.13589 15.9782 0 19.0781 0ZM51.0605 0C54.1886 0.000227286 57.5697 2.24368 57.2598 7.89453H47.9316C48.2135 9.57003 49.2004 10.8193 51.0322 10.8193C52.6102 10.8192 53.427 10.0809 53.8779 9.03027H57.0908C56.4145 12.5515 53.7659 13.8582 51.0605 13.8584C47.9605 13.8584 44.6064 11.87 44.6064 6.92871C44.6067 1.95936 47.9606 0 51.0605 0ZM63.3037 0C67.6999 2.33363e-05 69.4188 1.90259 69.4189 4.34473H65.7275C65.7274 3.46446 64.8816 2.66992 63.2754 2.66992C61.6692 2.66993 60.9649 3.15215 60.9648 3.97559C60.9648 4.91266 62.5707 5.11156 64.4023 5.39551C67.1641 5.82147 69.9823 5.99203 69.9824 9.34277C69.9824 12.5234 67.5592 13.8584 63.501 13.8584C59.1891 13.8584 57.0752 12.2681 57.0752 9.22949L60.8799 9.25781C60.8799 10.7345 62.1766 11.1318 63.7266 11.1318C65.3608 11.1318 66.1502 10.7914 66.1504 9.85449C66.1504 8.66177 64.3459 8.63308 62.0068 8.17871C59.2734 7.66756 57.3857 7.04243 57.3857 4.34473C57.3858 1.64701 59.3583 0 63.3037 0ZM8.25098 0C11.0127 0 12.7322 1.84569 12.7324 4.79883V13.4893H9.09668V5.79297C9.09659 4.34484 8.36383 3.23738 6.72949 3.2373C5.12322 3.2373 3.60762 4.34479 3.60742 5.79297V13.4893H0V0.369141H3.60742V2.24316C4.03047 1.47635 5.99676 8.12363e-05 8.25098 0ZM40.1182 0C42.8799 0 44.4295 1.84569 44.4297 4.79883V13.4893H40.7949V5.79297C40.7948 3.86238 39.9211 3.23748 38.8223 3.2373C37.695 3.2373 36.7364 3.94729 36.7363 5.79297V13.4893H33.1006V5.79297C33.1005 3.8621 32.227 3.2373 31.1279 3.2373C30.0008 3.23738 29.0431 3.94738 29.043 5.79297V6.18262L28.2881 6.04492C26.9908 5.79988 25.9972 4.47314 25.835 2.77832L25.5996 0.369141H29.043V2.1582C29.4658 1.39141 30.5933 0 32.4531 0C34.3129 0.000143623 35.637 0.852516 36.2852 2.3291C36.567 1.78953 38.0327 4.83334e-06 40.1182 0ZM29.043 13.4893H25.5752L25.835 10.8652C25.9971 9.19081 26.9904 7.86339 28.2471 7.61816L29.043 7.45508V13.4893ZM21.5293 8.03711C18.1194 7.83834 16.457 8.00864 16.457 9.85449C16.4572 10.7914 17.1332 11.3877 18.373 11.3877C19.8103 11.3877 20.9374 10.5926 21.5293 9.57031V8.03711ZM51.0322 3.03906C49.4259 3.03906 48.4678 3.97582 48.0732 5.33887H53.8779C53.5398 3.97589 52.6665 3.03919 51.0322 3.03906Z" fill="white"/>
-      </svg>
-    </div>
-    <h2>Готовы к первому<br/>миллиону охватов?</h2>
-    <p>Расскажите о бренде — посчитаем CPV и предложим стратегию. Бесплатно и без обязательств.</p>
-    <div class="cta-form">
-      <input class="cta-input" type="text" placeholder="Ваш Telegram или email"/>
-      <a href="https://t.me/ilyagoncharenko" class="btn-primary" target="_blank" rel="noopener">Написать →</a>
-    </div>
-    <p class="cta-note">Или сразу: <a href="https://t.me/ilyagoncharenko" target="_blank" rel="noopener">@ilyagoncharenko</a> в Telegram · Ответим в течение часа</p>
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ UGC GRID ═══════════════════════════ -->
+<section>
+  <div class="sec-label">Производство</div>
+  <h2 class="sec-h">Сотни форматов в тесте<br>одновременно</h2>
+  <p class="sec-p" style="max-width:540px">Запускаем параллельно десятки гипотез. Что работает — масштабируем. Что нет — итерируем без потери времени и бюджета.</p>
+  <div class="grid-img-wrap">
+    <img src="img/il_grid.jpg" alt="UGC контент Names"/>
+    <div class="grid-img-fade-l"></div>
   </div>
-</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ CLIENTS ═══════════════════════════ -->
+<section>
+  <div class="sec-label">Клиенты</div>
+  <h2 class="sec-h">Нам доверяют<br>растущие бренды</h2>
+  <div class="clients-strip">
+    <div class="client-pill">Vois</div>
+    <div class="client-pill">Frambini</div>
+    <div class="client-pill">Pusy</div>
+    <div class="client-pill">Lit Energy</div>
+    <div class="client-pill">Biorepair</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ GUARANTEES ═══════════════════════════ -->
+<section>
+  <div class="sec-label">Гарантии</div>
+  <h2 class="sec-h">Результат — в договоре.<br>Не выполняем — возвращаем деньги.</h2>
+  <div class="guar-grid">
+    <div class="guar-card">
+      <div class="guar-num">0.2<span class="red">₽</span></div>
+      <h3>Максимальный CPV зафиксирован в контракте</h3>
+      <p>Единственное агентство на рынке, которое прописывает гарантию стоимости просмотра в договоре.</p>
+    </div>
+    <div class="guar-card">
+      <div class="guar-num">5000<span class="red">+</span></div>
+      <h3>Роликов в месяц — фиксировано в SLA</h3>
+      <p>Конвейерное производство без человеческого фактора. Объём прописан и гарантирован.</p>
+    </div>
+    <div class="guar-card">
+      <div class="guar-num">24<span class="red">/7</span></div>
+      <h3>Мониторинг трендов в реальном времени</h3>
+      <p>Тренды живут часы. Наш аналитический отдел работает круглосуточно — ловим каждый.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ CTA ═══════════════════════════ -->
+<section style="padding-bottom:80px">
+  <div class="cta-wrap">
+    <div class="cta-left">
+      <div class="sec-label">Старт за 3 дня</div>
+      <h2>Запустим производство контента уже на этой неделе</h2>
+      <p>Расскажите о вашем бренде — рассчитаем CPV и объём специально под ваши задачи. Бесплатно, без обязательств. Ответим в течение часа.</p>
+      <div class="cta-btns">
+        <a href="https://t.me/ilya_goncharenko1" class="btn-primary">Написать Илье →</a>
+        <a href="https://t.me/stshkvchyn" class="btn-secondary">Написать Яну</a>
+      </div>
+      <div class="cta-note">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
+    </div>
+    <div class="cta-img-wrap">
+      <img src="img/il_founders.jpg" alt="Основатели Names"/>
+      <div class="cta-img-fade"></div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-left">
-    <div class="footer-logo-names">
-      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="10" viewBox="0 0 75 14" fill="none">
-        <path d="M72.2715 9.11621C73.5959 9.11622 74.6667 10.2515 74.667 11.5576C74.667 12.9207 73.596 14 72.2715 14C70.9469 14 69.876 12.9207 69.876 11.5576C69.8762 10.2515 70.9471 9.11621 72.2715 9.11621ZM19.0781 0C21.5652 5.93264e-05 23.9775 0.512708 24.835 2.98828C24.6123 4.58171 23.6328 5.81007 22.4092 6.04492L18.9424 6.67871C18.8213 6.69947 18.8213 6.88263 18.9424 6.90332L22.4502 7.61816C23.727 7.86347 24.7002 9.19089 24.8623 10.8652L25.1211 13.4893H21.5293V11.7285C21.1347 12.5237 19.8103 13.8584 17.3867 13.8584C14.8504 13.8584 12.9336 12.6086 12.9336 10.0527C12.9337 7.29824 14.0052 4.85573 21.5293 5.50879V5.19727C21.5293 3.91943 21.2759 2.81167 19.0781 2.81152C17.331 2.81152 16.8236 3.52129 16.6826 4.34473H13.4414C13.7515 1.13589 15.9782 0 19.0781 0ZM51.0605 0C54.1886 0.000227286 57.5697 2.24368 57.2598 7.89453H47.9316C48.2135 9.57003 49.2004 10.8193 51.0322 10.8193C52.6102 10.8192 53.427 10.0809 53.8779 9.03027H57.0908C56.4145 12.5515 53.7659 13.8582 51.0605 13.8584C47.9605 13.8584 44.6064 11.87 44.6064 6.92871C44.6067 1.95936 47.9606 0 51.0605 0ZM63.3037 0C67.6999 2.33363e-05 69.4188 1.90259 69.4189 4.34473H65.7275C65.7274 3.46446 64.8816 2.66992 63.2754 2.66992C61.6692 2.66993 60.9649 3.15215 60.9648 3.97559C60.9648 4.91266 62.5707 5.11156 64.4023 5.39551C67.1641 5.82147 69.9823 5.99203 69.9824 9.34277C69.9824 12.5234 67.5592 13.8584 63.501 13.8584C59.1891 13.8584 57.0752 12.2681 57.0752 9.22949L60.8799 9.25781C60.8799 10.7345 62.1766 11.1318 63.7266 11.1318C65.3608 11.1318 66.1502 10.7914 66.1504 9.85449C66.1504 8.66177 64.3459 8.63308 62.0068 8.17871C59.2734 7.66756 57.3857 7.04243 57.3857 4.34473C57.3858 1.64701 59.3583 0 63.3037 0ZM8.25098 0C11.0127 0 12.7322 1.84569 12.7324 4.79883V13.4893H9.09668V5.79297C9.09659 4.34484 8.36383 3.23738 6.72949 3.2373C5.12322 3.2373 3.60762 4.34479 3.60742 5.79297V13.4893H0V0.369141H3.60742V2.24316C4.03047 1.47635 5.99676 8.12363e-05 8.25098 0ZM40.1182 0C42.8799 0 44.4295 1.84569 44.4297 4.79883V13.4893H40.7949V5.79297C40.7948 3.86238 39.9211 3.23748 38.8223 3.2373C37.695 3.2373 36.7364 3.94729 36.7363 5.79297V13.4893H33.1006V5.79297C33.1005 3.8621 32.227 3.2373 31.1279 3.2373C30.0008 3.23738 29.0431 3.94738 29.043 5.79297V6.18262L28.2881 6.04492C26.9908 5.79988 25.9972 4.47314 25.835 2.77832L25.5996 0.369141H29.043V2.1582C29.4658 1.39141 30.5933 0 32.4531 0C34.3129 0.000143623 35.637 0.852516 36.2852 2.3291C36.567 1.78953 38.0327 4.83334e-06 40.1182 0ZM29.043 13.4893H25.5752L25.835 10.8652C25.9971 9.19081 26.9904 7.86339 28.2471 7.61816L29.043 7.45508V13.4893ZM21.5293 8.03711C18.1194 7.83834 16.457 8.00864 16.457 9.85449C16.4572 10.7914 17.1332 11.3877 18.373 11.3877C19.8103 11.3877 20.9374 10.5926 21.5293 9.57031V8.03711ZM51.0322 3.03906C49.4259 3.03906 48.4678 3.97582 48.0732 5.33887H53.8779C53.5398 3.97589 52.6665 3.03919 51.0322 3.03906Z" fill="rgba(255,255,255,.45)"/>
-      </svg>
-    </div>
+  <p>© 2025 Names — Завод контента полного цикла</p>
+  <div style="display:flex;gap:24px">
+    <a href="https://t.me/ilya_goncharenko1">@ilya_goncharenko1</a>
+    <a href="https://t.me/stshkvchyn">@stshkvchyn</a>
   </div>
-  <p>11М+ просмотров · 138 авторов · 3 платформы</p>
-  <p>© 2026 Names</p>
 </footer>
 
 </body>
