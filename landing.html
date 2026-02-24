@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Content Factory — UGC для вирусного охвата бренда</title>
+  <link rel="icon" type="image/svg+xml" href="names_logo.svg"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --accent:#a78bfa;
+      --accent2:#7c3aed;
+      --green:#4ade80;
+      --bg:#0d0d11;
+      --bg2:#13131a;
+      --bg3:#1a1a22;
+      --border:#2a2a38;
+      --text:#e0e0e0;
+      --muted:#666;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 40px;
+      background:rgba(13,13,17,.85);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(42,42,56,.6);
+    }
+    .nav-logo{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff}
+    .nav-logo span{color:var(--accent)}
+    .nav-cta{
+      padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;
+      background:var(--accent);color:#0d0d11;border:none;cursor:pointer;
+      text-decoration:none;transition:opacity .15s
+    }
+    .nav-cta:hover{opacity:.85}
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero{
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;padding:120px 24px 80px;
+      position:relative;overflow:hidden;
+    }
+    .hero-glow{
+      position:absolute;top:20%;left:50%;transform:translateX(-50%);
+      width:700px;height:400px;
+      background:radial-gradient(ellipse at center,rgba(124,58,237,.18) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);
+      color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+      padding:6px 14px;border-radius:20px;margin-bottom:32px;
+    }
+    .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    h1{
+      font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.05;
+      letter-spacing:-2px;max-width:800px;margin-bottom:24px;
+    }
+    h1 .hl{
+      background:linear-gradient(135deg,var(--accent),#60a5fa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-sub{
+      font-size:clamp(16px,2.5vw,20px);color:var(--muted);
+      max-width:560px;line-height:1.6;margin-bottom:44px;
+    }
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:64px}
+    .btn-primary{
+      padding:16px 36px;border-radius:10px;font-size:16px;font-weight:800;
+      background:var(--accent);color:#0d0d11;border:none;cursor:pointer;
+      text-decoration:none;transition:transform .15s,opacity .15s;display:inline-block;
+    }
+    .btn-primary:hover{transform:translateY(-2px);opacity:.92}
+    .btn-secondary{
+      padding:16px 36px;border-radius:10px;font-size:16px;font-weight:700;
+      background:transparent;color:var(--text);border:1px solid var(--border);
+      cursor:pointer;text-decoration:none;transition:border-color .15s;display:inline-block;
+    }
+    .btn-secondary:hover{border-color:#555}
+
+    /* ── HERO STATS ──────────────────────────────────────────── */
+    .hero-stats{
+      display:flex;gap:0;border:1px solid var(--border);border-radius:16px;
+      background:var(--bg3);overflow:hidden;flex-wrap:wrap;justify-content:center;
+    }
+    .hero-stat{padding:24px 40px;text-align:center;position:relative}
+    .hero-stat:not(:last-child)::after{
+      content:'';position:absolute;right:0;top:20%;bottom:20%;
+      width:1px;background:var(--border);
+    }
+    .hero-stat .num{font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .hero-stat .num span{color:var(--accent)}
+    .hero-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.6px}
+
+    /* ── SECTIONS ────────────────────────────────────────────── */
+    section{padding:96px 24px}
+    .container{max-width:1100px;margin:0 auto}
+    .section-tag{
+      display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:16px;
+    }
+    h2{font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:20px}
+    .section-sub{font-size:18px;color:var(--muted);line-height:1.6;max-width:560px}
+
+    /* ── HOW IT WORKS ────────────────────────────────────────── */
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:56px}
+    .step{
+      background:var(--bg3);border:1px solid var(--border);border-radius:16px;
+      padding:32px 28px;position:relative;overflow:hidden;transition:border-color .2s;
+    }
+    .step:hover{border-color:rgba(167,139,250,.4)}
+    .step-num{
+      font-size:56px;font-weight:900;color:rgba(167,139,250,.12);
+      position:absolute;top:16px;right:20px;line-height:1;letter-spacing:-2px;
+    }
+    .step-icon{
+      width:48px;height:48px;border-radius:12px;
+      background:rgba(167,139,250,.12);display:flex;align-items:center;justify-content:center;
+      font-size:22px;margin-bottom:20px;
+    }
+    .step h3{font-size:17px;font-weight:800;margin-bottom:10px}
+    .step p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* ── RESULTS ─────────────────────────────────────────────── */
+    .results-bg{background:var(--bg2)}
+    .results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:56px}
+    .result-card{
+      background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .result-card .r-num{font-size:38px;font-weight:900;color:var(--accent);letter-spacing:-1.5px;line-height:1}
+    .result-card .r-lbl{font-size:13px;color:var(--muted);line-height:1.5}
+    .result-card .r-tag{
+      font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+      color:var(--green);margin-top:4px;
+    }
+
+    /* ── CASES ───────────────────────────────────────────────── */
+    .cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:56px}
+    .case-card{
+      background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:32px;
+      transition:border-color .2s,transform .2s;
+    }
+    .case-card:hover{border-color:rgba(167,139,250,.35);transform:translateY(-4px)}
+    .case-header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+    .case-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+    .case-title{font-size:18px;font-weight:800}
+    .case-niche{font-size:12px;color:var(--muted);margin-top:2px}
+    .case-metrics{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+    .cm{background:var(--bg2);border-radius:10px;padding:14px}
+    .cm .v{font-size:22px;font-weight:800;line-height:1}
+    .cm .l{font-size:11px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+    .case-platforms{display:flex;gap:8px;flex-wrap:wrap}
+    .plat{
+      padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;
+      border:1px solid;
+    }
+    .plat-ig{border-color:#e1306c;color:#e1306c;background:rgba(225,48,108,.08)}
+    .plat-tt{border-color:#69c9d0;color:#69c9d0;background:rgba(105,201,208,.08)}
+    .plat-yt{border-color:#ff4e45;color:#ff4e45;background:rgba(255,78,69,.08)}
+
+    /* ── WHY US ──────────────────────────────────────────────── */
+    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:56px}
+    .why-card{
+      background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px;
+      transition:border-color .2s;
+    }
+    .why-card:hover{border-color:rgba(167,139,250,.3)}
+    .why-icon{font-size:28px;margin-bottom:16px}
+    .why-card h3{font-size:16px;font-weight:800;margin-bottom:10px}
+    .why-card p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* ── PLATFORMS ───────────────────────────────────────────── */
+    .platforms-bg{background:var(--bg2)}
+    .plat-row{
+      display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+      align-items:center;margin-top:48px;
+    }
+    .plat-big{
+      display:flex;align-items:center;gap:10px;
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:12px;padding:16px 28px;font-weight:700;font-size:15px;
+      transition:border-color .15s;
+    }
+    .plat-big:hover{border-color:#444}
+    .plat-big .ic{font-size:22px}
+
+    /* ── CTA ─────────────────────────────────────────────────── */
+    .cta-section{
+      text-align:center;padding:96px 24px;
+      background:linear-gradient(180deg,var(--bg) 0%,rgba(124,58,237,.06) 50%,var(--bg) 100%);
+    }
+    .cta-card{
+      max-width:700px;margin:0 auto;
+      background:var(--bg3);border:1px solid var(--border);border-radius:24px;
+      padding:64px 48px;position:relative;overflow:hidden;
+    }
+    .cta-card::before{
+      content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+      width:400px;height:300px;
+      background:radial-gradient(ellipse,rgba(167,139,250,.15) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .cta-card h2{margin-bottom:16px}
+    .cta-card p{font-size:17px;color:var(--muted);margin-bottom:40px;line-height:1.6}
+    .cta-input-row{display:flex;gap:10px;max-width:420px;margin:0 auto}
+    .cta-input{
+      flex:1;padding:14px 18px;border-radius:10px;
+      background:var(--bg);border:1px solid var(--border);color:var(--text);
+      font-size:15px;outline:none;transition:border-color .15s;
+    }
+    .cta-input:focus{border-color:var(--accent)}
+    .cta-input::placeholder{color:var(--muted)}
+    .cta-note{font-size:12px;color:var(--muted);margin-top:14px}
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer{
+      border-top:1px solid var(--border);padding:32px 40px;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    }
+    .footer-logo{font-size:16px;font-weight:800;color:#fff}
+    .footer-logo span{color:var(--accent)}
+    footer p{font-size:13px;color:var(--muted)}
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media(max-width:640px){
+      nav{padding:14px 20px}
+      .hero-stat{padding:18px 24px}
+      .hero-stat:not(:last-child)::after{display:none}
+      .hero-stats{border-radius:12px}
+      .cta-card{padding:40px 24px}
+      .cta-input-row{flex-direction:column}
+      footer{flex-direction:column;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Content<span>Factory</span></div>
+  <a href="#contact" class="nav-cta">Обсудить проект</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">
+    <span class="dot"></span>
+    UGC Content &nbsp;·&nbsp; Native Reach
+  </div>
+
+  <h1>Миллионы просмотров<br/>через <span class="hl">UGC-контент</span></h1>
+
+  <p class="hero-sub">
+    Запускаем массовые нативные охваты для брендов через сеть
+    UGC-авторов на Instagram, TikTok и YouTube Shorts.
+    Без рекламных пометок — только живой контент.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Запустить кампанию</a>
+    <a href="#cases" class="btn-secondary">Посмотреть кейсы</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">3<span>+</span></div>
+      <div class="lbl">Активных проекта</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">2<span>М+</span></div>
+      <div class="lbl">Просмотров в месяц</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">400<span>+</span></div>
+      <div class="lbl">Публикаций</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">3</div>
+      <div class="lbl">Платформы</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <span class="section-tag">Как это работает</span>
+    <h2>От брифа до вирального охвата<br/>за 2 недели</h2>
+    <p class="section-sub">Отлаженный процесс производства контента с полным контролем качества и аналитикой в реальном времени.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-icon">📋</div>
+        <h3>Бриф и стратегия</h3>
+        <p>Изучаем бренд, продукт, аудиторию. Формируем контент-стратегию и подбираем форматы под каждую платформу.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-icon">🎯</div>
+        <h3>Подбор авторов</h3>
+        <p>Отбираем UGC-авторов с нужной аудиторией и органическими показателями. Только проверенные каналы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-icon">🎬</div>
+        <h3>Производство</h3>
+        <p>Авторы снимают контент по ТЗ. Многоуровневая проверка качества перед публикацией. Правки включены.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-icon">📊</div>
+        <h3>Аналитика и рост</h3>
+        <p>Отслеживаем охваты в реальном времени. Масштабируем лучшие форматы, останавливаем неэффективные.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-bg" id="results">
+  <div class="container">
+    <span class="section-tag">Результаты в цифрах</span>
+    <h2>Реальные показатели<br/>действующих проектов</h2>
+    <p class="section-sub">Данные обновляются ежедневно по всем активным кампаниям.</p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="r-num">2М+</div>
+        <div class="r-lbl">Суммарных просмотров по всем кампаниям</div>
+        <div class="r-tag">↑ Органический охват</div>
+      </div>
+      <div class="result-card">
+        <div class="r-num">400+</div>
+        <div class="r-lbl">Опубликованных UGC-роликов за период</div>
+        <div class="r-tag">↑ Постоянный поток</div>
+      </div>
+      <div class="result-card">
+        <div class="r-num">3</div>
+        <div class="r-lbl">Ниши: дейтинг-приложения, мода, wellness</div>
+        <div class="r-tag">↑ Разные вертикали</div>
+      </div>
+      <div class="result-card">
+        <div class="r-num">&lt;0.5₽</div>
+        <div class="r-lbl">Средняя стоимость одного охвата (CPV)</div>
+        <div class="r-tag">↑ Эффективнее таргета</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="container">
+    <span class="section-tag">Кейсы</span>
+    <h2>Что мы уже запустили</h2>
+    <p class="section-sub">Работаем с брендами из разных ниш. Конфиденциальность клиентов соблюдаем.</p>
+
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-dot" style="background:#a78bfa"></div>
+          <div>
+            <div class="case-title">Дейтинг-приложение</div>
+            <div class="case-niche">Мобильные приложения / Lifestyle</div>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <div class="cm">
+            <div class="v" style="color:#a78bfa">1.9М+</div>
+            <div class="l">Просмотров</div>
+          </div>
+          <div class="cm">
+            <div class="v">85</div>
+            <div class="l">Публикаций</div>
+          </div>
+          <div class="cm">
+            <div class="v">2</div>
+            <div class="l">Мес. кампания</div>
+          </div>
+          <div class="cm">
+            <div class="v" style="color:#4ade80">0.26₽</div>
+            <div class="l">CPV</div>
+          </div>
+        </div>
+        <div class="case-platforms">
+          <span class="plat plat-ig">Instagram</span>
+          <span class="plat plat-tt">TikTok</span>
+          <span class="plat plat-yt">YouTube</span>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-dot" style="background:#60a5fa"></div>
+          <div>
+            <div class="case-title">Fashion-бренд</div>
+            <div class="case-niche">Одежда / E-commerce</div>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <div class="cm">
+            <div class="v" style="color:#60a5fa">500К+</div>
+            <div class="l">Просмотров</div>
+          </div>
+          <div class="cm">
+            <div class="v">161</div>
+            <div class="l">Публикаций</div>
+          </div>
+          <div class="cm">
+            <div class="v">3</div>
+            <div class="l">Мес. кампания</div>
+          </div>
+          <div class="cm">
+            <div class="v" style="color:#4ade80">0.52₽</div>
+            <div class="l">CPV</div>
+          </div>
+        </div>
+        <div class="case-platforms">
+          <span class="plat plat-ig">Instagram</span>
+          <span class="plat plat-tt">TikTok</span>
+          <span class="plat plat-yt">YouTube</span>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-dot" style="background:#34d399"></div>
+          <div>
+            <div class="case-title">Wellness-бренд</div>
+            <div class="case-niche">Здоровье / Нутрициология</div>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <div class="cm">
+            <div class="v" style="color:#34d399">460К+</div>
+            <div class="l">Просмотров</div>
+          </div>
+          <div class="cm">
+            <div class="v">60+</div>
+            <div class="l">Публикаций</div>
+          </div>
+          <div class="cm">
+            <div class="v">2</div>
+            <div class="l">Мес. кампания</div>
+          </div>
+          <div class="cm">
+            <div class="v" style="color:#4ade80">0.05₽</div>
+            <div class="l">CPV</div>
+          </div>
+        </div>
+        <div class="case-platforms">
+          <span class="plat plat-ig">Instagram</span>
+          <span class="plat plat-yt">YouTube</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="results-bg" id="why">
+  <div class="container">
+    <span class="section-tag">Почему Content Factory</span>
+    <h2>Не агентство.<br/>Фабрика охватов.</h2>
+    <p class="section-sub">Мы не продаём размещения — мы строим системы нативного продвижения с измеримым результатом.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">📡</div>
+        <h3>Живая аналитика</h3>
+        <p>Клиент видит охваты в реальном времени через личный дашборд. Никаких Excel-отчётов раз в месяц.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <h3>Нативность гарантирована</h3>
+        <p>Контент выглядит как органический. Авторы говорят своим голосом. Без рекламных меток и шаблонов.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Скорость запуска</h3>
+        <p>Первые ролики в эфире через 2 недели после брифа. Масштабируемый поток публикаций без простоев.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🎯</div>
+        <h3>Оплата за результат</h3>
+        <p>Прозрачная модель: платите за реальные охваты (CPV), а не за абстрактные «размещения».</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌐</div>
+        <h3>3 платформы сразу</h3>
+        <p>Один контент-план покрывает Instagram Reels, TikTok и YouTube Shorts. Единый бриф — тройной охват.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📈</div>
+        <h3>Масштабирование</h3>
+        <p>Лучшие форматы и авторы масштабируются моментально. Бюджет растёт только туда, где работает.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section class="platforms-bg">
+  <div class="container" style="text-align:center">
+    <span class="section-tag">Платформы</span>
+    <h2>Мы работаем там,<br/>где живёт ваша аудитория</h2>
+    <div class="plat-row">
+      <div class="plat-big">
+        <span class="ic">📸</span>
+        <span style="color:#e1306c">Instagram Reels</span>
+      </div>
+      <div class="plat-big">
+        <span class="ic">🎵</span>
+        <span style="color:#69c9d0">TikTok</span>
+      </div>
+      <div class="plat-big">
+        <span class="ic">▶️</span>
+        <span style="color:#ff4e45">YouTube Shorts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-card">
+    <span class="section-tag">Связаться</span>
+    <h2>Готовы запустить<br/>охваты для вашего бренда?</h2>
+    <p>Расскажите о проекте — обсудим стратегию и посчитаем CPV под ваш бюджет.</p>
+    <div class="cta-input-row">
+      <input class="cta-input" type="text" placeholder="Telegram или email"/>
+      <a href="https://t.me/ilyagoncharenko" class="btn-primary" target="_blank" rel="noopener">Написать</a>
+    </div>
+    <p class="cta-note">Или сразу в Telegram: <a href="https://t.me/ilyagoncharenko" style="color:var(--accent);text-decoration:none" target="_blank" rel="noopener">@ilyagoncharenko</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Content<span>Factory</span></div>
+  <p>© 2026 Content Factory · UGC-продвижение для брендов</p>
+</footer>
+
+</body>
+</html>
