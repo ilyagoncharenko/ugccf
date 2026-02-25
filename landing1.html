@@ -32,10 +32,11 @@
     .divider{max-width:1100px;margin:0 auto;height:1px;background:var(--b)}
 
     /* HERO */
-    .hero{padding:100px 0 64px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
-    @media(max-width:960px){.hero{grid-template-columns:1fr;padding:88px 0 48px}}
-    .hero-glow{position:fixed;top:0;left:-10%;width:600px;height:500px;background:radial-gradient(circle,rgba(232,0,10,.05),transparent 70%);pointer-events:none}
-    .hero-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 70% at 40% 20%,black,transparent 80%);opacity:.4;pointer-events:none}
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:url('img/il_hero_bg.jpg') center/cover no-repeat;z-index:0}
+    .hero-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,10,10,.96) 0%,rgba(10,10,10,.75) 48%,rgba(10,10,10,.18) 100%)}
+    .hero-ov-b{position:absolute;bottom:0;left:0;right:0;height:220px;z-index:1;background:linear-gradient(to top,rgba(10,10,10,1) 0%,transparent 100%)}
+    .hero-inner{position:relative;z-index:2;padding:140px 0 100px;max-width:600px}
 
     .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(232,0,10,.1);border:1px solid rgba(232,0,10,.3);color:var(--red);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:24px}
     .dot{width:5px;height:5px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);animation:p 2s infinite;flex-shrink:0}
@@ -64,11 +65,16 @@
     .ms-l{font-size:9px;color:var(--m);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
     @media(max-width:600px){.mstats{grid-template-columns:repeat(2,1fr)}.ms:nth-child(2){border-right:none}.ms:nth-child(3){border-top:1px solid var(--b);border-right:1px solid var(--b)}.ms:nth-child(4){border-top:1px solid var(--b)}}
 
-    /* HERO IMAGE */
-    .hero-img{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 32px 80px rgba(232,0,10,.14)}
-    .hero-img img{width:100%;display:block}
-    .hero-img-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 24%);pointer-events:none}
-    @media(max-width:960px){.hero-img{display:none}}
+    /* HERO STATS STRIP */
+    .hero-stats-strip{position:absolute;bottom:0;left:0;right:0;z-index:3;border-top:1px solid rgba(255,255,255,.08)}
+    .hero-stats-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(4,1fr)}
+    @media(max-width:600px){.hero-stats-inner{grid-template-columns:repeat(2,1fr);padding:0 20px}}
+    .hss{padding:20px 0;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+    .hss:last-child{border-right:none}
+    @media(max-width:600px){.hss:nth-child(2){border-right:none}.hss:nth-child(3){border-right:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.08)}.hss:nth-child(4){border-top:1px solid rgba(255,255,255,.08)}}
+    .hss-n{font-size:24px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .hss-n sup{font-size:.5em;color:var(--red)}
+    .hss-l{font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
 
     /* CLIENTS STRIP */
     .clients-bar{padding:20px 0;border-top:1px solid var(--b);border-bottom:1px solid var(--b);display:flex;align-items:center;gap:0}
@@ -168,9 +174,6 @@
 </head>
 <body>
 
-<div class="hero-glow"></div>
-<div class="hero-grid"></div>
-
 <!-- NAV -->
 <nav>
   <div class="logo">Names<span>.</span></div>
@@ -178,9 +181,12 @@
 </nav>
 
 <!-- HERO -->
-<div class="w">
-  <div class="hero">
-    <div>
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-ov-b"></div>
+  <div class="w" style="width:100%">
+    <div class="hero-inner">
       <div class="badge"><div class="dot"></div>Завод контента · Полный цикл</div>
       <h1>Снижаем CPV<br>в <span class="r">7 раз.</span><br>Гарантия<br>в договоре.</h1>
       <p class="sub">Системное производство вирусного UGC-контента — 5000 роликов в месяц на Instagram, TikTok, YouTube Shorts.</p>
@@ -189,16 +195,14 @@
         <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Запустить кампанию →</a>
         <a href="#case" class="btn btn-g">Смотреть кейс</a>
       </div>
-      <div class="mstats">
-        <div class="ms"><div class="ms-n">5000<sup>+</sup></div><div class="ms-l">Роликов/мес</div></div>
-        <div class="ms"><div class="ms-n">0.028<sup>₽</sup></div><div class="ms-l">Мин. CPV</div></div>
-        <div class="ms"><div class="ms-n">7<sup>млн+</sup></div><div class="ms-l">Охват</div></div>
-        <div class="ms"><div class="ms-n">138</div><div class="ms-l">Авторов</div></div>
-      </div>
     </div>
-    <div class="hero-img">
-      <img src="img/il_hero.jpg" alt="Names"/>
-      <div class="hero-img-fade"></div>
+  </div>
+  <div class="hero-stats-strip">
+    <div class="hero-stats-inner">
+      <div class="hss"><div class="hss-n">5000<sup>+</sup></div><div class="hss-l">Роликов/мес</div></div>
+      <div class="hss"><div class="hss-n">0.028<sup>₽</sup></div><div class="hss-l">Мин. CPV</div></div>
+      <div class="hss"><div class="hss-n">7<sup>млн+</sup></div><div class="hss-l">Охват</div></div>
+      <div class="hss"><div class="hss-n">138</div><div class="hss-l">Авторов</div></div>
     </div>
   </div>
 </div>
