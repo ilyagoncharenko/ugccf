@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Names — Завод контента. CPV от 0.028₽</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --red:#E8000A;--red2:#ff1a20;
+      --bg:#0A0A0A;--bg2:#111;--bg3:#181818;
+      --b:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
+      --t:#F0F0F0;--m:#6B7280;--m2:#9CA3AF;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+    a{text-decoration:none}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:99;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
+    .logo{font-size:18px;font-weight:900;letter-spacing:-1px;color:#fff;text-transform:uppercase}
+    .logo span{color:var(--red)}
+    .nav-cta{padding:8px 20px;background:var(--red);color:#fff;border-radius:5px;font-size:13px;font-weight:700;transition:.15s}
+    .nav-cta:hover{background:var(--red2)}
+    @media(max-width:600px){nav{padding:0 20px}}
+
+    /* LAYOUT */
+    .w{max-width:1100px;margin:0 auto;padding:0 40px}
+    @media(max-width:600px){.w{padding:0 20px}}
+    section{padding:64px 0}
+    @media(max-width:600px){section{padding:48px 0}}
+    .divider{max-width:1100px;margin:0 auto;height:1px;background:var(--b)}
+
+    /* HERO */
+    .hero{padding:100px 0 64px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
+    @media(max-width:960px){.hero{grid-template-columns:1fr;padding:88px 0 48px}}
+    .hero-glow{position:fixed;top:0;left:-10%;width:600px;height:500px;background:radial-gradient(circle,rgba(232,0,10,.05),transparent 70%);pointer-events:none}
+    .hero-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 70% at 40% 20%,black,transparent 80%);opacity:.4;pointer-events:none}
+
+    .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(232,0,10,.1);border:1px solid rgba(232,0,10,.3);color:var(--red);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:24px}
+    .dot{width:5px;height:5px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);animation:p 2s infinite;flex-shrink:0}
+    @keyframes p{0%,100%{opacity:1}50%{opacity:.2}}
+
+    h1{font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.0;letter-spacing:-2.5px;text-transform:uppercase;color:#fff;margin-bottom:20px}
+    h1 .r{color:var(--red)}
+    .sub{font-size:16px;color:var(--m2);line-height:1.6;max-width:480px;margin-bottom:12px}
+    .note{font-size:13px;color:var(--m);margin-bottom:32px;display:flex;align-items:center;gap:6px}
+    .note::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--red);opacity:.8;flex-shrink:0}
+
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+    .btn{padding:14px 32px;border-radius:6px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;gap:8px;transition:.18s}
+    .btn-r{background:var(--red);color:#fff;box-shadow:0 0 40px rgba(232,0,10,.3)}
+    .btn-r:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 0 60px rgba(232,0,10,.4)}
+    .btn-g{border:1px solid var(--b2);color:var(--t)}
+    .btn-g:hover{background:rgba(255,255,255,.05)}
+    .reply{font-size:12px;color:var(--m)}
+
+    /* MINI STATS */
+    .mstats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--b);border-radius:8px;overflow:hidden;background:var(--bg2)}
+    .ms{padding:16px 12px;text-align:center;border-right:1px solid var(--b)}
+    .ms:last-child{border-right:none}
+    .ms-n{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .ms-n sup{font-size:.5em;color:var(--red)}
+    .ms-l{font-size:9px;color:var(--m);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+    @media(max-width:600px){.mstats{grid-template-columns:repeat(2,1fr)}.ms:nth-child(2){border-right:none}.ms:nth-child(3){border-top:1px solid var(--b);border-right:1px solid var(--b)}.ms:nth-child(4){border-top:1px solid var(--b)}}
+
+    /* HERO IMAGE */
+    .hero-img{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 32px 80px rgba(232,0,10,.14)}
+    .hero-img img{width:100%;display:block}
+    .hero-img-fade{position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 24%);pointer-events:none}
+    @media(max-width:960px){.hero-img{display:none}}
+
+    /* CLIENTS STRIP */
+    .clients-bar{padding:20px 0;border-top:1px solid var(--b);border-bottom:1px solid var(--b);display:flex;align-items:center;gap:0}
+    .clients-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--m);padding-right:28px;border-right:1px solid var(--b);white-space:nowrap;flex-shrink:0}
+    .clients-list{display:flex;gap:8px;flex-wrap:wrap;padding-left:28px}
+    .cl{background:var(--bg2);border:1px solid var(--b2);border-radius:6px;padding:7px 18px;font-size:13px;font-weight:700;color:var(--m2)}
+    @media(max-width:600px){.clients-bar{flex-direction:column;align-items:flex-start;gap:16px}.clients-label{border-right:none;padding-right:0}.clients-list{padding-left:0}}
+
+    /* SECTION LABELS */
+    .lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+    .sh{font-size:clamp(26px,3.2vw,40px);font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:16px}
+    .sp{font-size:15px;color:var(--m2);line-height:1.6}
+
+    /* CASE */
+    .case-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden}
+    .case-top{padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+    @media(max-width:700px){.case-top{grid-template-columns:1fr;padding:28px 24px}}
+    .case-tag{background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;display:inline-block;margin-bottom:12px}
+    .case-h{font-size:clamp(18px,2.2vw,26px);font-weight:900;color:#fff;letter-spacing:-.8px;line-height:1.1;margin-bottom:10px}
+    .case-p{font-size:14px;color:var(--m2);line-height:1.6;max-width:420px}
+    .case-pills{display:flex;flex-direction:column;gap:6px;min-width:140px}
+    .pill{background:var(--bg3);border:1px solid var(--b);border-radius:7px;padding:11px 16px;text-align:center}
+    .pill-n{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.8px}
+    .pill-l{font-size:9px;color:var(--m);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+    .case-nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--b)}
+    @media(max-width:500px){.case-nums{grid-template-columns:1fr}}
+    .cn{padding:24px 32px;border-right:1px solid var(--b);text-align:center}
+    .cn:last-child{border-right:none}
+    @media(max-width:500px){.cn{border-right:none;border-bottom:1px solid var(--b)}.cn:last-child{border-bottom:none}}
+    .cn-n{font-size:36px;font-weight:900;color:#fff;letter-spacing:-2px}
+    .cn-n .r{color:var(--red)}
+    .cn-l{font-size:11px;color:var(--m);margin-top:6px;text-transform:uppercase;letter-spacing:.5px}
+    .case-img{position:relative;overflow:hidden;max-height:280px}
+    .case-img img{width:100%;display:block;object-fit:cover;object-position:top}
+    .case-img::before{content:"";position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,var(--bg2),transparent);z-index:1}
+    .case-img::after{content:"";position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,var(--bg2),transparent);z-index:1}
+
+    /* STEPS */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--b);border-radius:10px;overflow:hidden;margin-top:32px;background:var(--bg2)}
+    @media(max-width:700px){.steps{grid-template-columns:1fr 1fr}}
+    @media(max-width:400px){.steps{grid-template-columns:1fr}}
+    .step{padding:24px 20px;border-right:1px solid var(--b)}
+    .step:last-child{border-right:none}
+    @media(max-width:700px){.step:nth-child(2){border-right:none}.step:nth-child(3){border-top:1px solid var(--b)}.step:nth-child(4){border-top:1px solid var(--b);border-right:none}}
+    .sn{font-size:28px;font-weight:900;color:var(--red);opacity:.2;letter-spacing:-2px;margin-bottom:10px}
+    .step h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#fff;margin-bottom:6px}
+    .step p{font-size:12px;color:var(--m2);line-height:1.5}
+
+    /* GUARANTEES */
+    .guar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+    @media(max-width:700px){.guar{grid-template-columns:1fr}}
+    .gc{background:var(--bg2);border:1px solid var(--b);border-radius:10px;padding:28px 24px;transition:.18s}
+    .gc:hover{border-color:rgba(232,0,10,.3)}
+    .gn{font-size:40px;font-weight:900;letter-spacing:-2px;color:#fff;line-height:1;margin-bottom:10px}
+    .gn .r{color:var(--red)}
+    .gc h3{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px}
+    .gc p{font-size:13px;color:var(--m2);line-height:1.5}
+
+    /* CTA FINAL */
+    .cta-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 280px}
+    @media(max-width:700px){.cta-box{grid-template-columns:1fr}}
+    .cta-in{padding:44px 48px}
+    @media(max-width:600px){.cta-in{padding:32px 24px}}
+    .cta-h{font-size:clamp(22px,2.5vw,34px);font-weight:900;letter-spacing:-1px;color:#fff;margin-bottom:12px;line-height:1.05}
+    .cta-p{font-size:14px;color:var(--m2);line-height:1.6;margin-bottom:24px;max-width:400px}
+    .cta-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .cta-note{margin-top:12px;font-size:11px;color:var(--m)}
+    .cta-img{position:relative;overflow:hidden;align-self:stretch}
+    .cta-img img{width:100%;height:100%;object-fit:cover;object-position:top center}
+    .cta-img::before{content:"";position:absolute;inset:0;background:linear-gradient(to right,var(--bg2),transparent 35%);z-index:1}
+    @media(max-width:700px){.cta-img{height:200px}}
+
+    /* FOOTER */
+    footer{padding:24px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--b)}
+    footer p,footer a{font-size:12px;color:var(--m)}
+    footer a:hover{color:var(--red)}
+    footer div{display:flex;gap:20px}
+    @media(max-width:500px){footer{flex-direction:column;gap:12px;padding:24px 20px;text-align:center}}
+  </style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+<div class="hero-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Names<span>.</span></div>
+  <a href="https://t.me/ilya_goncharenko1" class="nav-cta">Получить расчёт →</a>
+</nav>
+
+<!-- HERO -->
+<div class="w">
+  <div class="hero">
+    <div>
+      <div class="badge"><div class="dot"></div>Завод контента · Полный цикл</div>
+      <h1>Снижаем CPV<br>в <span class="r">7 раз.</span><br>Гарантия<br>в договоре.</h1>
+      <p class="sub">Системное производство вирусного UGC-контента — 5000 роликов в месяц на Instagram, TikTok, YouTube Shorts.</p>
+      <p class="note">Стоимость просмотра от 0.028₽ зафиксирована в контракте</p>
+      <div class="btns">
+        <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Запустить кампанию →</a>
+        <a href="#case" class="btn btn-g">Смотреть кейс</a>
+      </div>
+      <div class="mstats">
+        <div class="ms"><div class="ms-n">5000<sup>+</sup></div><div class="ms-l">Роликов/мес</div></div>
+        <div class="ms"><div class="ms-n">0.028<sup>₽</sup></div><div class="ms-l">Мин. CPV</div></div>
+        <div class="ms"><div class="ms-n">7<sup>млн+</sup></div><div class="ms-l">Охват</div></div>
+        <div class="ms"><div class="ms-n">138</div><div class="ms-l">Авторов</div></div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="img/il_hero.jpg" alt="Names"/>
+      <div class="hero-img-fade"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<div class="w">
+  <div class="clients-bar">
+    <div class="clients-label">Клиенты</div>
+    <div class="clients-list">
+      <div class="cl">Biorepair</div>
+      <div class="cl">Vois</div>
+      <div class="cl">Lit Energy</div>
+      <div class="cl">Frambini</div>
+      <div class="cl">Pusy</div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE -->
+<section id="case">
+  <div class="w">
+    <div class="lbl">Кейс · Доказательство</div>
+    <h2 class="sh">Biorepair: с 0.20₽ до 0.028₽ за просмотр</h2>
+    <p class="sp" style="margin-bottom:28px;max-width:540px">Предыдущее агентство давало CPV 0.20₽. После запуска нашего конвейера — 0.028₽ и 7+ миллионов охвата.</p>
+    <div class="case-box">
+      <div class="case-top">
+        <div>
+          <div class="case-tag">Реальный кейс</div>
+          <div class="case-h">С 0.20₽ до 0.028₽ за просмотр.<br>7+ миллионов человек охвата.</div>
+          <p class="case-p">Запустили конвейер: 221 UGC-ролик, 86 монтажей, 39 AI-видео. Результат — в 7 раз дешевле рынка, со стабильным ростом охвата каждую неделю.</p>
+        </div>
+        <div class="case-pills">
+          <div class="pill"><div class="pill-n">221</div><div class="pill-l">UGC роликов</div></div>
+          <div class="pill"><div class="pill-n">86</div><div class="pill-l">Монтаж</div></div>
+          <div class="pill"><div class="pill-n">39</div><div class="pill-l">AI-ролики</div></div>
+        </div>
+      </div>
+      <div class="case-nums">
+        <div class="cn"><div class="cn-n">0.20<span class="r">₽</span></div><div class="cn-l">CPV до Names</div></div>
+        <div class="cn"><div class="cn-n">0.028<span class="r">₽</span></div><div class="cn-l">CPV с Names</div></div>
+        <div class="cn"><div class="cn-n">7<span class="r">млн+</span></div><div class="cn-l">Охват</div></div>
+      </div>
+      <div class="case-img">
+        <img src="img/il_case.jpg" alt="Biorepair"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="w">
+    <div class="lbl">Как работаем</div>
+    <h2 class="sh">Один поток — от брифа до результата</h2>
+    <p class="sp" style="max-width:520px">Анализируем тренды 24/7, кастингуем авторов, снимаем, монтируем, размещаем и оптимизируем — каждый день, без выходных.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="sn">01</div>
+        <h3>Бриф</h3>
+        <p>Изучаем бренд и аудиторию, определяем форматы и тональность</p>
+      </div>
+      <div class="step">
+        <div class="sn">02</div>
+        <h3>Кастинг</h3>
+        <p>Подбираем авторов из базы 138+ creators под ваш продукт</p>
+      </div>
+      <div class="step">
+        <div class="sn">03</div>
+        <h3>Производство</h3>
+        <p>UGC + монтаж + AI-ролики. До 5000 видео в месяц в едином потоке</p>
+      </div>
+      <div class="step">
+        <div class="sn">04</div>
+        <h3>Аналитика</h3>
+        <p>Следим за CPV в реальном времени, масштабируем рабочее</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEES -->
+<section>
+  <div class="w">
+    <div class="lbl">Гарантии</div>
+    <h2 class="sh">Результат прописан в договоре</h2>
+    <p class="sp" style="max-width:500px;margin-bottom:0">Единственное агентство на рынке, которое фиксирует CPV в контракте. Не выполняем — возвращаем деньги.</p>
+    <div class="guar">
+      <div class="gc">
+        <div class="gn">0.2<span class="r">₽</span></div>
+        <h3>Максимальный CPV в контракте</h3>
+        <p>Не достигаем — компенсируем разницу</p>
+      </div>
+      <div class="gc">
+        <div class="gn">5K<span class="r">+</span></div>
+        <h3>Роликов в месяц по SLA</h3>
+        <p>Объём зафиксирован и гарантирован</p>
+      </div>
+      <div class="gc">
+        <div class="gn">24<span class="r">/7</span></div>
+        <h3>Мониторинг трендов</h3>
+        <p>Ловим вирусные форматы до того, как они уходят</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section style="padding-bottom:72px">
+  <div class="w">
+    <div class="cta-box">
+      <div class="cta-in">
+        <div class="lbl">Старт за 3 дня</div>
+        <div class="cta-h">Запустим производство уже на этой неделе</div>
+        <p class="cta-p">Расскажите о бренде — рассчитаем CPV и объём под ваши задачи. Бесплатно, без обязательств. Ответим в течение часа.</p>
+        <div class="cta-btns">
+          <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Написать Илье →</a>
+          <a href="https://t.me/stshkvchyn" class="btn btn-g">Написать Яну</a>
+        </div>
+        <div class="cta-note">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
+      </div>
+      <div class="cta-img">
+        <img src="img/il_founders.jpg" alt="Основатели"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Names — Завод контента</p>
+  <div>
+    <a href="https://t.me/ilya_goncharenko1">@ilya_goncharenko1</a>
+    <a href="https://t.me/stshkvchyn">@stshkvchyn</a>
+  </div>
+</footer>
+
+</body>
+</html>
