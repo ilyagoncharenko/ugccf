@@ -33,7 +33,7 @@
 
     /* HERO */
     .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
-    .hero-bg{position:absolute;inset:0;background:url('img/il_hero_bg.jpg') center/cover no-repeat;z-index:0}
+    .hero-bg{position:absolute;inset:0;background:url('img/figma_factory_hq.jpg') center/cover no-repeat;z-index:0}
     .hero-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,10,10,.96) 0%,rgba(10,10,10,.75) 48%,rgba(10,10,10,.18) 100%)}
     .hero-ov-b{position:absolute;bottom:0;left:0;right:0;height:220px;z-index:1;background:linear-gradient(to top,rgba(10,10,10,1) 0%,transparent 100%)}
     .hero-inner{position:relative;z-index:2;padding:140px 0 100px;max-width:600px}
@@ -338,8 +338,15 @@
         <div class="cn"><div class="cn-n">0.028<span class="r">₽</span></div><div class="cn-l">CPV с Names</div></div>
         <div class="cn"><div class="cn-n">7<span class="r">млн+</span></div><div class="cn-l">Охват</div></div>
       </div>
-      <div class="case-img">
-        <img src="img/figma_case_bg.jpg" alt="Biorepair"/>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:0;border-top:1px solid var(--b)">
+        <div class="case-img" style="border-right:1px solid var(--b)">
+          <img src="img/figma_case_bg.jpg" alt="Biorepair результаты"/>
+        </div>
+        <div style="width:140px;position:relative;overflow:hidden;flex-shrink:0">
+          <img src="img/figma_case_photo.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"/>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,var(--bg2),transparent)"></div>
+          <div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:9px;color:var(--m);letter-spacing:.5px;text-transform:uppercase">Реальный UGC</div>
+        </div>
       </div>
     </div>
   </div>
