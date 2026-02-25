@@ -82,6 +82,23 @@
     .sh{font-size:clamp(26px,3.2vw,40px);font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:16px}
     .sp{font-size:15px;color:var(--m2);line-height:1.6}
 
+    /* IL BLOCKS */
+    .il{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .il.rev{direction:rtl}.il.rev>*{direction:ltr}
+    @media(max-width:768px){.il,.il.rev{grid-template-columns:1fr;direction:ltr}}
+    .il-img{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 64px rgba(232,0,10,.1)}
+    .il-img img{width:100%;display:block}
+    .il-fade-l{position:absolute;inset:0;border-radius:14px;background:linear-gradient(to left,var(--bg) 0%,transparent 22%);pointer-events:none}
+    .il-fade-r{position:absolute;inset:0;border-radius:14px;background:linear-gradient(to right,var(--bg) 0%,transparent 22%);pointer-events:none}
+    .stat-row{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+    .stat-item{background:var(--bg2);border:1px solid var(--b);border-radius:8px;padding:14px 20px;text-align:center;flex:1;min-width:100px}
+    .stat-n{font-size:24px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .stat-n .r{color:var(--red)}
+    .stat-l{font-size:10px;color:var(--m);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+    .il-list{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+    .il-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--m2);line-height:1.5}
+    .il-item::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:7px;flex-shrink:0}
+
     /* CASE */
     .case-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden}
     .case-top{padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
@@ -199,6 +216,99 @@
     </div>
   </div>
 </div>
+
+<!-- BLOCK 1: Экран сменился -->
+<section>
+  <div class="w">
+    <div class="il">
+      <div>
+        <div class="lbl">Сдвиг рынка</div>
+        <h2 class="sh">Способ потребления контента изменился — и уже никогда не будет прежним</h2>
+        <p class="sp">Экран сменился, формат сменился, внимание пользователей — тоже. Бренды, которые это не учитывают, теряют аудиторию каждый день.</p>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-n">2 <span class="r">ч</span></div>
+            <div class="stat-l">Раньше — ТВ в день</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-n">2 <span class="r">ч</span></div>
+            <div class="stat-l">Сейчас — короткое видео</div>
+          </div>
+        </div>
+        <div class="il-list" style="margin-top:20px">
+          <div class="il-item">Аудитория ушла с телевизора в телефон — и эта тенденция стремительно растёт</div>
+          <div class="il-item">Традиционная реклама теряет охваты. Короткое вертикальное видео — набирает</div>
+          <div class="il-item">Бренды, которые освоят формат сейчас, займут нишу до того, как это сделают конкуренты</div>
+        </div>
+      </div>
+      <div class="il-img">
+        <img src="img/il_shift.jpg" alt="Смена экрана"/>
+        <div class="il-fade-l"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOCK 2: Алгоритмы про объём -->
+<section>
+  <div class="w">
+    <div class="il rev">
+      <div>
+        <div class="lbl">Новые правила 2025</div>
+        <h2 class="sh">Алгоритмы требуют объём и вариативность. Не 5-10 роликов — а сотни.</h2>
+        <p class="sp">Чтобы ролики «залетали», нужно производить и тестировать сотни форматов в день. Алгоритм продвигает то, что уже работает — нужно дать ему выборку.</p>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-n">5–10</div>
+            <div class="stat-l">Роликов — старый подход</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-n">100<span class="r">+</span></div>
+            <div class="stat-l">Роликов — новый стандарт</div>
+          </div>
+        </div>
+        <div class="il-list" style="margin-top:20px">
+          <div class="il-item">Одно агентство — 10-20 роликов в месяц. Этого недостаточно для стабильного результата</div>
+          <div class="il-item">Names производит до 5000 роликов в месяц — конвейер, а не ручная работа</div>
+          <div class="il-item">Больше форматов в тесте = быстрее находим то, что бьёт в алгоритм</div>
+        </div>
+      </div>
+      <div class="il-img">
+        <img src="img/il_grid.jpg" alt="Объём контента"/>
+        <div class="il-fade-r"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOCK 3: Тренды раньше конкурентов -->
+<section>
+  <div class="w">
+    <div class="il">
+      <div>
+        <div class="lbl">Наша технология</div>
+        <h2 class="sh">Отслеживаем тренды до того, как они становятся массовыми</h2>
+        <p class="sp">Мы создали собственный аналитический софт, который 24/7 сканирует мировые площадки, где «вирусятся» ролики. Контент выходит раньше конкурентов — и получает максимальный органический охват.</p>
+        <div class="il-list" style="margin-top:20px">
+          <div class="il-item">Постоянный мониторинг — алгоритмы анализируют TikTok, Instagram Reels, YouTube Shorts</div>
+          <div class="il-item">Раннее обнаружение — находим набирающие популярность форматы в разных странах</div>
+          <div class="il-item">Мгновенная адаптация — используем тренды в момент их зарождения, а не через месяц</div>
+          <div class="il-item">Результат: контент обгоняет рынок на 2-3 недели и получает максимальный вирусный потенциал</div>
+        </div>
+      </div>
+      <div class="il-img">
+        <img src="img/il_trend.jpg" alt="Тренды"/>
+        <div class="il-fade-l"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- CASE -->
 <section id="case">
