@@ -215,6 +215,11 @@
     .cta-img img{width:100%;height:100%;object-fit:cover;object-position:top center}
     .cta-img::before{content:"";position:absolute;inset:0;background:linear-gradient(to right,var(--bg2),transparent 35%);z-index:1}
     @media(max-width:700px){.cta-img{height:200px}}
+    .social-logos{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .soc-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;color:rgba(255,255,255,.75)}
+    .soc-pill svg{width:15px;height:15px;flex-shrink:0}
+    .cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:700px){.cases-grid{grid-template-columns:1fr}}
 
     /* FOOTER */
     footer{padding:24px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--b)}
@@ -240,8 +245,8 @@
   <div class="w" style="width:100%">
     <div class="hero-inner">
       <div class="badge"><div class="dot"></div>Завод контента · Полный цикл</div>
-      <h1>Снижаем CPV<br>в <span class="r">7 раз.</span><br>Гарантия<br>в договоре.</h1>
-      <p class="sub">Системное производство вирусного UGC-контента — 5000 роликов в месяц на Instagram, TikTok, YouTube Shorts.</p>
+      <h1>UGC<br>контент<span class="r">-завод</span></h1>
+      <p class="sub">Системное производство вирусного UGC-контента в Instagram, TikTok, YouTube Shorts, VK Видео</p>
       <p class="note">Стоимость просмотра от 0.028₽ зафиксирована в контракте</p>
       <div class="btns">
         <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Запустить кампанию →</a>
@@ -251,10 +256,10 @@
   </div>
   <div class="hero-stats-strip">
     <div class="hero-stats-inner">
-      <div class="hss"><div class="hss-n">5000<sup>+</sup></div><div class="hss-l">Роликов/мес</div></div>
-      <div class="hss"><div class="hss-n">0.028<sup>₽</sup></div><div class="hss-l">Мин. CPV</div></div>
-      <div class="hss"><div class="hss-n">7<sup>млн+</sup></div><div class="hss-l">Охват</div></div>
-      <div class="hss"><div class="hss-n">138</div><div class="hss-l">Авторов</div></div>
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">До 10.000</div><div class="hss-l">Роликов в месяц</div></div>
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">От 0,02<sup>₽</sup></div><div class="hss-l">За охват</div></div>
+      <div class="hss"><div class="hss-n">1000<sup>+</sup></div><div class="hss-l">Креаторов</div></div>
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">От 2,5<sup>млн</sup></div><div class="hss-l">Охват в месяц</div></div>
     </div>
   </div>
 </div>
@@ -273,32 +278,35 @@
   </div>
 </div>
 
-<!-- BLOCK 1: Экран сменился -->
+<!-- BLOCK 1: Помогаем брендам -->
 <section>
   <div class="w">
     <div class="il">
       <div>
-        <div class="lbl">Сдвиг рынка</div>
-        <h2 class="sh">Способ потребления контента изменился — и уже никогда не будет прежним</h2>
-        <p class="sp">Экран сменился, формат сменился, внимание пользователей — тоже. Бренды, которые это не учитывают, теряют аудиторию каждый день.</p>
-        <div class="stat-row">
-          <div class="stat-item">
-            <div class="stat-n">2 <span class="r">ч</span></div>
-            <div class="stat-l">Раньше — ТВ в день</div>
+        <div class="lbl">Наша миссия</div>
+        <h2 class="sh">Мы помогаем брендам увеличивать продажи</h2>
+        <p class="sp">И получать многомиллионные охваты в социальных сетях за счёт вирусного контента, создаваемого в больших объёмах.</p>
+        <div class="social-logos">
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
           </div>
-          <div class="stat-item">
-            <div class="stat-n">2 <span class="r">ч</span></div>
-            <div class="stat-l">Сейчас — короткое видео</div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.88a8.27 8.27 0 004.84 1.56V7a4.85 4.85 0 01-1.07-.31z"/></svg>
+            TikTok
           </div>
-        </div>
-        <div class="il-list" style="margin-top:20px">
-          <div class="il-item">Аудитория ушла с телевизора в телефон — и эта тенденция стремительно растёт</div>
-          <div class="il-item">Традиционная реклама теряет охваты. Короткое вертикальное видео — набирает</div>
-          <div class="il-item">Бренды, которые освоят формат сейчас, займут нишу до того, как это сделают конкуренты</div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube Shorts
+          </div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.523-2.049-1.712-1.033-1.033-1.49-.985-1.49.197v1.122c0 .348-.232.553-.923.553-1.26 0-2.652-.078-3.942-1.447-1.544-1.632-2.99-4.892-2.99-5.238 0-.197.098-.392.492-.392h1.744c.392 0 .512.196.66.524.655 1.448 1.743 2.783 2.196 2.783.196 0 .294-.099.294-.588V9.832c-.065-1.032-.588-1.12-.588-1.49 0-.196.197-.392.458-.392h2.668c.36 0 .458.196.458.59v3.16c0 .36.163.458.294.458.197 0 .36-.098.69-.426 1.064-1.194 1.81-3.028 1.81-3.028.098-.197.295-.393.687-.393h1.744c.524 0 .624.262.524.59-.196.916-2.098 3.59-2.098 3.59-.163.262-.23.36 0 .654.163.196.719.719 1.09 1.154.655.786 1.155 1.44 1.286 1.9.13.39-.065.59-.524.59z"/></svg>
+            VK Видео
+          </div>
         </div>
       </div>
       <div class="il-img">
-        <img src="img/il_shift.jpg" alt="Смена экрана"/>
+        <img src="img/il_shift.jpg" alt="Социальные сети"/>
         <div class="il-fade-l"></div>
       </div>
     </div>
@@ -307,58 +315,23 @@
 
 <div class="divider"></div>
 
-<!-- BLOCK 2: Алгоритмы про объём -->
+<!-- BLOCK 2: Механика контент-завода -->
 <section>
   <div class="w">
     <div class="il rev">
       <div>
-        <div class="lbl">Новые правила 2025</div>
-        <h2 class="sh">Алгоритмы требуют объём и вариативность. Не 5-10 роликов — а сотни.</h2>
-        <p class="sp">Чтобы ролики «залетали», нужно производить и тестировать сотни форматов в день. Алгоритм продвигает то, что уже работает — нужно дать ему выборку.</p>
-        <div class="stat-row">
-          <div class="stat-item">
-            <div class="stat-n">5–10</div>
-            <div class="stat-l">Роликов — старый подход</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-n">100<span class="r">+</span></div>
-            <div class="stat-l">Роликов — новый стандарт</div>
-          </div>
-        </div>
-        <div class="il-list" style="margin-top:20px">
-          <div class="il-item">Одно агентство — 10-20 роликов в месяц. Этого недостаточно для стабильного результата</div>
-          <div class="il-item">Names производит до 5000 роликов в месяц — конвейер, а не ручная работа</div>
-          <div class="il-item">Больше форматов в тесте = быстрее находим то, что бьёт в алгоритм</div>
-        </div>
-      </div>
-      <div class="il-img">
-        <img src="img/il_grid.jpg" alt="Объём контента"/>
-        <div class="il-fade-r"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- BLOCK 3: Тренды раньше конкурентов -->
-<section>
-  <div class="w">
-    <div class="il">
-      <div>
         <div class="lbl">Наша технология</div>
-        <h2 class="sh">Отслеживаем тренды до того, как они становятся массовыми</h2>
-        <p class="sp">Мы создали собственный аналитический софт, который 24/7 сканирует мировые площадки, где «вирусятся» ролики. Контент выходит раньше конкурентов — и получает максимальный органический охват.</p>
-        <div class="il-list" style="margin-top:20px">
-          <div class="il-item">Постоянный мониторинг — алгоритмы анализируют TikTok, Instagram Reels, YouTube Shorts</div>
-          <div class="il-item">Раннее обнаружение — находим набирающие популярность форматы в разных странах</div>
-          <div class="il-item">Мгновенная адаптация — используем тренды в момент их зарождения, а не через месяц</div>
-          <div class="il-item">Результат: контент обгоняет рынок на 2-3 недели и получает максимальный вирусный потенциал</div>
+        <h2 class="sh">Механика контент-завода — наиболее эффективная и вирусная стратегия для развития бренда</h2>
+        <div class="il-list" style="margin-top:24px">
+          <div class="il-item">Массовое производство креативов</div>
+          <div class="il-item">Быстрый тест гипотез</div>
+          <div class="il-item">Опора на эмоции, а не постановку</div>
+          <div class="il-item">Контент-заводы — ядро новой маркетинговой экосистемы</div>
         </div>
       </div>
       <div class="il-img">
-        <img src="img/figma_trend.jpg" alt="Тренды"/>
-        <div class="il-fade-l"></div>
+        <img src="img/il_grid.jpg" alt="Механика контент-завода"/>
+        <div class="il-fade-r"></div>
       </div>
     </div>
   </div>
@@ -369,35 +342,34 @@
 <!-- CASE -->
 <section id="case">
   <div class="w">
-    <div class="lbl">Кейс · Доказательство</div>
-    <h2 class="sh">Biorepair: с 0.20₽ до 0.028₽ за просмотр</h2>
-    <p class="sp" style="margin-bottom:28px;max-width:540px">Предыдущее агентство давало CPV 0.20₽. После запуска нашего конвейера — 0.028₽ и 7+ миллионов охвата.</p>
-    <div class="case-box">
-      <div class="case-top">
-        <div>
-          <div class="case-tag">Реальный кейс</div>
-          <div class="case-h">С 0.20₽ до 0.028₽ за просмотр.<br>7+ миллионов человек охвата.</div>
-          <p class="case-p">Запустили конвейер: 221 UGC-ролик, 86 монтажей, 39 AI-видео. Результат — в 7 раз дешевле рынка, со стабильным ростом охвата каждую неделю.</p>
+    <div class="lbl">Кейсы · Доказательство</div>
+    <h2 class="sh">Реальные результаты клиентов</h2>
+    <p class="sp" style="margin-bottom:28px;max-width:540px">Снижаем стоимость охвата в десятки раз. Результаты зафиксированы в отчётах.</p>
+    <div class="cases-grid">
+      <div class="case-box">
+        <div class="case-top" style="grid-template-columns:1fr">
+          <div>
+            <div class="case-tag">Кейс</div>
+            <div class="case-h">Премиальный бренд зубной пасты</div>
+            <p class="case-p">UGC-кампания для премиального бренда на российском рынке. Рекордно низкий CPV и массовый охват.</p>
+          </div>
         </div>
-        <div class="case-pills">
-          <div class="pill"><div class="pill-n">221</div><div class="pill-l">UGC роликов</div></div>
-          <div class="pill"><div class="pill-n">86</div><div class="pill-l">Монтаж</div></div>
-          <div class="pill"><div class="pill-n">39</div><div class="pill-l">AI-ролики</div></div>
+        <div class="case-nums" style="grid-template-columns:1fr 1fr">
+          <div class="cn"><div class="cn-n">0,03<span class="r">₽</span></div><div class="cn-l">За охват</div></div>
+          <div class="cn"><div class="cn-n">40<span class="r">млн</span></div><div class="cn-l">Охват</div></div>
         </div>
       </div>
-      <div class="case-nums">
-        <div class="cn"><div class="cn-n">0.20<span class="r">₽</span></div><div class="cn-l">CPV до Names</div></div>
-        <div class="cn"><div class="cn-n">0.028<span class="r">₽</span></div><div class="cn-l">CPV с Names</div></div>
-        <div class="cn"><div class="cn-n">7<span class="r">млн+</span></div><div class="cn-l">Охват</div></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:0;border-top:1px solid var(--b)">
-        <div class="case-img" style="border-right:1px solid var(--b)">
-          <img src="img/figma_case_bg.jpg" alt="Biorepair результаты"/>
+      <div class="case-box">
+        <div class="case-top" style="grid-template-columns:1fr">
+          <div>
+            <div class="case-tag">Кейс</div>
+            <div class="case-h">Косметика LUVU</div>
+            <p class="case-p">Запуск UGC-контента для косметического бренда. Массовый охват через нативные ролики авторов.</p>
+          </div>
         </div>
-        <div style="width:140px;position:relative;overflow:hidden;flex-shrink:0">
-          <img src="img/figma_case_photo.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"/>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,var(--bg2),transparent)"></div>
-          <div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:9px;color:var(--m);letter-spacing:.5px;text-transform:uppercase">Реальный UGC</div>
+        <div class="case-nums" style="grid-template-columns:1fr 1fr">
+          <div class="cn"><div class="cn-n">0,09<span class="r">₽</span></div><div class="cn-l">За охват</div></div>
+          <div class="cn"><div class="cn-n">10<span class="r">млн</span></div><div class="cn-l">Охват</div></div>
         </div>
       </div>
     </div>
@@ -448,19 +420,13 @@
         <h2 class="sh">Результат прописан в договоре</h2>
         <p class="sp" style="margin-bottom:24px">Единственное агентство на рынке, которое фиксирует CPV в контракте. Не выполняем — возвращаем деньги.</p>
         <div class="guar" style="grid-template-columns:1fr;gap:12px">
-          <div class="gc" style="display:flex;align-items:center;gap:16px;padding:20px 24px">
-            <div class="gn" style="font-size:32px;margin:0;flex-shrink:0">0.2<span class="r">₽</span></div>
-            <div>
-              <h3>Потолок CPV — в контракте</h3>
-              <p>Указываем максимальную стоимость охвата. Выше не поднимаемся.</p>
-            </div>
+          <div class="gc" style="padding:20px 24px">
+            <h3>Объём зафиксирован и гарантирован договором</h3>
+            <p>Количество роликов в месяц прописано в контракте. Выполняем или возвращаем деньги.</p>
           </div>
-          <div class="gc" style="display:flex;align-items:center;gap:16px;padding:20px 24px">
-            <div class="gn" style="font-size:32px;margin:0;flex-shrink:0">5K<span class="r">+</span></div>
-            <div>
-              <h3>Роликов в месяц по SLA</h3>
-              <p>Объём зафиксирован и гарантирован договором.</p>
-            </div>
+          <div class="gc" style="padding:20px 24px">
+            <h3>Результат прописан в договоре</h3>
+            <p>CPV и охват фиксируем в контракте. Не выполняем — возвращаем деньги.</p>
           </div>
           <div class="gc" style="display:flex;align-items:center;gap:16px;padding:20px 24px">
             <div class="gn" style="font-size:32px;margin:0;flex-shrink:0">↓</div>
