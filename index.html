@@ -3,1091 +3,479 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Content Factory</title>
-  <link rel="icon" type="image/svg+xml" href="names_logo.svg"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <title>Names — UGC-агентство. Снижаем CPV до 0.028₽ | UGC-контент для брендов</title>
+  <meta name="description" content="Names — производство UGC-видео для брендов на Instagram, TikTok и YouTube. Снижаем стоимость просмотра в 7 раз. CPV от 0.028₽. Гарантия результата в договоре."/>
+  <meta name="keywords" content="UGC контент, UGC агентство, UGC видео, нативная реклама, контент для брендов, снижение CPV, UGC производство, инфлюенс маркетинг"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://names.agency/"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://names.agency/"/>
+  <meta property="og:title" content="Names — UGC-агентство. CPV от 0.028₽"/>
+  <meta property="og:description" content="Производство UGC-видео для брендов. Снижаем стоимость просмотра в 7 раз. Гарантия результата прописана в договоре."/>
+  <meta property="og:image" content="https://names.agency/img/og_preview.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale" content="ru_RU"/>
+  <meta property="og:site_name" content="Names"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Names — UGC-агентство. CPV от 0.028₽"/>
+  <meta name="twitter:description" content="Производство UGC-видео для брендов. Снижаем стоимость просмотра в 7 раз."/>
+  <meta name="twitter:image" content="https://names.agency/img/og_preview.jpg"/>
+
+  <!-- Schema.org: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Names",
+    "description": "UGC-агентство. Производство нативного видеоконтента для брендов на Instagram, TikTok, YouTube.",
+    "url": "https://names.agency",
+    "logo": "https://names.agency/img/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "availableLanguage": "Russian"
+    },
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Schema.org: Service -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Производство UGC-контента",
+    "provider": { "@type": "Organization", "name": "Names" },
+    "description": "Создание UGC-видео для продвижения брендов на Instagram, TikTok и YouTube. Снижение CPV в 7 раз, гарантия в договоре.",
+    "areaServed": "RU",
+    "serviceType": "UGC Content Production"
+  }
+  </script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d0d11;color:#e0e0e0;min-height:100vh;padding:28px 24px}
-
-    /* Header */
-    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
-    .logo{font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#fff}
-    .logo span{color:#666;font-weight:400;font-size:14px;margin-left:8px}
-    .updated{font-size:12px;color:#444}
-
-    /* Project tabs */
-    .project-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
-    .proj-tab{
-      display:flex;align-items:center;gap:10px;
-      padding:12px 20px;border-radius:12px;cursor:pointer;
-      border:1px solid #2a2a38;background:#1a1a22;
-      transition:all .15s;min-width:180px
+    :root{
+      --red:#E8000A;--red2:#ff1a20;
+      --bg:#0A0A0A;--bg2:#111;--bg3:#181818;
+      --b:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
+      --t:#F0F0F0;--m:#6B7280;--m2:#9CA3AF;
     }
-    .proj-tab:hover{border-color:#3a3a50}
-    .proj-tab.active{border-color:var(--proj-color);background:#1a1a22}
-    .proj-tab .dot{width:10px;height:10px;border-radius:50%;background:var(--proj-color);flex-shrink:0}
-    .proj-tab .name{font-weight:700;font-size:15px}
-    .proj-tab .meta{font-size:11px;color:#555;margin-top:2px}
-    .proj-tab.active .name{color:var(--proj-color)}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+    a{text-decoration:none}
 
-    /* Cards */
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:28px}
-    .card{background:#1a1a22;border:1px solid #2a2a38;border-radius:12px;padding:18px}
-    .card .label{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
-    .card .value{font-size:26px;font-weight:700;line-height:1}
-    .card .sub{font-size:11px;color:#444;margin-top:5px}
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:99;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--b)}
+    .logo{font-size:18px;font-weight:900;letter-spacing:-1px;color:#fff;text-transform:uppercase}
+    .logo span{color:var(--red)}
+    .nav-cta{padding:8px 20px;background:var(--red);color:#fff;border-radius:5px;font-size:13px;font-weight:700;transition:.15s}
+    .nav-cta:hover{background:var(--red2)}
+    @media(max-width:600px){nav{padding:0 20px}}
 
-    /* Charts grid */
-    .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
-    @media(max-width:650px){.charts-grid{grid-template-columns:1fr}}
-    .chart-box{background:#1a1a22;border:1px solid #2a2a38;border-radius:12px;padding:18px}
-    .chart-box h3{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
-    .chart-box canvas{max-height:240px}
+    /* LAYOUT */
+    .w{max-width:1100px;margin:0 auto;padding:0 40px}
+    @media(max-width:600px){.w{padding:0 20px}}
+    section{padding:64px 0}
+    @media(max-width:600px){section{padding:48px 0}}
+    .divider{max-width:1100px;margin:0 auto;height:1px;background:var(--b)}
 
-    /* Timeline */
-    .section-title{font-size:16px;font-weight:700;color:#aaa;margin:32px 0 14px;letter-spacing:-.2px}
-    .timeline-controls{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-    .toggle-group{display:flex;background:#1a1a22;border:1px solid #2a2a38;border-radius:8px;overflow:hidden}
-    .toggle-btn{padding:6px 13px;font-size:12px;font-weight:600;background:transparent;color:#555;border:none;cursor:pointer}
-    .toggle-btn.active{background:#2a2a38;color:#e0e0e0}
-    .pf-btn{padding:5px 11px;font-size:11px;font-weight:700;border-radius:20px;border:1px solid;cursor:pointer;background:transparent}
-    .pf-btn.ig{border-color:#e1306c;color:#e1306c}.pf-btn.ig.active{background:#3d1020}
-    .pf-btn.tt{border-color:#69c9d0;color:#69c9d0}.pf-btn.tt.active{background:#0d2e30}
-    .pf-btn.yt{border-color:#ff4e45;color:#ff4e45}.pf-btn.yt.active{background:#3d1010}
-    .pf-btn.all{border-color:var(--proj-color,#a78bfa);color:var(--proj-color,#a78bfa)}.pf-btn.all.active{background:#1a1a22}
-    .timeline-box{background:#1a1a22;border:1px solid #2a2a38;border-radius:12px;padding:22px;margin-bottom:18px}
-    .timeline-box canvas{max-height:300px}
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:url('img/figma_factory_hq.jpg') center/cover no-repeat;z-index:0}
+    .hero-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,10,10,.96) 0%,rgba(10,10,10,.75) 48%,rgba(10,10,10,.18) 100%)}
+    .hero-ov-b{position:absolute;bottom:0;left:0;right:0;height:220px;z-index:1;background:linear-gradient(to top,rgba(10,10,10,1) 0%,transparent 100%)}
+    .hero-inner{position:relative;z-index:2;padding:140px 0 100px;max-width:600px}
 
-    /* Stats row */
-    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-    .stat-mini{background:#1a1a22;border:1px solid #2a2a38;border-radius:10px;padding:14px}
-    .stat-mini .label{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-    .stat-mini .value{font-size:20px;font-weight:700}
-    .stat-mini .trend{font-size:11px;color:#444;margin-top:4px}
-    .up{color:#4ade80!important}.down{color:#f87171!important}
+    .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(232,0,10,.1);border:1px solid rgba(232,0,10,.3);color:var(--red);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:24px}
+    .dot{width:5px;height:5px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);animation:p 2s infinite;flex-shrink:0}
+    @keyframes p{0%,100%{opacity:1}50%{opacity:.2}}
 
-    /* Table */
-    .table-box{background:#1a1a22;border:1px solid #2a2a38;border-radius:12px;padding:20px;overflow-x:auto}
-    .table-box h3{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    thead th{text-align:left;padding:7px 10px;border-bottom:1px solid #2a2a38;color:#444;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
-    tbody tr{border-bottom:1px solid #1a1a22}
-    tbody tr:hover{background:#1e1e2a}
-    tbody td{padding:9px 10px;vertical-align:middle}
-    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
-    .badge-INSTAGRAM{background:#3d1020;color:#e1306c}
-    .badge-TIKTOK{background:#0d2e30;color:#69c9d0}
-    .badge-YOUTUBE{background:#3d1010;color:#ff4e45}
-    .ch-link{color:#6b7aff;text-decoration:none;font-size:12px}
-    .ch-link:hover{text-decoration:underline}
-    .bar-track{flex:1;height:5px;background:#2a2a38;border-radius:3px;overflow:hidden;min-width:50px}
-    .bar-fill{height:100%;border-radius:3px}
-    .bar-INSTAGRAM{background:#e1306c}.bar-TIKTOK{background:#69c9d0}.bar-YOUTUBE{background:#ff4e45}
-    .sort-th{cursor:pointer;user-select:none}
-    .sort-th:hover{color:#aaa}
-    .num{font-variant-numeric:tabular-nums}
+    h1{font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.0;letter-spacing:-2.5px;text-transform:uppercase;color:#fff;margin-bottom:20px}
+    h1 .r{color:var(--red)}
+    .sub{font-size:16px;color:var(--m2);line-height:1.6;max-width:480px;margin-bottom:12px}
+    .note{font-size:13px;color:var(--m);margin-bottom:32px;display:flex;align-items:center;gap:6px}
+    .note::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--red);opacity:.8;flex-shrink:0}
 
-    /* Subtitle */
-    .subtitle{font-size:12px;color:#444;margin-top:4px}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+    .btn{padding:14px 32px;border-radius:6px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;gap:8px;transition:.18s}
+    .btn-r{background:var(--red);color:#fff;box-shadow:0 0 40px rgba(232,0,10,.3)}
+    .btn-r:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 0 60px rgba(232,0,10,.4)}
+    .btn-g{border:1px solid var(--b2);color:var(--t)}
+    .btn-g:hover{background:rgba(255,255,255,.05)}
+    .reply{font-size:12px;color:var(--m)}
 
-    /* PDF button */
-    .pdf-btn{padding:7px 16px;font-size:12px;font-weight:700;background:transparent;border:1px solid #3a3a50;color:#888;border-radius:8px;cursor:pointer;transition:all .15s}
-    .pdf-btn:hover{border-color:#a78bfa;color:#a78bfa}
+    /* MINI STATS */
+    .mstats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--b);border-radius:8px;overflow:hidden;background:var(--bg2)}
+    .ms{padding:16px 12px;text-align:center;border-right:1px solid var(--b)}
+    .ms:last-child{border-right:none}
+    .ms-n{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .ms-n sup{font-size:.5em;color:var(--red)}
+    .ms-l{font-size:9px;color:var(--m);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+    @media(max-width:600px){.mstats{grid-template-columns:repeat(2,1fr)}.ms:nth-child(2){border-right:none}.ms:nth-child(3){border-top:1px solid var(--b);border-right:1px solid var(--b)}.ms:nth-child(4){border-top:1px solid var(--b)}}
 
-    /* Client link button */
-    .client-link-btn{padding:7px 16px;font-size:12px;font-weight:700;background:transparent;border:1px solid #3a3a50;color:#555;border-radius:8px;cursor:pointer;transition:all .15s}
-    .client-link-btn:hover{border-color:#6b7aff;color:#6b7aff}
+    /* HERO STATS STRIP */
+    .hero-stats-strip{position:absolute;bottom:0;left:0;right:0;z-index:3;border-top:1px solid rgba(255,255,255,.08)}
+    .hero-stats-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(4,1fr)}
+    @media(max-width:600px){.hero-stats-inner{grid-template-columns:repeat(2,1fr);padding:0 20px}}
+    .hss{padding:20px 0;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+    .hss:last-child{border-right:none}
+    @media(max-width:600px){.hss:nth-child(2){border-right:none}.hss:nth-child(3){border-right:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.08)}.hss:nth-child(4){border-top:1px solid rgba(255,255,255,.08)}}
+    .hss-n{font-size:24px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .hss-n sup{font-size:.5em;color:var(--red)}
+    .hss-l{font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
 
-    /* Toast */
-    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#23233a;color:#e0e0e0;padding:10px 20px;border-radius:10px;font-size:13px;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;border:1px solid #3a3a50}
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    /* CLIENTS STRIP */
+    .clients-bar{padding:20px 0;border-top:1px solid var(--b);border-bottom:1px solid var(--b);display:flex;align-items:center;gap:0}
+    .clients-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--m);padding-right:28px;border-right:1px solid var(--b);white-space:nowrap;flex-shrink:0}
+    .clients-list{display:flex;gap:8px;flex-wrap:wrap;padding-left:28px}
+    .cl{background:var(--bg2);border:1px solid var(--b2);border-radius:6px;padding:7px 18px;font-size:13px;font-weight:700;color:var(--m2)}
+    @media(max-width:600px){.clients-bar{flex-direction:column;align-items:flex-start;gap:16px}.clients-label{border-right:none;padding-right:0}.clients-list{padding-left:0}}
 
-    /* PDF modal */
-    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
-    .modal-overlay.open{display:flex}
-    .modal{background:#1a1a22;border:1px solid #2a2a38;border-radius:16px;padding:28px;min-width:320px;max-width:460px;width:90%}
-    .modal h2{font-size:16px;font-weight:700;margin-bottom:6px}
-    .modal p{font-size:12px;color:#555;margin-bottom:20px}
-    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-    .modal-opt{padding:10px 14px;background:#12121a;border:1px solid #2a2a38;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;text-align:center;transition:all .15s}
-    .modal-opt:hover{border-color:var(--proj-color,#a78bfa);color:var(--proj-color,#a78bfa)}
-    .modal-opt.full{grid-column:1/-1;color:var(--proj-color,#a78bfa);border-color:var(--proj-color,#a78bfa)}
-    .modal-cancel{width:100%;padding:8px;background:transparent;border:none;color:#444;font-size:12px;cursor:pointer;margin-top:4px}
-    .modal-cancel:hover{color:#888}
+    /* SECTION LABELS */
+    .lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+    .sh{font-size:clamp(26px,3.2vw,40px);font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:16px}
+    .sp{font-size:15px;color:var(--m2);line-height:1.6}
 
-    /* Print styles */
-    @media print{
-      body{background:#fff!important;color:#111!important;padding:12px!important}
-      .header,.project-tabs,.timeline-controls,.pdf-btn,.modal-overlay{display:none!important}
-      .card{border:1px solid #ddd!important;background:#f9f9f9!important}
-      .card .label{color:#666!important}
-      .card .sub{color:#999!important}
-      .chart-box,.timeline-box,.table-box{border:1px solid #ddd!important;background:#f9f9f9!important}
-      .chart-box h3{color:#666!important}
-      .section-title{color:#333!important}
-      .stats-row{display:none}
-      .stat-mini{border:1px solid #ddd!important;background:#f9f9f9!important}
-      .stat-mini .label{color:#666!important}
-      .stat-mini .trend{color:#999!important}
-      thead th{color:#666!important;border-bottom:1px solid #ddd!important}
-      tbody tr{border-bottom:1px solid #eee!important}
-      .badge-INSTAGRAM{background:#ffe0ea!important;color:#c0004e!important}
-      .badge-TIKTOK{background:#d0f5f6!important;color:#007a80!important}
-      .badge-YOUTUBE{background:#ffe0de!important;color:#c00000!important}
-      .print-hidden{display:none!important}
-      .print-header{display:block!important;font-size:20px;font-weight:800;margin-bottom:4px}
-      .print-sub{display:block!important;font-size:12px;color:#666;margin-bottom:20px}
-    }
-    .print-header,.print-sub{display:none}
+    /* IL BLOCKS */
+    .il{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .il.rev{direction:rtl}.il.rev>*{direction:ltr}
+    @media(max-width:768px){.il,.il.rev{grid-template-columns:1fr;direction:ltr}}
+    .il-img{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 64px rgba(232,0,10,.1)}
+    .il-img img{width:100%;display:block}
+    .il-fade-l{position:absolute;inset:0;border-radius:14px;background:linear-gradient(to left,var(--bg) 0%,transparent 22%);pointer-events:none}
+    .il-fade-r{position:absolute;inset:0;border-radius:14px;background:linear-gradient(to right,var(--bg) 0%,transparent 22%);pointer-events:none}
+    .stat-row{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+    .stat-item{background:var(--bg2);border:1px solid var(--b);border-radius:8px;padding:14px 20px;text-align:center;flex:1;min-width:100px}
+    .stat-n{font-size:24px;font-weight:900;color:#fff;letter-spacing:-1px}
+    .stat-n .r{color:var(--red)}
+    .stat-l{font-size:10px;color:var(--m);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+    .il-list{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+    .il-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--m2);line-height:1.5}
+    .il-item::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:7px;flex-shrink:0}
 
-    /* Password screen */
-    .pw-screen{position:fixed;inset:0;background:#0d0d11;z-index:99999;display:flex;align-items:center;justify-content:center}
-    .pw-box{background:#1a1a22;border:1px solid #2a2a38;border-radius:20px;padding:40px 36px;width:320px;text-align:center}
-    .pw-box .pw-logo{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
-    .pw-box .pw-sub{font-size:12px;color:#444;margin-bottom:28px}
-    .pw-box input{width:100%;background:#12121a;border:1px solid #2a2a38;border-radius:10px;padding:12px 16px;font-size:16px;color:#e0e0e0;text-align:center;letter-spacing:4px;outline:none;transition:border-color .15s;box-sizing:border-box}
-    .pw-box input:focus{border-color:#a78bfa}
-    .pw-box input.error{border-color:#f87171;animation:shake .3s}
-    .pw-box button{width:100%;margin-top:12px;padding:12px;background:#a78bfa;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s}
-    .pw-box button:hover{opacity:.85}
-    .pw-box .pw-err{font-size:12px;color:#f87171;margin-top:10px;min-height:18px}
-    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    /* CASE */
+    .case-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden}
+    .case-top{padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+    @media(max-width:700px){.case-top{grid-template-columns:1fr;padding:28px 24px}}
+    .case-tag{background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;display:inline-block;margin-bottom:12px}
+    .case-h{font-size:clamp(18px,2.2vw,26px);font-weight:900;color:#fff;letter-spacing:-.8px;line-height:1.1;margin-bottom:10px}
+    .case-p{font-size:14px;color:var(--m2);line-height:1.6;max-width:420px}
+    .case-pills{display:flex;flex-direction:column;gap:6px;min-width:140px}
+    .pill{background:var(--bg3);border:1px solid var(--b);border-radius:7px;padding:11px 16px;text-align:center}
+    .pill-n{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.8px}
+    .pill-l{font-size:9px;color:var(--m);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+    .case-nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--b)}
+    @media(max-width:500px){.case-nums{grid-template-columns:1fr}}
+    .cn{padding:24px 32px;border-right:1px solid var(--b);text-align:center}
+    .cn:last-child{border-right:none}
+    @media(max-width:500px){.cn{border-right:none;border-bottom:1px solid var(--b)}.cn:last-child{border-bottom:none}}
+    .cn-n{font-size:36px;font-weight:900;color:#fff;letter-spacing:-2px}
+    .cn-n .r{color:var(--red)}
+    .cn-l{font-size:11px;color:var(--m);margin-top:6px;text-transform:uppercase;letter-spacing:.5px}
+    .case-img{position:relative;overflow:hidden;max-height:280px}
+    .case-img img{width:100%;display:block;object-fit:cover;object-position:top}
+    .case-img::before{content:"";position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,var(--bg2),transparent);z-index:1}
+    .case-img::after{content:"";position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,var(--bg2),transparent);z-index:1}
 
-    /* Adesk internal section */
-    .adesk-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-    .adesk-badge{background:#1e1e10;border:1px solid #3a3a10;color:#b8b840;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px}
-    .adesk-sep{margin-top:40px;padding-top:28px;border-top:1px solid #2a2a38}
-    .adesk-note{margin-top:8px;font-size:11px;color:#333;text-align:right}
+    /* STEPS */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--b);border-radius:10px;overflow:hidden;margin-top:32px;background:var(--bg2)}
+    @media(max-width:700px){.steps{grid-template-columns:1fr 1fr}}
+    @media(max-width:400px){.steps{grid-template-columns:1fr}}
+    .step{padding:24px 20px;border-right:1px solid var(--b)}
+    .step:last-child{border-right:none}
+    @media(max-width:700px){.step:nth-child(2){border-right:none}.step:nth-child(3){border-top:1px solid var(--b)}.step:nth-child(4){border-top:1px solid var(--b);border-right:none}}
+    .sn{font-size:28px;font-weight:900;color:var(--red);opacity:.2;letter-spacing:-2px;margin-bottom:10px}
+    .step h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#fff;margin-bottom:6px}
+    .step p{font-size:12px;color:var(--m2);line-height:1.5}
+
+    /* GUARANTEES */
+    .guar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+    @media(max-width:700px){.guar{grid-template-columns:1fr}}
+    .gc{background:var(--bg2);border:1px solid var(--b);border-radius:10px;padding:28px 24px;transition:.18s}
+    .gc:hover{border-color:rgba(232,0,10,.3)}
+    .gn{font-size:40px;font-weight:900;letter-spacing:-2px;color:#fff;line-height:1;margin-bottom:10px}
+    .gn .r{color:var(--red)}
+    .gc h3{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px}
+    .gc p{font-size:13px;color:var(--m2);line-height:1.5}
+
+    /* CTA FINAL */
+    .cta-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 280px}
+    @media(max-width:700px){.cta-box{grid-template-columns:1fr}}
+    .cta-in{padding:44px 48px}
+    @media(max-width:600px){.cta-in{padding:32px 24px}}
+    .cta-h{font-size:clamp(22px,2.5vw,34px);font-weight:900;letter-spacing:-1px;color:#fff;margin-bottom:12px;line-height:1.05}
+    .cta-p{font-size:14px;color:var(--m2);line-height:1.6;margin-bottom:24px;max-width:400px}
+    .cta-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .cta-note{margin-top:12px;font-size:11px;color:var(--m)}
+    .cta-img{position:relative;overflow:hidden;align-self:stretch}
+    .cta-img img{width:100%;height:100%;object-fit:cover;object-position:top center}
+    .cta-img::before{content:"";position:absolute;inset:0;background:linear-gradient(to right,var(--bg2),transparent 35%);z-index:1}
+    @media(max-width:700px){.cta-img{height:200px}}
+    .social-logos{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .soc-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:7px 13px;font-size:12px;font-weight:600;color:rgba(255,255,255,.75)}
+    .soc-pill svg{width:15px;height:15px;flex-shrink:0}
+    .cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:700px){.cases-grid{grid-template-columns:1fr}}
+
+    /* FOOTER */
+    footer{padding:24px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--b)}
+    footer p,footer a{font-size:12px;color:var(--m)}
+    footer a:hover{color:var(--red)}
+    footer div{display:flex;gap:20px}
+    @media(max-width:500px){footer{flex-direction:column;gap:12px;padding:24px 20px;text-align:center}}
   </style>
 </head>
 <body>
 
-<!-- Password screen (скрыт если client mode или уже авторизован) -->
-<div class="pw-screen" id="pwScreen">
-  <div class="pw-box">
-    <div class="pw-logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="150" height="28" viewBox="0 0 75 14" fill="none"><path d="M72.2715 9.11621C73.5959 9.11622 74.6667 10.2515 74.667 11.5576C74.667 12.9207 73.596 14 72.2715 14C70.9469 14 69.876 12.9207 69.876 11.5576C69.8762 10.2515 70.9471 9.11621 72.2715 9.11621ZM19.0781 0C21.5652 5.93264e-05 23.9775 0.512708 24.835 2.98828C24.6123 4.58171 23.6328 5.81007 22.4092 6.04492L18.9424 6.67871C18.8213 6.69947 18.8213 6.88263 18.9424 6.90332L22.4502 7.61816C23.727 7.86347 24.7002 9.19089 24.8623 10.8652L25.1211 13.4893H21.5293V11.7285C21.1347 12.5237 19.8103 13.8584 17.3867 13.8584C14.8504 13.8584 12.9336 12.6086 12.9336 10.0527C12.9337 7.29824 14.0052 4.85573 21.5293 5.50879V5.19727C21.5293 3.91943 21.2759 2.81167 19.0781 2.81152C17.331 2.81152 16.8236 3.52129 16.6826 4.34473H13.4414C13.7515 1.13589 15.9782 0 19.0781 0ZM51.0605 0C54.1886 0.000227286 57.5697 2.24368 57.2598 7.89453H47.9316C48.2135 9.57003 49.2004 10.8193 51.0322 10.8193C52.6102 10.8192 53.427 10.0809 53.8779 9.03027H57.0908C56.4145 12.5515 53.7659 13.8582 51.0605 13.8584C47.9605 13.8584 44.6064 11.87 44.6064 6.92871C44.6067 1.95936 47.9606 0 51.0605 0ZM63.3037 0C67.6999 2.33363e-05 69.4188 1.90259 69.4189 4.34473H65.7275C65.7274 3.46446 64.8816 2.66992 63.2754 2.66992C61.6692 2.66993 60.9649 3.15215 60.9648 3.97559C60.9648 4.91266 62.5707 5.11156 64.4023 5.39551C67.1641 5.82147 69.9823 5.99203 69.9824 9.34277C69.9824 12.5234 67.5592 13.8584 63.501 13.8584C59.1891 13.8584 57.0752 12.2681 57.0752 9.22949L60.8799 9.25781C60.8799 10.7345 62.1766 11.1318 63.7266 11.1318C65.3608 11.1318 66.1502 10.7914 66.1504 9.85449C66.1504 8.66177 64.3459 8.63308 62.0068 8.17871C59.2734 7.66756 57.3857 7.04243 57.3857 4.34473C57.3858 1.64701 59.3583 0 63.3037 0ZM8.25098 0C11.0127 0 12.7322 1.84569 12.7324 4.79883V13.4893H9.09668V5.79297C9.09659 4.34484 8.36383 3.23738 6.72949 3.2373C5.12322 3.2373 3.60762 4.34479 3.60742 5.79297V13.4893H0V0.369141H3.60742V2.24316C4.03047 1.47635 5.99676 8.12363e-05 8.25098 0ZM40.1182 0C42.8799 0 44.4295 1.84569 44.4297 4.79883V13.4893H40.7949V5.79297C40.7948 3.86238 39.9211 3.23748 38.8223 3.2373C37.695 3.2373 36.7364 3.94729 36.7363 5.79297V13.4893H33.1006V5.79297C33.1005 3.8621 32.227 3.2373 31.1279 3.2373C30.0008 3.23738 29.0431 3.94738 29.043 5.79297V6.18262L28.2881 6.04492C26.9908 5.79988 25.9972 4.47314 25.835 2.77832L25.5996 0.369141H29.043V2.1582C29.4658 1.39141 30.5933 0 32.4531 0C34.3129 0.000143623 35.637 0.852516 36.2852 2.3291C36.567 1.78953 38.0327 4.83334e-06 40.1182 0ZM29.043 13.4893H25.5752L25.835 10.8652C25.9971 9.19081 26.9904 7.86339 28.2471 7.61816L29.043 7.45508V13.4893ZM21.5293 8.03711C18.1194 7.83834 16.457 8.00864 16.457 9.85449C16.4572 10.7914 17.1332 11.3877 18.373 11.3877C19.8103 11.3877 20.9374 10.5926 21.5293 9.57031V8.03711ZM51.0322 3.03906C49.4259 3.03906 48.4678 3.97582 48.0732 5.33887H53.8779C53.5398 3.97589 52.6665 3.03919 51.0322 3.03906Z" fill="#ffffff"/></svg>
+<!-- NAV -->
+<nav>
+  <div class="logo">Names<span>.</span></div>
+  <a href="https://t.me/ilya_goncharenko1" class="nav-cta">Получить расчёт →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-ov-b"></div>
+  <div class="w" style="width:100%">
+    <div class="hero-inner">
+      <div class="badge"><div class="dot"></div>Завод контента · Полный цикл</div>
+      <h1>UGC<br>контент<span class="r">-завод</span></h1>
+      <p class="sub">Системное производство вирусного UGC-контента в Instagram, TikTok, YouTube Shorts, VK Видео</p>
+      <p class="note">Стоимость просмотра от 0.028₽ зафиксирована в контракте</p>
+      <div class="btns">
+        <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Запустить кампанию →</a>
+        <a href="#case" class="btn btn-g">Смотреть кейс</a>
+      </div>
     </div>
-    <div class="pw-sub">Введите пароль для входа</div>
-    <input type="password" id="pwInput" placeholder="••••" maxlength="20"
-      onkeydown="if(event.key==='Enter') checkPassword()"/>
-    <button onclick="checkPassword()">Войти</button>
-    <div class="pw-err" id="pwErr"></div>
   </div>
-</div>
-
-<div class="header">
-  <div>
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="150" height="28" viewBox="0 0 75 14" fill="none" style="display:block;margin-bottom:2px"><path d="M72.2715 9.11621C73.5959 9.11622 74.6667 10.2515 74.667 11.5576C74.667 12.9207 73.596 14 72.2715 14C70.9469 14 69.876 12.9207 69.876 11.5576C69.8762 10.2515 70.9471 9.11621 72.2715 9.11621ZM19.0781 0C21.5652 5.93264e-05 23.9775 0.512708 24.835 2.98828C24.6123 4.58171 23.6328 5.81007 22.4092 6.04492L18.9424 6.67871C18.8213 6.69947 18.8213 6.88263 18.9424 6.90332L22.4502 7.61816C23.727 7.86347 24.7002 9.19089 24.8623 10.8652L25.1211 13.4893H21.5293V11.7285C21.1347 12.5237 19.8103 13.8584 17.3867 13.8584C14.8504 13.8584 12.9336 12.6086 12.9336 10.0527C12.9337 7.29824 14.0052 4.85573 21.5293 5.50879V5.19727C21.5293 3.91943 21.2759 2.81167 19.0781 2.81152C17.331 2.81152 16.8236 3.52129 16.6826 4.34473H13.4414C13.7515 1.13589 15.9782 0 19.0781 0ZM51.0605 0C54.1886 0.000227286 57.5697 2.24368 57.2598 7.89453H47.9316C48.2135 9.57003 49.2004 10.8193 51.0322 10.8193C52.6102 10.8192 53.427 10.0809 53.8779 9.03027H57.0908C56.4145 12.5515 53.7659 13.8582 51.0605 13.8584C47.9605 13.8584 44.6064 11.87 44.6064 6.92871C44.6067 1.95936 47.9606 0 51.0605 0ZM63.3037 0C67.6999 2.33363e-05 69.4188 1.90259 69.4189 4.34473H65.7275C65.7274 3.46446 64.8816 2.66992 63.2754 2.66992C61.6692 2.66993 60.9649 3.15215 60.9648 3.97559C60.9648 4.91266 62.5707 5.11156 64.4023 5.39551C67.1641 5.82147 69.9823 5.99203 69.9824 9.34277C69.9824 12.5234 67.5592 13.8584 63.501 13.8584C59.1891 13.8584 57.0752 12.2681 57.0752 9.22949L60.8799 9.25781C60.8799 10.7345 62.1766 11.1318 63.7266 11.1318C65.3608 11.1318 66.1502 10.7914 66.1504 9.85449C66.1504 8.66177 64.3459 8.63308 62.0068 8.17871C59.2734 7.66756 57.3857 7.04243 57.3857 4.34473C57.3858 1.64701 59.3583 0 63.3037 0ZM8.25098 0C11.0127 0 12.7322 1.84569 12.7324 4.79883V13.4893H9.09668V5.79297C9.09659 4.34484 8.36383 3.23738 6.72949 3.2373C5.12322 3.2373 3.60762 4.34479 3.60742 5.79297V13.4893H0V0.369141H3.60742V2.24316C4.03047 1.47635 5.99676 8.12363e-05 8.25098 0ZM40.1182 0C42.8799 0 44.4295 1.84569 44.4297 4.79883V13.4893H40.7949V5.79297C40.7948 3.86238 39.9211 3.23748 38.8223 3.2373C37.695 3.2373 36.7364 3.94729 36.7363 5.79297V13.4893H33.1006V5.79297C33.1005 3.8621 32.227 3.2373 31.1279 3.2373C30.0008 3.23738 29.0431 3.94738 29.043 5.79297V6.18262L28.2881 6.04492C26.9908 5.79988 25.9972 4.47314 25.835 2.77832L25.5996 0.369141H29.043V2.1582C29.4658 1.39141 30.5933 0 32.4531 0C34.3129 0.000143623 35.637 0.852516 36.2852 2.3291C36.567 1.78953 38.0327 4.83334e-06 40.1182 0ZM29.043 13.4893H25.5752L25.835 10.8652C25.9971 9.19081 26.9904 7.86339 28.2471 7.61816L29.043 7.45508V13.4893ZM21.5293 8.03711C18.1194 7.83834 16.457 8.00864 16.457 9.85449C16.4572 10.7914 17.1332 11.3877 18.373 11.3877C19.8103 11.3877 20.9374 10.5926 21.5293 9.57031V8.03711ZM51.0322 3.03906C49.4259 3.03906 48.4678 3.97582 48.0732 5.33887H53.8779C53.5398 3.97589 52.6665 3.03919 51.0322 3.03906Z" fill="#ffffff"/></svg>
-      <span id="headerMeta"></span>
+  <div class="hero-stats-strip">
+    <div class="hero-stats-inner">
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">До 10.000</div><div class="hss-l">Роликов в месяц</div></div>
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">От 0,02<sup>₽</sup></div><div class="hss-l">За охват</div></div>
+      <div class="hss"><div class="hss-n">1000<sup>+</sup></div><div class="hss-l">Креаторов</div></div>
+      <div class="hss"><div class="hss-n" style="font-size:17px;letter-spacing:-.5px">От 2,5<sup>млн</sup></div><div class="hss-l">Охват в месяц</div></div>
     </div>
-    <div class="subtitle">Обновляется ежедневно в 23:30 по МСК</div>
-  </div>
-  <div class="updated" id="updatedAt"></div>
-</div>
-
-<div class="project-tabs" id="projectTabs"></div>
-
-<div id="projectContent"></div>
-
-<!-- PDF Modal -->
-<div class="toast" id="toast"></div>
-
-<div class="modal-overlay" id="pdfModal">
-  <div class="modal">
-    <h2>Экспорт в PDF</h2>
-    <p>Выберите период для выгрузки</p>
-    <div class="modal-grid" id="pdfOptions"></div>
-    <button class="modal-cancel" onclick="closePdfModal()">Отмена</button>
   </div>
 </div>
 
-<script>
-const PROJECTS_DATA = {"Twinby":{"name":"Twinby","spreadsheet_id":"1DqVJAwEvxw7HoUrTNZNCw4jVAeK7_ow_beRiEiGVcHM","color":"#a78bfa","budget":500000,"channels_data":[{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/chrisveum9?igsh=MWRrYWRlZTJjbnNkaQ%3D%3D&utm_source=qr","total_videos":89,"total_views":1962863},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@user9247771846859?_r=1&_t=ZM-92FbGVelETc","total_videos":28,"total_views":393},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@ronaldpinegar?si=UK-BEXcZvhXFAcRW","total_videos":87,"total_views":37118},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/by_laura.zi?igsh=MTcyem1wamIzdWhjNg%3D%3D&utm_source=qr","total_videos":89,"total_views":16133},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@user9247771846859?_r=1&_t=ZM-92FbChl09WO","total_videos":28,"total_views":393},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@louisjustice-j4z?si=q1YFwNlPfQriVmkD","total_videos":88,"total_views":41068},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/jenny_twin_by","total_videos":66,"total_views":85396},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nora_twin","total_videos":55,"total_views":36588},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nora_twin_/","total_videos":67,"total_views":140815},{"social_network":"TIKTOK","channel_url":"www.tiktok.com/@jenny_twinby","total_videos":55,"total_views":23656},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/julia_pokeda?igsh=aGNienozZ25zZ3Zo&utm_source=qr","total_videos":45,"total_views":17541},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@julia_winslet?_r=1&_t=ZP-93PWYMveyH0","total_videos":46,"total_views":80374},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/julia_wins1et?igsh=MW1pMTN6OTlsaGdraw%3D%3D&utm_source=qr","total_videos":50,"total_views":38689},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastasiaaaa__?igsh=NnAyZDQzOGpvd2Ex&utm_source=qr","total_videos":9,"total_views":1107},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nastasiaa111?_r=1&_t=ZS-93aGhE9vsYv","total_videos":9,"total_views":17861},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@nastasia_a-a?si=IQq_9xEmyVSMplBw","total_videos":9,"total_views":9773},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@by.laura_zi?_r=1&_t=ZS-93nrQBs7Qn3","total_videos":52,"total_views":196122},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@laura_znak?_r=1&_t=ZS-93nrYPVlDdJ","total_videos":21,"total_views":7723},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/love_patterns1","total_videos":49,"total_views":2493},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/conscious_dating1","total_videos":24,"total_views":604},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/love_without_games","total_videos":49,"total_views":3455},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/date_mindset","total_videos":24,"total_views":1336},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@realtalkdating4","total_videos":46,"total_views":28132},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@heartlogic12","total_videos":47,"total_views":27654},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@moderndates4","total_videos":46,"total_views":23727},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@datingdecoded12","total_videos":47,"total_views":9275},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@LoveDynamics12","total_videos":14,"total_views":33}],"daily_data":[{"date":"2025-12-18","total_views":11294,"by_platform":{"INSTAGRAM":10510,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":11294,"delta_by_platform":{"INSTAGRAM":10510,"TIKTOK":784,"YOUTUBE":0}},{"date":"2025-12-19","total_views":9120,"by_platform":{"INSTAGRAM":8336,"TIKTOK":784,"YOUTUBE":0},"channels":3,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-20","total_views":9316,"by_platform":{"INSTAGRAM":8532,"TIKTOK":784,"YOUTUBE":0},"channels":3,"delta":196,"delta_by_platform":{"INSTAGRAM":196,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-21","total_views":12100,"by_platform":{"INSTAGRAM":11316,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":2784,"delta_by_platform":{"INSTAGRAM":2784,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-22","total_views":16160,"by_platform":{"INSTAGRAM":15376,"TIKTOK":784,"YOUTUBE":0},"channels":4,"delta":4060,"delta_by_platform":{"INSTAGRAM":4060,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-23","total_views":76354,"by_platform":{"INSTAGRAM":75570,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":60194,"delta_by_platform":{"INSTAGRAM":60194,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-24","total_views":87110,"by_platform":{"INSTAGRAM":86326,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":10756,"delta_by_platform":{"INSTAGRAM":10756,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-25","total_views":99178,"by_platform":{"INSTAGRAM":93918,"TIKTOK":784,"YOUTUBE":4476},"channels":7,"delta":12068,"delta_by_platform":{"INSTAGRAM":7592,"TIKTOK":0,"YOUTUBE":4476}},{"date":"2025-12-26","total_views":105907,"by_platform":{"INSTAGRAM":105123,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":6729,"delta_by_platform":{"INSTAGRAM":11205,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-27","total_views":173937,"by_platform":{"INSTAGRAM":173153,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":68030,"delta_by_platform":{"INSTAGRAM":68030,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-28","total_views":279520,"by_platform":{"INSTAGRAM":278736,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":105583,"delta_by_platform":{"INSTAGRAM":105583,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-29","total_views":325603,"by_platform":{"INSTAGRAM":324819,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":46083,"delta_by_platform":{"INSTAGRAM":46083,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-30","total_views":441507,"by_platform":{"INSTAGRAM":436205,"TIKTOK":784,"YOUTUBE":4518},"channels":7,"delta":115904,"delta_by_platform":{"INSTAGRAM":111386,"TIKTOK":0,"YOUTUBE":4518}},{"date":"2025-12-31","total_views":524494,"by_platform":{"INSTAGRAM":523710,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":82987,"delta_by_platform":{"INSTAGRAM":87505,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-01","total_views":540902,"by_platform":{"INSTAGRAM":540902,"TIKTOK":0,"YOUTUBE":0},"channels":4,"delta":16408,"delta_by_platform":{"INSTAGRAM":17192,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-02","total_views":562046,"by_platform":{"INSTAGRAM":562038,"TIKTOK":8,"YOUTUBE":0},"channels":6,"delta":21144,"delta_by_platform":{"INSTAGRAM":21136,"TIKTOK":8,"YOUTUBE":0}},{"date":"2026-01-03","total_views":614278,"by_platform":{"INSTAGRAM":598097,"TIKTOK":786,"YOUTUBE":15395},"channels":7,"delta":52232,"delta_by_platform":{"INSTAGRAM":36059,"TIKTOK":778,"YOUTUBE":15395}},{"date":"2026-01-04","total_views":644222,"by_platform":{"INSTAGRAM":643436,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":29944,"delta_by_platform":{"INSTAGRAM":45339,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-05","total_views":682342,"by_platform":{"INSTAGRAM":681556,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":38120,"delta_by_platform":{"INSTAGRAM":38120,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-06","total_views":706854,"by_platform":{"INSTAGRAM":706068,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":24512,"delta_by_platform":{"INSTAGRAM":24512,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-07","total_views":729358,"by_platform":{"INSTAGRAM":728572,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":22504,"delta_by_platform":{"INSTAGRAM":22504,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-08","total_views":751751,"by_platform":{"INSTAGRAM":750965,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":22393,"delta_by_platform":{"INSTAGRAM":22393,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-09","total_views":783223,"by_platform":{"INSTAGRAM":782437,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":31472,"delta_by_platform":{"INSTAGRAM":31472,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-10","total_views":834032,"by_platform":{"INSTAGRAM":813436,"TIKTOK":786,"YOUTUBE":19810},"channels":7,"delta":50809,"delta_by_platform":{"INSTAGRAM":30999,"TIKTOK":0,"YOUTUBE":19810}},{"date":"2026-01-11","total_views":831219,"by_platform":{"INSTAGRAM":830433,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":0,"delta_by_platform":{"INSTAGRAM":16997,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-12","total_views":661217,"by_platform":{"INSTAGRAM":660431,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-13","total_views":868181,"by_platform":{"INSTAGRAM":867395,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":206964,"delta_by_platform":{"INSTAGRAM":206964,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-14","total_views":886861,"by_platform":{"INSTAGRAM":886075,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":18680,"delta_by_platform":{"INSTAGRAM":18680,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-15","total_views":918788,"by_platform":{"INSTAGRAM":918002,"TIKTOK":786,"YOUTUBE":0},"channels":6,"delta":31927,"delta_by_platform":{"INSTAGRAM":31927,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-16","total_views":1031718,"by_platform":{"INSTAGRAM":1030934,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":112930,"delta_by_platform":{"INSTAGRAM":112932,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-17","total_views":1070276,"by_platform":{"INSTAGRAM":1069492,"TIKTOK":784,"YOUTUBE":0},"channels":6,"delta":38558,"delta_by_platform":{"INSTAGRAM":38558,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-18","total_views":1185670,"by_platform":{"INSTAGRAM":1104185,"TIKTOK":784,"YOUTUBE":80701},"channels":10,"delta":115394,"delta_by_platform":{"INSTAGRAM":34693,"TIKTOK":0,"YOUTUBE":80701}},{"date":"2026-01-19","total_views":1250519,"by_platform":{"INSTAGRAM":1167947,"TIKTOK":784,"YOUTUBE":81788},"channels":10,"delta":64849,"delta_by_platform":{"INSTAGRAM":63762,"TIKTOK":0,"YOUTUBE":1087}},{"date":"2026-01-20","total_views":1321605,"by_platform":{"INSTAGRAM":1234627,"TIKTOK":784,"YOUTUBE":86194},"channels":10,"delta":71086,"delta_by_platform":{"INSTAGRAM":66680,"TIKTOK":0,"YOUTUBE":4406}},{"date":"2026-01-21","total_views":1351658,"by_platform":{"INSTAGRAM":1264078,"TIKTOK":784,"YOUTUBE":86796},"channels":10,"delta":30053,"delta_by_platform":{"INSTAGRAM":29451,"TIKTOK":0,"YOUTUBE":602}},{"date":"2026-01-22","total_views":1387955,"by_platform":{"INSTAGRAM":1297090,"TIKTOK":784,"YOUTUBE":90081},"channels":10,"delta":36297,"delta_by_platform":{"INSTAGRAM":33012,"TIKTOK":0,"YOUTUBE":3285}},{"date":"2026-01-23","total_views":1445279,"by_platform":{"INSTAGRAM":1349904,"TIKTOK":784,"YOUTUBE":94591},"channels":10,"delta":57324,"delta_by_platform":{"INSTAGRAM":52814,"TIKTOK":0,"YOUTUBE":4510}},{"date":"2026-01-24","total_views":1490001,"by_platform":{"INSTAGRAM":1390658,"TIKTOK":784,"YOUTUBE":98559},"channels":10,"delta":44722,"delta_by_platform":{"INSTAGRAM":40754,"TIKTOK":0,"YOUTUBE":3968}},{"date":"2026-01-25","total_views":1460559,"by_platform":{"INSTAGRAM":1430914,"TIKTOK":784,"YOUTUBE":28861},"channels":7,"delta":0,"delta_by_platform":{"INSTAGRAM":40256,"TIKTOK":0,"YOUTUBE":0}},{"date":"2026-01-26","total_views":1559827,"by_platform":{"INSTAGRAM":1455876,"TIKTOK":3255,"YOUTUBE":100696},"channels":11,"delta":99268,"delta_by_platform":{"INSTAGRAM":24962,"TIKTOK":2471,"YOUTUBE":71835}},{"date":"2026-01-28","total_views":1600251,"by_platform":{"INSTAGRAM":1488902,"TIKTOK":6808,"YOUTUBE":104541},"channels":11,"delta":40424,"delta_by_platform":{"INSTAGRAM":33026,"TIKTOK":3553,"YOUTUBE":3845}},{"date":"2026-01-29","total_views":1617558,"by_platform":{"INSTAGRAM":1502364,"TIKTOK":8887,"YOUTUBE":106307},"channels":11,"delta":17307,"delta_by_platform":{"INSTAGRAM":13462,"TIKTOK":2079,"YOUTUBE":1766}},{"date":"2026-01-30","total_views":1636557,"by_platform":{"INSTAGRAM":1516937,"TIKTOK":11857,"YOUTUBE":107763},"channels":11,"delta":18999,"delta_by_platform":{"INSTAGRAM":14573,"TIKTOK":2970,"YOUTUBE":1456}},{"date":"2026-01-31","total_views":1605606,"by_platform":{"INSTAGRAM":1534380,"TIKTOK":13165,"YOUTUBE":58061},"channels":10,"delta":0,"delta_by_platform":{"INSTAGRAM":17443,"TIKTOK":1308,"YOUTUBE":0}},{"date":"2026-02-01","total_views":1623539,"by_platform":{"INSTAGRAM":1550722,"TIKTOK":14283,"YOUTUBE":58534},"channels":10,"delta":17933,"delta_by_platform":{"INSTAGRAM":16342,"TIKTOK":1118,"YOUTUBE":473}},{"date":"2026-02-02","total_views":1668117,"by_platform":{"INSTAGRAM":1584172,"TIKTOK":22565,"YOUTUBE":61380},"channels":16,"delta":44578,"delta_by_platform":{"INSTAGRAM":33450,"TIKTOK":8282,"YOUTUBE":2846}},{"date":"2026-02-03","total_views":1696850,"by_platform":{"INSTAGRAM":1608783,"TIKTOK":24638,"YOUTUBE":63429},"channels":16,"delta":28733,"delta_by_platform":{"INSTAGRAM":24611,"TIKTOK":2073,"YOUTUBE":2049}},{"date":"2026-02-04","total_views":1750018,"by_platform":{"INSTAGRAM":1652760,"TIKTOK":30991,"YOUTUBE":66267},"channels":25,"delta":53168,"delta_by_platform":{"INSTAGRAM":43977,"TIKTOK":6353,"YOUTUBE":2838}},{"date":"2026-02-05","total_views":1803267,"by_platform":{"INSTAGRAM":1699362,"TIKTOK":36650,"YOUTUBE":67255},"channels":25,"delta":53249,"delta_by_platform":{"INSTAGRAM":46602,"TIKTOK":5659,"YOUTUBE":988}},{"date":"2026-02-06","total_views":1834681,"by_platform":{"INSTAGRAM":1721687,"TIKTOK":45269,"YOUTUBE":67725},"channels":25,"delta":31414,"delta_by_platform":{"INSTAGRAM":22325,"TIKTOK":8619,"YOUTUBE":470}},{"date":"2026-02-07","total_views":1846442,"by_platform":{"INSTAGRAM":1724891,"TIKTOK":52629,"YOUTUBE":68922},"channels":25,"delta":11761,"delta_by_platform":{"INSTAGRAM":3204,"TIKTOK":7360,"YOUTUBE":1197}},{"date":"2026-02-08","total_views":1876787,"by_platform":{"INSTAGRAM":1750826,"TIKTOK":56866,"YOUTUBE":69095},"channels":25,"delta":30345,"delta_by_platform":{"INSTAGRAM":25935,"TIKTOK":4237,"YOUTUBE":173}},{"date":"2026-02-09","total_views":1896408,"by_platform":{"INSTAGRAM":1761889,"TIKTOK":64798,"YOUTUBE":69721},"channels":25,"delta":19621,"delta_by_platform":{"INSTAGRAM":11063,"TIKTOK":7932,"YOUTUBE":626}},{"date":"2026-02-10","total_views":2086737,"by_platform":{"INSTAGRAM":1779654,"TIKTOK":236055,"YOUTUBE":71028},"channels":27,"delta":190329,"delta_by_platform":{"INSTAGRAM":17765,"TIKTOK":171257,"YOUTUBE":1307}},{"date":"2026-02-11","total_views":2284745,"by_platform":{"INSTAGRAM":1928910,"TIKTOK":283217,"YOUTUBE":72618},"channels":27,"delta":198008,"delta_by_platform":{"INSTAGRAM":149256,"TIKTOK":47162,"YOUTUBE":1590}},{"date":"2026-02-12","total_views":2385271,"by_platform":{"INSTAGRAM":2002556,"TIKTOK":309097,"YOUTUBE":73618},"channels":27,"delta":100526,"delta_by_platform":{"INSTAGRAM":73646,"TIKTOK":25880,"YOUTUBE":1000}},{"date":"2026-02-13","total_views":2438682,"by_platform":{"INSTAGRAM":2029484,"TIKTOK":334247,"YOUTUBE":74951},"channels":27,"delta":53411,"delta_by_platform":{"INSTAGRAM":26928,"TIKTOK":25150,"YOUTUBE":1333}},{"date":"2026-02-14","total_views":2465675,"by_platform":{"INSTAGRAM":2051062,"TIKTOK":339583,"YOUTUBE":75030},"channels":27,"delta":26993,"delta_by_platform":{"INSTAGRAM":21578,"TIKTOK":5336,"YOUTUBE":79}},{"date":"2026-02-16","total_views":2521565,"by_platform":{"INSTAGRAM":2093164,"TIKTOK":352734,"YOUTUBE":75667},"channels":27,"delta":55890,"delta_by_platform":{"INSTAGRAM":42102,"TIKTOK":13151,"YOUTUBE":637}},{"date":"2026-02-17","total_views":2555286,"by_platform":{"INSTAGRAM":2116109,"TIKTOK":362529,"YOUTUBE":76648},"channels":27,"delta":33721,"delta_by_platform":{"INSTAGRAM":22945,"TIKTOK":9795,"YOUTUBE":981}},{"date":"2026-02-18","total_views":2602307,"by_platform":{"INSTAGRAM":2148812,"TIKTOK":375845,"YOUTUBE":77650},"channels":27,"delta":47021,"delta_by_platform":{"INSTAGRAM":32703,"TIKTOK":13316,"YOUTUBE":1002}},{"date":"2026-02-19","total_views":2636258,"by_platform":{"INSTAGRAM":2169822,"TIKTOK":386789,"YOUTUBE":79647},"channels":27,"delta":33951,"delta_by_platform":{"INSTAGRAM":21010,"TIKTOK":10944,"YOUTUBE":1997}},{"date":"2026-02-20","total_views":2675611,"by_platform":{"INSTAGRAM":2192991,"TIKTOK":400841,"YOUTUBE":81779},"channels":27,"delta":39353,"delta_by_platform":{"INSTAGRAM":23169,"TIKTOK":14052,"YOUTUBE":2132}},{"date":"2026-02-21","total_views":2696884,"by_platform":{"INSTAGRAM":2207110,"TIKTOK":407064,"YOUTUBE":82710},"channels":27,"delta":21273,"delta_by_platform":{"INSTAGRAM":14119,"TIKTOK":6223,"YOUTUBE":931}},{"date":"2026-02-23","total_views":2752760,"by_platform":{"INSTAGRAM":2237575,"TIKTOK":429956,"YOUTUBE":85229},"channels":27,"delta":55876,"delta_by_platform":{"INSTAGRAM":30465,"TIKTOK":22892,"YOUTUBE":2519}},{"date":"2026-02-24","total_views":2779368,"by_platform":{"INSTAGRAM":2253112,"TIKTOK":440268,"YOUTUBE":85988},"channels":27,"delta":26608,"delta_by_platform":{"INSTAGRAM":15537,"TIKTOK":10312,"YOUTUBE":759}},{"date":"2026-02-25","total_views":2810322,"by_platform":{"INSTAGRAM":2270432,"TIKTOK":451898,"YOUTUBE":87992},"channels":27,"delta":30954,"delta_by_platform":{"INSTAGRAM":17320,"TIKTOK":11630,"YOUTUBE":2004}}],"updated_at":"2026-02-25T21:04:10.376238"},"Luvu":{"name":"Luvu","spreadsheet_id":"1j9DS35rRRmVjYGKBH3iEox1Ldk60k79qqSe2uyWL6-Y","color":"#34d399","budget":1000000,"channels_data":[{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@justinmiles7318","total_videos":9,"total_views":3885},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@nancyhicks-z2k","total_videos":9,"total_views":8849},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvubeauty?igsh=OXZ0Z2drcjNjYWE2","total_videos":86,"total_views":75344},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@lina.probeauty?si=RXUbTaE2SqmXbZp0","total_videos":156,"total_views":700235},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/_beautyliana_?igsh=MXB4dmRwOHVwd3ZpYw%3D%3D&utm_source=qr","total_videos":120,"total_views":22644},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@_beautyliana_?_r=1&_t=ZN-91du6WrZV3e","total_videos":137,"total_views":68490},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyliana046?si=b3q13VNaV7PWfBug","total_videos":30,"total_views":14458},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/t.martynova__?igsh=ajBvazVmZGgzYnJq&utm_source=qr","total_videos":18,"total_views":2367},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@fuluwokuhayuga4679?_r=1&_t=ZN-92FBKEavTpG","total_videos":6,"total_views":3282},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@tatiana_b-l6w?si=igwL0rxGIy0BK82a","total_videos":5,"total_views":5789},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/amalliiyyaaa__aa?igsh=cXN4aXAyMzgycTV0&utm_source=qr","total_videos":172,"total_views":61221},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@amalliiyyaaluvu?si=BYSNdzuznco9KqoS","total_videos":120,"total_views":75464},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/evaluvu1?igsh=czAwcG5hZmg1OHc%3D&utm_source=qr","total_videos":103,"total_views":32829},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@evaluvu1?_r=1&_t=ZS-91usW1r7XN2","total_videos":102,"total_views":75880},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evaluvu2?si=F9hBY3GGb4eZ7WtG","total_videos":63,"total_views":15238},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@dariabeautylifestyle?si=Arn-P59H8TqPP4cx","total_videos":91,"total_views":137396},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/evaluvu2?igsh=MWVicWM3dDBncXNpOQ%3D%3D&utm_source=qr","total_videos":103,"total_views":8603},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@evaluvu2?_r=1&_t=ZS-91y53b8C4HY","total_videos":103,"total_views":54095},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evaluvu1?si=nsuJ-g20_a3XURR5","total_videos":103,"total_views":238084},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nataliehoward5766?_r=1&_t=ZS-92KgWutLoUq","total_videos":3,"total_views":1458},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautygirl_046?igsh=MWtuZ2o0b3NmNGlweg%3D%3D&utm_source=qr","total_videos":111,"total_views":45958},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautygirl_046?si=C4vdtxUtUun5NSK9","total_videos":32,"total_views":9256},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvubeauty2?igsh=MTlhdG93MXI0NzN1ag==","total_videos":43,"total_views":1142},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@linaluvubeauty2?_r=1&_t=ZN-92HCNKN0hBG","total_videos":118,"total_views":86708},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@lina.probeauty2?si=I7871GNCwynHftFc","total_videos":16,"total_views":1257},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/anneberge692?igsh=MW9lOGYxOTZlbWR2bA%3D%3D&utm_source=qr","total_videos":19,"total_views":7915},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@jutaluyehucize5389?_r=1&_t=ZN-92FBLgly3IU","total_videos":9,"total_views":3474},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@tatianamartynova-b6h?si=v5FM8Gp_TSqoAANP","total_videos":7,"total_views":7221},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/amalliiyyaabyluvu?igsh=YWticTJzZTUzYngw&utm_source=qr","total_videos":159,"total_views":4501498},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@linaluvubeauty?_r=1&_t=ZN-92HCKXHOY5e","total_videos":122,"total_views":1728256},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@linuvbeauty?si=kgHvyEG9ALbb1jCu","total_videos":69,"total_views":21609},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@amalliiyyaaa_luvu?_r=1&_t=ZS-92Lo5LRMnRZ","total_videos":156,"total_views":95584},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@amalliiyyaaaluvu?si=Kf8K6axre9wBJsOF","total_videos":115,"total_views":80264},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@amalliiyyaa_luvu?_r=1&_t=ZN-92RUqawQqve","total_videos":52,"total_views":22434},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/krisxbeauty_?igsh=bzF6ZHI2N2tydjRy","total_videos":87,"total_views":26273},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@krisprobeauty_?_r=1&_t=ZN-930RWRf481e","total_videos":87,"total_views":55404},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@kris.luv.makeup?si=VidDoEnB1gVyw3tM","total_videos":81,"total_views":51414},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/xristinaluv.beauty?igsh=bmR4eG4xcDllMmtu","total_videos":82,"total_views":18416},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@beauty_kriis?_r=1&_t=ZS-930RZRMy4yF","total_videos":90,"total_views":68610},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@kris.luvbeauty?si=ueIBhz2XH9ETAnVx","total_videos":7,"total_views":3343},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyliana045?si=W7j7-N0qSJC8W1fi","total_videos":120,"total_views":58079},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautygirl_045?si=pdK1scPPwZZYHn-K","total_videos":120,"total_views":34730},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@_beautygirl_046?_r=1&_t=ZM-935z7RzYcOm","total_videos":128,"total_views":155701},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@dariabeauty5?_r=1&_t=ZG-92uqhx41o37","total_videos":45,"total_views":22567},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@arianaluvu_b?_r=1&_t=ZG-93HYs7952Gm","total_videos":7,"total_views":11},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@beautyaria_luvu?si=tpgub4_Eo3T8kDUw","total_videos":41,"total_views":38857},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@arialuvu2?_r=1&_t=ZG-93HYvXSlpaq","total_videos":25,"total_views":7011},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@arialuvu?si=YnPZAhlv2mvKwxxi","total_videos":27,"total_views":1493},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@krisxluvu?si=h2WC5kYtl40vMXdK","total_videos":75,"total_views":11471},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/alicecreateee?igsh=MWJrYTJ0bnNzenUzMg==","total_videos":8,"total_views":88802},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@alice.makeup96?_r=1&_t=ZN-943XaC8wRWc","total_videos":7,"total_views":1570},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@alice.makeup.create?si=6fmOStuXcJyEE9pS","total_videos":7,"total_views":9375},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautyviksi?igsh=NXFmc2l2MWx5cG45&utm_source=qr","total_videos":100,"total_views":1429},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaloveyou01?_r=1&_t=ZP-93rfYaBCqIZ","total_videos":94,"total_views":33844},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikabeautycontent?si=vrkNmVmaXWXjlS9e","total_videos":93,"total_views":88495},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaaa_beauty?igsh=MWExMWhlbXBkbjdvcw==","total_videos":55,"total_views":16334},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vika.luvu?_r=1&_t=ZS-93o0eUHNsdl","total_videos":51,"total_views":24201},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaluvu?si=Iucsq_1x_iTzOHU3","total_videos":54,"total_views":58204},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/viictoria_luvu?igsh=MXNodXRsNmRuMmlzeA==","total_videos":52,"total_views":906},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@viictorialuvu?si=9vA0HdoNMp6JD4Id","total_videos":50,"total_views":16578},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/linaluvbeautyy?igsh=MWtic3BuYWhweTN3cg==","total_videos":30,"total_views":33240},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/beautyli_luvu?igsh=MTZucmRjcTR1eTBhaA%3D%3D&utm_source=qr","total_videos":40,"total_views":13359},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/liana_beauty45?igsh=bzdzeHdueWtrN2Fl&utm_source=qr","total_videos":40,"total_views":18564},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ale.aly_luvu?igsh=Y3prNGNnNHg1aWZt&utm_source=qr","total_videos":87,"total_views":11485},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@ale.alya_luvu?_r=1&_t=ZG-93ixigxJbPc","total_videos":47,"total_views":17403},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@ale.alya_luvu","total_videos":18,"total_views":49},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ale.alya_ugc.luvu?igsh=MW9leDd4MDMwdnFt&utm_source=qr","total_videos":87,"total_views":27846},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@ale.alya_ugc.luvu?_r=1&_t=ZG-93ixkSIaqBc","total_videos":47,"total_views":18141},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@ale.alya_ugc","total_videos":40,"total_views":13992},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/viktorilove22?igsh=ZjFjMmt4bTR1cDZn&utm_source=qr","total_videos":107,"total_views":4188},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@lovelovevika","total_videos":58,"total_views":76930},{"social_network":"YOUTUBE","channel_url":"https://www.youtube.com/@Vikaloveyou2213","total_videos":11,"total_views":19}],"daily_data":[{"date":"2025-11-29","total_views":31902,"by_platform":{"INSTAGRAM":3804,"TIKTOK":10367,"YOUTUBE":17731},"channels":10,"delta":31902,"delta_by_platform":{"INSTAGRAM":3804,"TIKTOK":10367,"YOUTUBE":17731}},{"date":"2025-11-30","total_views":26817,"by_platform":{"INSTAGRAM":3608,"TIKTOK":5478,"YOUTUBE":17731},"channels":8,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":0,"YOUTUBE":0}},{"date":"2025-12-01","total_views":32328,"by_platform":{"INSTAGRAM":3627,"TIKTOK":10970,"YOUTUBE":17731},"channels":9,"delta":5511,"delta_by_platform":{"INSTAGRAM":19,"TIKTOK":5492,"YOUTUBE":0}},{"date":"2025-12-02","total_views":32339,"by_platform":{"INSTAGRAM":3628,"TIKTOK":10979,"YOUTUBE":17732},"channels":9,"delta":11,"delta_by_platform":{"INSTAGRAM":1,"TIKTOK":9,"YOUTUBE":1}},{"date":"2025-12-03","total_views":34350,"by_platform":{"INSTAGRAM":4064,"TIKTOK":11389,"YOUTUBE":18897},"channels":10,"delta":2011,"delta_by_platform":{"INSTAGRAM":436,"TIKTOK":410,"YOUTUBE":1165}},{"date":"2025-12-04","total_views":41464,"by_platform":{"INSTAGRAM":4846,"TIKTOK":15608,"YOUTUBE":21010},"channels":16,"delta":7114,"delta_by_platform":{"INSTAGRAM":782,"TIKTOK":4219,"YOUTUBE":2113}},{"date":"2025-12-05","total_views":44946,"by_platform":{"INSTAGRAM":6559,"TIKTOK":20703,"YOUTUBE":17684},"channels":16,"delta":3482,"delta_by_platform":{"INSTAGRAM":1713,"TIKTOK":5095,"YOUTUBE":0}},{"date":"2025-12-06","total_views":71313,"by_platform":{"INSTAGRAM":14367,"TIKTOK":22487,"YOUTUBE":34459},"channels":19,"delta":26367,"delta_by_platform":{"INSTAGRAM":7808,"TIKTOK":1784,"YOUTUBE":16775}},{"date":"2025-12-07","total_views":68879,"by_platform":{"INSTAGRAM":8649,"TIKTOK":24229,"YOUTUBE":36001},"channels":20,"delta":0,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":1742,"YOUTUBE":1542}},{"date":"2025-12-08","total_views":77974,"by_platform":{"INSTAGRAM":11243,"TIKTOK":29345,"YOUTUBE":37386},"channels":22,"delta":9095,"delta_by_platform":{"INSTAGRAM":2594,"TIKTOK":5116,"YOUTUBE":1385}},{"date":"2025-12-09","total_views":92670,"by_platform":{"INSTAGRAM":10691,"TIKTOK":36729,"YOUTUBE":45250},"channels":22,"delta":14696,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":7384,"YOUTUBE":7864}},{"date":"2025-12-10","total_views":119294,"by_platform":{"INSTAGRAM":16205,"TIKTOK":45277,"YOUTUBE":57812},"channels":23,"delta":26624,"delta_by_platform":{"INSTAGRAM":5514,"TIKTOK":8548,"YOUTUBE":12562}},{"date":"2025-12-11","total_views":136561,"by_platform":{"INSTAGRAM":18338,"TIKTOK":51587,"YOUTUBE":66636},"channels":23,"delta":17267,"delta_by_platform":{"INSTAGRAM":2133,"TIKTOK":6310,"YOUTUBE":8824}},{"date":"2025-12-12","total_views":232240,"by_platform":{"INSTAGRAM":19912,"TIKTOK":56726,"YOUTUBE":155602},"channels":23,"delta":95679,"delta_by_platform":{"INSTAGRAM":1574,"TIKTOK":5139,"YOUTUBE":88966}},{"date":"2025-12-13","total_views":237232,"by_platform":{"INSTAGRAM":21090,"TIKTOK":29112,"YOUTUBE":187030},"channels":19,"delta":4992,"delta_by_platform":{"INSTAGRAM":1178,"TIKTOK":0,"YOUTUBE":31428}},{"date":"2025-12-14","total_views":247059,"by_platform":{"INSTAGRAM":21357,"TIKTOK":28889,"YOUTUBE":196813},"channels":19,"delta":9827,"delta_by_platform":{"INSTAGRAM":267,"TIKTOK":0,"YOUTUBE":9783}},{"date":"2025-12-15","total_views":273607,"by_platform":{"INSTAGRAM":28343,"TIKTOK":34626,"YOUTUBE":210638},"channels":23,"delta":26548,"delta_by_platform":{"INSTAGRAM":6986,"TIKTOK":5737,"YOUTUBE":13825}},{"date":"2025-12-16","total_views":290655,"by_platform":{"INSTAGRAM":30152,"TIKTOK":38126,"YOUTUBE":222377},"channels":23,"delta":17048,"delta_by_platform":{"INSTAGRAM":1809,"TIKTOK":3500,"YOUTUBE":11739}},{"date":"2025-12-18","total_views":326086,"by_platform":{"INSTAGRAM":36375,"TIKTOK":45709,"YOUTUBE":244002},"channels":23,"delta":35431,"delta_by_platform":{"INSTAGRAM":6223,"TIKTOK":7583,"YOUTUBE":21625}},{"date":"2025-12-19","total_views":374904,"by_platform":{"INSTAGRAM":38301,"TIKTOK":55762,"YOUTUBE":280841},"channels":31,"delta":48818,"delta_by_platform":{"INSTAGRAM":1926,"TIKTOK":10053,"YOUTUBE":36839}},{"date":"2025-12-20","total_views":404701,"by_platform":{"INSTAGRAM":46476,"TIKTOK":59034,"YOUTUBE":299191},"channels":31,"delta":29797,"delta_by_platform":{"INSTAGRAM":8175,"TIKTOK":3272,"YOUTUBE":18350}},{"date":"2025-12-21","total_views":321529,"by_platform":{"INSTAGRAM":66739,"TIKTOK":63006,"YOUTUBE":191784},"channels":30,"delta":0,"delta_by_platform":{"INSTAGRAM":20263,"TIKTOK":3972,"YOUTUBE":0}},{"date":"2025-12-22","total_views":532133,"by_platform":{"INSTAGRAM":89146,"TIKTOK":71575,"YOUTUBE":371412},"channels":31,"delta":210604,"delta_by_platform":{"INSTAGRAM":22407,"TIKTOK":8569,"YOUTUBE":179628}},{"date":"2025-12-23","total_views":1226534,"by_platform":{"INSTAGRAM":723595,"TIKTOK":82640,"YOUTUBE":420299},"channels":32,"delta":694401,"delta_by_platform":{"INSTAGRAM":634449,"TIKTOK":11065,"YOUTUBE":48887}},{"date":"2025-12-24","total_views":1914805,"by_platform":{"INSTAGRAM":1382113,"TIKTOK":57418,"YOUTUBE":475274},"channels":29,"delta":688271,"delta_by_platform":{"INSTAGRAM":658518,"TIKTOK":0,"YOUTUBE":54975}},{"date":"2025-12-25","total_views":2171966,"by_platform":{"INSTAGRAM":1531899,"TIKTOK":89210,"YOUTUBE":550857},"channels":33,"delta":257161,"delta_by_platform":{"INSTAGRAM":149786,"TIKTOK":31792,"YOUTUBE":75583}},{"date":"2025-12-26","total_views":2292780,"by_platform":{"INSTAGRAM":1613043,"TIKTOK":108524,"YOUTUBE":571213},"channels":34,"delta":120814,"delta_by_platform":{"INSTAGRAM":81144,"TIKTOK":19314,"YOUTUBE":20356}},{"date":"2025-12-27","total_views":2400592,"by_platform":{"INSTAGRAM":1707510,"TIKTOK":110325,"YOUTUBE":582757},"channels":34,"delta":107812,"delta_by_platform":{"INSTAGRAM":94467,"TIKTOK":1801,"YOUTUBE":11544}},{"date":"2025-12-28","total_views":2489070,"by_platform":{"INSTAGRAM":1802032,"TIKTOK":98300,"YOUTUBE":588738},"channels":33,"delta":88478,"delta_by_platform":{"INSTAGRAM":94522,"TIKTOK":0,"YOUTUBE":5981}},{"date":"2025-12-29","total_views":2589879,"by_platform":{"INSTAGRAM":1881468,"TIKTOK":114834,"YOUTUBE":593577},"channels":34,"delta":100809,"delta_by_platform":{"INSTAGRAM":79436,"TIKTOK":16534,"YOUTUBE":4839}},{"date":"2025-12-30","total_views":2668652,"by_platform":{"INSTAGRAM":1955084,"TIKTOK":117942,"YOUTUBE":595626},"channels":34,"delta":78773,"delta_by_platform":{"INSTAGRAM":73616,"TIKTOK":3108,"YOUTUBE":2049}},{"date":"2025-12-31","total_views":2750843,"by_platform":{"INSTAGRAM":2028419,"TIKTOK":122183,"YOUTUBE":600241},"channels":34,"delta":82191,"delta_by_platform":{"INSTAGRAM":73335,"TIKTOK":4241,"YOUTUBE":4615}},{"date":"2026-01-01","total_views":2798242,"by_platform":{"INSTAGRAM":2197118,"TIKTOK":0,"YOUTUBE":601124},"channels":23,"delta":47399,"delta_by_platform":{"INSTAGRAM":168699,"TIKTOK":0,"YOUTUBE":883}},{"date":"2026-01-02","total_views":2961343,"by_platform":{"INSTAGRAM":2317688,"TIKTOK":40053,"YOUTUBE":603602},"channels":34,"delta":163101,"delta_by_platform":{"INSTAGRAM":120570,"TIKTOK":40053,"YOUTUBE":2478}},{"date":"2026-01-03","total_views":3092708,"by_platform":{"INSTAGRAM":2389139,"TIKTOK":95740,"YOUTUBE":607829},"channels":34,"delta":131365,"delta_by_platform":{"INSTAGRAM":71451,"TIKTOK":55687,"YOUTUBE":4227}},{"date":"2026-01-04","total_views":3153496,"by_platform":{"INSTAGRAM":2445059,"TIKTOK":99097,"YOUTUBE":609340},"channels":34,"delta":60788,"delta_by_platform":{"INSTAGRAM":55920,"TIKTOK":3357,"YOUTUBE":1511}},{"date":"2026-01-05","total_views":3264765,"by_platform":{"INSTAGRAM":2508438,"TIKTOK":137917,"YOUTUBE":618410},"channels":34,"delta":111269,"delta_by_platform":{"INSTAGRAM":63379,"TIKTOK":38820,"YOUTUBE":9070}},{"date":"2026-01-06","total_views":3344418,"by_platform":{"INSTAGRAM":2565092,"TIKTOK":149705,"YOUTUBE":629621},"channels":34,"delta":79653,"delta_by_platform":{"INSTAGRAM":56654,"TIKTOK":11788,"YOUTUBE":11211}},{"date":"2026-01-07","total_views":3464124,"by_platform":{"INSTAGRAM":2634323,"TIKTOK":177779,"YOUTUBE":652022},"channels":34,"delta":119706,"delta_by_platform":{"INSTAGRAM":69231,"TIKTOK":28074,"YOUTUBE":22401}},{"date":"2026-01-08","total_views":3532204,"by_platform":{"INSTAGRAM":2689680,"TIKTOK":178112,"YOUTUBE":664412},"channels":34,"delta":68080,"delta_by_platform":{"INSTAGRAM":55357,"TIKTOK":333,"YOUTUBE":12390}},{"date":"2026-01-09","total_views":3628548,"by_platform":{"INSTAGRAM":2735807,"TIKTOK":206436,"YOUTUBE":686305},"channels":34,"delta":96344,"delta_by_platform":{"INSTAGRAM":46127,"TIKTOK":28324,"YOUTUBE":21893}},{"date":"2026-01-10","total_views":3682607,"by_platform":{"INSTAGRAM":2781136,"TIKTOK":212169,"YOUTUBE":689302},"channels":34,"delta":54059,"delta_by_platform":{"INSTAGRAM":45329,"TIKTOK":5733,"YOUTUBE":2997}},{"date":"2026-01-11","total_views":3738991,"by_platform":{"INSTAGRAM":2830716,"TIKTOK":217025,"YOUTUBE":691250},"channels":33,"delta":56384,"delta_by_platform":{"INSTAGRAM":49580,"TIKTOK":4856,"YOUTUBE":1948}},{"date":"2026-01-12","total_views":3795985,"by_platform":{"INSTAGRAM":2882919,"TIKTOK":218696,"YOUTUBE":694370},"channels":33,"delta":56994,"delta_by_platform":{"INSTAGRAM":52203,"TIKTOK":1671,"YOUTUBE":3120}},{"date":"2026-01-13","total_views":3869152,"by_platform":{"INSTAGRAM":2949543,"TIKTOK":221106,"YOUTUBE":698503},"channels":33,"delta":73167,"delta_by_platform":{"INSTAGRAM":66624,"TIKTOK":2410,"YOUTUBE":4133}},{"date":"2026-01-14","total_views":3978848,"by_platform":{"INSTAGRAM":3018776,"TIKTOK":242866,"YOUTUBE":717206},"channels":43,"delta":109696,"delta_by_platform":{"INSTAGRAM":69233,"TIKTOK":21760,"YOUTUBE":18703}},{"date":"2026-01-15","total_views":4115060,"by_platform":{"INSTAGRAM":3071576,"TIKTOK":301375,"YOUTUBE":742109},"channels":50,"delta":136212,"delta_by_platform":{"INSTAGRAM":52800,"TIKTOK":58509,"YOUTUBE":24903}},{"date":"2026-01-16","total_views":3476982,"by_platform":{"INSTAGRAM":3151089,"TIKTOK":325887,"YOUTUBE":6},"channels":33,"delta":0,"delta_by_platform":{"INSTAGRAM":79513,"TIKTOK":24512,"YOUTUBE":0}},{"date":"2026-01-17","total_views":4279323,"by_platform":{"INSTAGRAM":3175807,"TIKTOK":332966,"YOUTUBE":770550},"channels":52,"delta":802341,"delta_by_platform":{"INSTAGRAM":24718,"TIKTOK":7079,"YOUTUBE":770544}},{"date":"2026-01-18","total_views":4353140,"by_platform":{"INSTAGRAM":3240091,"TIKTOK":337468,"YOUTUBE":775581},"channels":53,"delta":73817,"delta_by_platform":{"INSTAGRAM":64284,"TIKTOK":4502,"YOUTUBE":5031}},{"date":"2026-01-19","total_views":4434720,"by_platform":{"INSTAGRAM":3305697,"TIKTOK":346514,"YOUTUBE":782509},"channels":55,"delta":81580,"delta_by_platform":{"INSTAGRAM":65606,"TIKTOK":9046,"YOUTUBE":6928}},{"date":"2026-01-20","total_views":4554149,"by_platform":{"INSTAGRAM":3382222,"TIKTOK":368677,"YOUTUBE":803250},"channels":55,"delta":119429,"delta_by_platform":{"INSTAGRAM":76525,"TIKTOK":22163,"YOUTUBE":20741}},{"date":"2026-01-21","total_views":4637643,"by_platform":{"INSTAGRAM":3420699,"TIKTOK":391417,"YOUTUBE":825527},"channels":55,"delta":83494,"delta_by_platform":{"INSTAGRAM":38477,"TIKTOK":22740,"YOUTUBE":22277}},{"date":"2026-01-22","total_views":4724279,"by_platform":{"INSTAGRAM":3471871,"TIKTOK":409049,"YOUTUBE":843359},"channels":55,"delta":86636,"delta_by_platform":{"INSTAGRAM":51172,"TIKTOK":17632,"YOUTUBE":17832}},{"date":"2026-01-23","total_views":4832864,"by_platform":{"INSTAGRAM":3533756,"TIKTOK":435248,"YOUTUBE":863860},"channels":55,"delta":108585,"delta_by_platform":{"INSTAGRAM":61885,"TIKTOK":26199,"YOUTUBE":20501}},{"date":"2026-01-24","total_views":4956121,"by_platform":{"INSTAGRAM":3621430,"TIKTOK":447589,"YOUTUBE":887102},"channels":55,"delta":123257,"delta_by_platform":{"INSTAGRAM":87674,"TIKTOK":12341,"YOUTUBE":23242}},{"date":"2026-01-25","total_views":5047577,"by_platform":{"INSTAGRAM":3699700,"TIKTOK":450203,"YOUTUBE":897674},"channels":55,"delta":91456,"delta_by_platform":{"INSTAGRAM":78270,"TIKTOK":2614,"YOUTUBE":10572}},{"date":"2026-01-26","total_views":5137254,"by_platform":{"INSTAGRAM":3750927,"TIKTOK":455794,"YOUTUBE":930533},"channels":61,"delta":89677,"delta_by_platform":{"INSTAGRAM":51227,"TIKTOK":5591,"YOUTUBE":32859}},{"date":"2026-01-27","total_views":5247160,"by_platform":{"INSTAGRAM":3815497,"TIKTOK":484672,"YOUTUBE":946991},"channels":61,"delta":109906,"delta_by_platform":{"INSTAGRAM":64570,"TIKTOK":28878,"YOUTUBE":16458}},{"date":"2026-01-28","total_views":5354940,"by_platform":{"INSTAGRAM":3862376,"TIKTOK":507822,"YOUTUBE":984742},"channels":61,"delta":107780,"delta_by_platform":{"INSTAGRAM":46879,"TIKTOK":23150,"YOUTUBE":37751}},{"date":"2026-01-29","total_views":5452474,"by_platform":{"INSTAGRAM":3918321,"TIKTOK":530684,"YOUTUBE":1003469},"channels":61,"delta":97534,"delta_by_platform":{"INSTAGRAM":55945,"TIKTOK":22862,"YOUTUBE":18727}},{"date":"2026-01-30","total_views":5562090,"by_platform":{"INSTAGRAM":3974979,"TIKTOK":556414,"YOUTUBE":1030697},"channels":61,"delta":109616,"delta_by_platform":{"INSTAGRAM":56658,"TIKTOK":25730,"YOUTUBE":27228}},{"date":"2026-01-31","total_views":5707582,"by_platform":{"INSTAGRAM":4037843,"TIKTOK":593727,"YOUTUBE":1076012},"channels":61,"delta":145492,"delta_by_platform":{"INSTAGRAM":62864,"TIKTOK":37313,"YOUTUBE":45315}},{"date":"2026-02-01","total_views":5802952,"by_platform":{"INSTAGRAM":4098049,"TIKTOK":604154,"YOUTUBE":1100749},"channels":61,"delta":95370,"delta_by_platform":{"INSTAGRAM":60206,"TIKTOK":10427,"YOUTUBE":24737}},{"date":"2026-02-02","total_views":5860769,"by_platform":{"INSTAGRAM":4139462,"TIKTOK":609858,"YOUTUBE":1111449},"channels":62,"delta":57817,"delta_by_platform":{"INSTAGRAM":41413,"TIKTOK":5704,"YOUTUBE":10700}},{"date":"2026-02-03","total_views":5912737,"by_platform":{"INSTAGRAM":4173434,"TIKTOK":617836,"YOUTUBE":1121467},"channels":62,"delta":51968,"delta_by_platform":{"INSTAGRAM":33972,"TIKTOK":7978,"YOUTUBE":10018}},{"date":"2026-02-04","total_views":5949069,"by_platform":{"INSTAGRAM":4191922,"TIKTOK":622840,"YOUTUBE":1134307},"channels":59,"delta":36332,"delta_by_platform":{"INSTAGRAM":18488,"TIKTOK":5004,"YOUTUBE":12840}},{"date":"2026-02-05","total_views":6072264,"by_platform":{"INSTAGRAM":4211675,"TIKTOK":713921,"YOUTUBE":1146668},"channels":58,"delta":123195,"delta_by_platform":{"INSTAGRAM":19753,"TIKTOK":91081,"YOUTUBE":12361}},{"date":"2026-02-06","total_views":6315137,"by_platform":{"INSTAGRAM":4323949,"TIKTOK":831771,"YOUTUBE":1159417},"channels":59,"delta":242873,"delta_by_platform":{"INSTAGRAM":112274,"TIKTOK":117850,"YOUTUBE":12749}},{"date":"2026-02-07","total_views":6485104,"by_platform":{"INSTAGRAM":4354750,"TIKTOK":961620,"YOUTUBE":1168734},"channels":58,"delta":169967,"delta_by_platform":{"INSTAGRAM":30801,"TIKTOK":129849,"YOUTUBE":9317}},{"date":"2026-02-08","total_views":6632149,"by_platform":{"INSTAGRAM":4420588,"TIKTOK":1023871,"YOUTUBE":1187690},"channels":58,"delta":147045,"delta_by_platform":{"INSTAGRAM":65838,"TIKTOK":62251,"YOUTUBE":18956}},{"date":"2026-02-09","total_views":6726765,"by_platform":{"INSTAGRAM":4456574,"TIKTOK":1064109,"YOUTUBE":1206082},"channels":58,"delta":94616,"delta_by_platform":{"INSTAGRAM":35986,"TIKTOK":40238,"YOUTUBE":18392}},{"date":"2026-02-10","total_views":6794253,"by_platform":{"INSTAGRAM":4470312,"TIKTOK":1101096,"YOUTUBE":1222845},"channels":55,"delta":67488,"delta_by_platform":{"INSTAGRAM":13738,"TIKTOK":36987,"YOUTUBE":16763}},{"date":"2026-02-11","total_views":6985589,"by_platform":{"INSTAGRAM":4507332,"TIKTOK":1173302,"YOUTUBE":1304955},"channels":55,"delta":191336,"delta_by_platform":{"INSTAGRAM":37020,"TIKTOK":72206,"YOUTUBE":82110}},{"date":"2026-02-12","total_views":7347460,"by_platform":{"INSTAGRAM":4594371,"TIKTOK":1277662,"YOUTUBE":1475427},"channels":74,"delta":361871,"delta_by_platform":{"INSTAGRAM":87039,"TIKTOK":104360,"YOUTUBE":170472}},{"date":"2026-02-13","total_views":7412400,"by_platform":{"INSTAGRAM":4629098,"TIKTOK":1269581,"YOUTUBE":1513721},"channels":74,"delta":64940,"delta_by_platform":{"INSTAGRAM":34727,"TIKTOK":0,"YOUTUBE":38294}},{"date":"2026-02-14","total_views":7582015,"by_platform":{"INSTAGRAM":4681704,"TIKTOK":1302296,"YOUTUBE":1598015},"channels":74,"delta":169615,"delta_by_platform":{"INSTAGRAM":52606,"TIKTOK":32715,"YOUTUBE":84294}},{"date":"2026-02-16","total_views":7747668,"by_platform":{"INSTAGRAM":4757341,"TIKTOK":1345513,"YOUTUBE":1644814},"channels":74,"delta":165653,"delta_by_platform":{"INSTAGRAM":75637,"TIKTOK":43217,"YOUTUBE":46799}},{"date":"2026-02-17","total_views":7815333,"by_platform":{"INSTAGRAM":4785620,"TIKTOK":1372062,"YOUTUBE":1657651},"channels":74,"delta":67665,"delta_by_platform":{"INSTAGRAM":28279,"TIKTOK":26549,"YOUTUBE":12837}},{"date":"2026-02-18","total_views":7874039,"by_platform":{"INSTAGRAM":4809739,"TIKTOK":1396380,"YOUTUBE":1667920},"channels":74,"delta":58706,"delta_by_platform":{"INSTAGRAM":24119,"TIKTOK":24318,"YOUTUBE":10269}},{"date":"2026-02-19","total_views":7821333,"by_platform":{"INSTAGRAM":4830939,"TIKTOK":1411684,"YOUTUBE":1578710},"channels":73,"delta":0,"delta_by_platform":{"INSTAGRAM":21200,"TIKTOK":15304,"YOUTUBE":0}},{"date":"2026-02-20","total_views":7876750,"by_platform":{"INSTAGRAM":4858204,"TIKTOK":1443735,"YOUTUBE":1574811},"channels":72,"delta":55417,"delta_by_platform":{"INSTAGRAM":27265,"TIKTOK":32051,"YOUTUBE":0}},{"date":"2026-02-21","total_views":7980065,"by_platform":{"INSTAGRAM":4893535,"TIKTOK":1472788,"YOUTUBE":1613742},"channels":72,"delta":103315,"delta_by_platform":{"INSTAGRAM":35331,"TIKTOK":29053,"YOUTUBE":38931}},{"date":"2026-02-23","total_views":8226252,"by_platform":{"INSTAGRAM":4968731,"TIKTOK":1602979,"YOUTUBE":1654542},"channels":72,"delta":246187,"delta_by_platform":{"INSTAGRAM":75196,"TIKTOK":130191,"YOUTUBE":40800}},{"date":"2026-02-24","total_views":8515642,"by_platform":{"INSTAGRAM":4989383,"TIKTOK":1848718,"YOUTUBE":1677541},"channels":72,"delta":289390,"delta_by_platform":{"INSTAGRAM":20652,"TIKTOK":245739,"YOUTUBE":22999}},{"date":"2026-02-25","total_views":9346521,"by_platform":{"INSTAGRAM":5020363,"TIKTOK":2624939,"YOUTUBE":1701219},"channels":72,"delta":830879,"delta_by_platform":{"INSTAGRAM":30980,"TIKTOK":776221,"YOUTUBE":23678}}],"updated_at":"2026-02-25T21:06:03.006357"},"Ocomplex":{"name":"Ocomplex","spreadsheet_id":"1YNe0e2EI_IzAjLDALptEa9ok3eAPb24cgnhTTwy1ikU","color":"#f59e0b","budget":500000,"channels_data":[{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/rezultat.na.lizo_?igsh=bGpyY3R0cnhsYjI2&utm_source=qr","total_videos":10,"total_views":1370},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastia_pro_zozh?igsh=ZmU4OWdibDR2NW1z&utm_source=qr","total_videos":66,"total_views":8000},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@timkuffuzph?_r=1&_t=ZS-93GaGLacjWk","total_videos":64,"total_views":38070},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/nastyazdorov_e?igsh=MTB1ajlrN2pyMWZ1eQ%3D%3D&utm_source=qr","total_videos":65,"total_views":2596},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@nastyzncogs?_r=1&_t=ZS-93GXBDqfCok","total_videos":64,"total_views":25491},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaprooteki","total_videos":65,"total_views":9969},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaxydeyu","total_videos":62,"total_views":36058},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaprooteki","total_videos":46,"total_views":21623},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/vikaxydeyu","total_videos":64,"total_views":8893},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@vikaprooteki","total_videos":64,"total_views":26039},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@vikaxydeyu","total_videos":62,"total_views":21312},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/o.zdorov.di?igsh=MTBsN3Zqa2RkMnZraQ==","total_videos":13,"total_views":3493},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.zdorov?_r=1&_t=ZG-93rLXVbRTcX","total_videos":13,"total_views":3359},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.zdorov?si=oPudC9WSJkGXeYvM","total_videos":3,"total_views":3},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/mari_zdorovie?igsh=cWMyZmw0emQ2ejNy&utm_source=qr","total_videos":49,"total_views":10463},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@mari_zdorovie?si=CnEXhS3-L8WamrYY","total_videos":47,"total_views":33132},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@dasha_zdorovie?_r=1&_t=ZG-93S9QLVaAW9","total_videos":11,"total_views":112},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@dasha_zdorovie?si=CsW5xFxPvdpVh65f","total_videos":50,"total_views":17754},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@daria_zdorovie?_r=1&_t=ZG-93S9SKNchPc","total_videos":11,"total_views":0},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@daria_zdorovie?si=KF1ukeidrpOFoODC","total_videos":40,"total_views":5285},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/megankzgr?igsh=cHdzdHBpMXpxOGI4&utm_source=qr","total_videos":51,"total_views":14307},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@annfran826?_r=1&_t=ZT-93TEYGvwNJ1","total_videos":52,"total_views":15339},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@brucecosta-u7h?si=hMoLB-CxoVI3UC5O","total_videos":7,"total_views":11},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@jon-d3j4r?si=QopZxeWgcZ0tYtx8","total_videos":12,"total_views":1217},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/eva__wellness1?igsh=MXMweWIxN2hsNW90dg%3D%3D&utm_source=qr","total_videos":29,"total_views":3086},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@eva_wellness15?_r=1&_t=ZN-93U4qmN15VO","total_videos":29,"total_views":13830},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@evawellness15?si=1e-Ctj6-mwu305Hr","total_videos":22,"total_views":15494},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/ohhh.juli?igsh=NXBmZmdvOG41b3I4&utm_source=qr","total_videos":13,"total_views":37},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.poleznom6?_r=1&_t=ZN-93UyJGd4ES6","total_videos":13,"total_views":5424},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.poleznom4?si=Jzp06WQznmayXSsA","total_videos":12,"total_views":5755},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/o.polze13?igsh=MXMwZXc2ZTFjaWs3aA%3D%3D&utm_source=qr","total_videos":13,"total_views":2030},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@o.poleznom4?_r=1&_t=ZN-93UyLPEarI6","total_videos":13,"total_views":3882},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@o.poleznom6?si=5ge-Ejcrz_JdF-0q","total_videos":11,"total_views":4048},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/_sspalagina_o?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr","total_videos":7,"total_views":476},{"social_network":"TIKTOK","channel_url":"www.tiktok.com/@sspalagina_o","total_videos":6,"total_views":0},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@is_a_zeolite?_r=1&_t=ZG-93dYie252bg","total_videos":3,"total_views":1},{"social_network":"YOUTUBE","channel_url":"https://youtube.com/@valensiya.zeolite?si=pIFKJPoTr30-pL7r","total_videos":7,"total_views":6409},{"social_network":"INSTAGRAM","channel_url":"https://www.instagram.com/zeolite_o_complex?igsh=MXNya2xkN2l0NDFzNw%3D%3D&utm_source=qr","total_videos":8,"total_views":2895},{"social_network":"TIKTOK","channel_url":"https://www.tiktok.com/@zeolite_o_complex?_r=1&_t=ZG-93dYmwu6Lyr","total_videos":1,"total_views":1}],"daily_data":[{"date":"2026-01-28","total_views":21052,"by_platform":{"INSTAGRAM":3027,"TIKTOK":15627,"YOUTUBE":2398},"channels":8,"delta":21052,"delta_by_platform":{"INSTAGRAM":3027,"TIKTOK":15627,"YOUTUBE":2398}},{"date":"2026-01-29","total_views":27593,"by_platform":{"INSTAGRAM":4349,"TIKTOK":19208,"YOUTUBE":4036},"channels":13,"delta":6541,"delta_by_platform":{"INSTAGRAM":1322,"TIKTOK":3581,"YOUTUBE":1638}},{"date":"2026-01-30","total_views":37310,"by_platform":{"INSTAGRAM":6093,"TIKTOK":26970,"YOUTUBE":4247},"channels":18,"delta":9717,"delta_by_platform":{"INSTAGRAM":1744,"TIKTOK":7762,"YOUTUBE":211}},{"date":"2026-01-31","total_views":54488,"by_platform":{"INSTAGRAM":8763,"TIKTOK":39364,"YOUTUBE":6361},"channels":22,"delta":17178,"delta_by_platform":{"INSTAGRAM":2670,"TIKTOK":12394,"YOUTUBE":2114}},{"date":"2026-02-01","total_views":62369,"by_platform":{"INSTAGRAM":10441,"TIKTOK":44404,"YOUTUBE":7524},"channels":23,"delta":7881,"delta_by_platform":{"INSTAGRAM":1678,"TIKTOK":5040,"YOUTUBE":1163}},{"date":"2026-02-02","total_views":67965,"by_platform":{"INSTAGRAM":11368,"TIKTOK":48612,"YOUTUBE":7985},"channels":24,"delta":5596,"delta_by_platform":{"INSTAGRAM":927,"TIKTOK":4208,"YOUTUBE":461}},{"date":"2026-02-03","total_views":74518,"by_platform":{"INSTAGRAM":12460,"TIKTOK":52502,"YOUTUBE":9556},"channels":26,"delta":6553,"delta_by_platform":{"INSTAGRAM":1092,"TIKTOK":3890,"YOUTUBE":1571}},{"date":"2026-02-04","total_views":81690,"by_platform":{"INSTAGRAM":14472,"TIKTOK":55769,"YOUTUBE":11449},"channels":28,"delta":7172,"delta_by_platform":{"INSTAGRAM":2012,"TIKTOK":3267,"YOUTUBE":1893}},{"date":"2026-02-05","total_views":94006,"by_platform":{"INSTAGRAM":16114,"TIKTOK":62518,"YOUTUBE":15374},"channels":28,"delta":12316,"delta_by_platform":{"INSTAGRAM":1642,"TIKTOK":6749,"YOUTUBE":3925}},{"date":"2026-02-06","total_views":109999,"by_platform":{"INSTAGRAM":17790,"TIKTOK":70596,"YOUTUBE":21613},"channels":28,"delta":15993,"delta_by_platform":{"INSTAGRAM":1676,"TIKTOK":8078,"YOUTUBE":6239}},{"date":"2026-02-07","total_views":115510,"by_platform":{"INSTAGRAM":18924,"TIKTOK":71358,"YOUTUBE":25228},"channels":28,"delta":5511,"delta_by_platform":{"INSTAGRAM":1134,"TIKTOK":762,"YOUTUBE":3615}},{"date":"2026-02-08","total_views":117918,"by_platform":{"INSTAGRAM":19053,"TIKTOK":73033,"YOUTUBE":25832},"channels":28,"delta":2408,"delta_by_platform":{"INSTAGRAM":129,"TIKTOK":1675,"YOUTUBE":604}},{"date":"2026-02-09","total_views":124312,"by_platform":{"INSTAGRAM":19704,"TIKTOK":77217,"YOUTUBE":27391},"channels":28,"delta":6394,"delta_by_platform":{"INSTAGRAM":651,"TIKTOK":4184,"YOUTUBE":1559}},{"date":"2026-02-10","total_views":137512,"by_platform":{"INSTAGRAM":22049,"TIKTOK":85178,"YOUTUBE":30285},"channels":28,"delta":13200,"delta_by_platform":{"INSTAGRAM":2345,"TIKTOK":7961,"YOUTUBE":2894}},{"date":"2026-02-11","total_views":186550,"by_platform":{"INSTAGRAM":30416,"TIKTOK":115324,"YOUTUBE":40810},"channels":31,"delta":49038,"delta_by_platform":{"INSTAGRAM":8367,"TIKTOK":30146,"YOUTUBE":10525}},{"date":"2026-02-12","total_views":211285,"by_platform":{"INSTAGRAM":34007,"TIKTOK":124715,"YOUTUBE":52563},"channels":38,"delta":24735,"delta_by_platform":{"INSTAGRAM":3591,"TIKTOK":9391,"YOUTUBE":11753}},{"date":"2026-02-13","total_views":225302,"by_platform":{"INSTAGRAM":35188,"TIKTOK":131763,"YOUTUBE":58351},"channels":38,"delta":14017,"delta_by_platform":{"INSTAGRAM":1181,"TIKTOK":7048,"YOUTUBE":5788}},{"date":"2026-02-14","total_views":236775,"by_platform":{"INSTAGRAM":39894,"TIKTOK":129971,"YOUTUBE":66910},"channels":37,"delta":11473,"delta_by_platform":{"INSTAGRAM":4706,"TIKTOK":0,"YOUTUBE":8559}},{"date":"2026-02-16","total_views":241892,"by_platform":{"INSTAGRAM":42556,"TIKTOK":121322,"YOUTUBE":78014},"channels":36,"delta":5117,"delta_by_platform":{"INSTAGRAM":2662,"TIKTOK":0,"YOUTUBE":11104}},{"date":"2026-02-17","total_views":259960,"by_platform":{"INSTAGRAM":44970,"TIKTOK":129794,"YOUTUBE":85196},"channels":40,"delta":18068,"delta_by_platform":{"INSTAGRAM":2414,"TIKTOK":8472,"YOUTUBE":7182}},{"date":"2026-02-18","total_views":276868,"by_platform":{"INSTAGRAM":51929,"TIKTOK":133564,"YOUTUBE":91375},"channels":40,"delta":16908,"delta_by_platform":{"INSTAGRAM":6959,"TIKTOK":3770,"YOUTUBE":6179}},{"date":"2026-02-19","total_views":304239,"by_platform":{"INSTAGRAM":59426,"TIKTOK":144186,"YOUTUBE":100627},"channels":40,"delta":27371,"delta_by_platform":{"INSTAGRAM":7497,"TIKTOK":10622,"YOUTUBE":9252}},{"date":"2026-02-20","total_views":317150,"by_platform":{"INSTAGRAM":63208,"TIKTOK":148809,"YOUTUBE":105133},"channels":40,"delta":12911,"delta_by_platform":{"INSTAGRAM":3782,"TIKTOK":4623,"YOUTUBE":4506}},{"date":"2026-02-21","total_views":324641,"by_platform":{"INSTAGRAM":53536,"TIKTOK":157257,"YOUTUBE":113848},"channels":39,"delta":7491,"delta_by_platform":{"INSTAGRAM":0,"TIKTOK":8448,"YOUTUBE":8715}},{"date":"2026-02-23","total_views":334567,"by_platform":{"INSTAGRAM":55245,"TIKTOK":158862,"YOUTUBE":120460},"channels":39,"delta":9926,"delta_by_platform":{"INSTAGRAM":1709,"TIKTOK":1605,"YOUTUBE":6612}},{"date":"2026-02-24","total_views":341469,"by_platform":{"INSTAGRAM":60873,"TIKTOK":157166,"YOUTUBE":123430},"channels":39,"delta":6902,"delta_by_platform":{"INSTAGRAM":5628,"TIKTOK":0,"YOUTUBE":2970}},{"date":"2026-02-25","total_views":367264,"by_platform":{"INSTAGRAM":67615,"TIKTOK":167606,"YOUTUBE":132043},"channels":39,"delta":25795,"delta_by_platform":{"INSTAGRAM":6742,"TIKTOK":10440,"YOUTUBE":8613}}],"updated_at":"2026-02-25T21:06:39.624065"}};
+<!-- CLIENTS -->
+<div class="w">
+  <div class="clients-bar">
+    <div class="clients-label">Клиенты</div>
+    <div class="clients-list">
+      <div class="cl">Biorepair</div>
+      <div class="cl">Vois</div>
+      <div class="cl">Lit Energy</div>
+      <div class="cl">Frambini</div>
+      <div class="cl">Pusy</div>
+    </div>
+  </div>
+</div>
 
-let currentProject = null;
-let timelineChart = null;
-let tlMode = 'delta';
-let tlPlatform = 'all';
-let sortField = 'total_views';
-let sortAsc = false;
-
-function fmt(n){
-  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
-  if(n>=1e3) return (n/1e3).toFixed(1)+'K';
-  return String(n);
-}
-
-function fmtDate(iso){
-  if(!iso) return '—';
-  const parts = iso.split('-');
-  if(parts.length !== 3) return iso;
-  return `${parts[2]}.${parts[1]}.${parts[0]}`;
-}
-
-function channelName(url){
-  if(!url) return '—';
-  try{
-    const u = url.startsWith('http') ? new URL(url) : new URL('https://'+url);
-    return u.pathname.split('/').filter(Boolean)[0] || u.hostname;
-  }catch{return url.slice(0,25)}
-}
-
-// ─── BUILD TABS ───
-function buildTabs(){
-  const container = document.getElementById('projectTabs');
-  const names = Object.keys(PROJECTS_DATA);
-  container.innerHTML = names.map(name => {
-    const p = PROJECTS_DATA[name];
-    const days = p.daily_data.length;
-    const total = days ? p.daily_data[days-1].total_views : 0;
-    return `<div class="proj-tab" id="tab-${name}" style="--proj-color:${p.color}"
-      onclick="switchProject('${name}')">
-      <div class="dot"></div>
+<!-- BLOCK 1: Помогаем брендам -->
+<section>
+  <div class="w">
+    <div class="il">
       <div>
-        <div class="name">${name}</div>
-        <div class="meta">${fmt(total)} просмотров · ${days} дней</div>
-      </div>
-    </div>`;
-  }).join('');
-  if(names.length) switchProject(names[0]);
-}
-
-// ─── SWITCH PROJECT ───
-function switchProject(name){
-  currentProject = name;
-  document.querySelectorAll('.proj-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-'+name)?.classList.add('active');
-  document.body.style.setProperty('--proj-color', PROJECTS_DATA[name].color);
-  tlMode = 'delta'; tlPlatform = 'all';
-  if(timelineChart){ timelineChart.destroy(); timelineChart = null; }
-  renderProject(name);
-}
-
-// ─── RENDER PROJECT ───
-function renderProject(name){
-  const p = PROJECTS_DATA[name];
-  const html = `
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px" id="topButtons-${name}">
-      <button class="client-link-btn" onclick="copyClientLink('${name}')">🔗 Ссылка для клиента</button>
-      <button class="pdf-btn" onclick="openPdfModal('${name}')">⬇ Скачать PDF</button>
-    </div>
-    <div class="print-header">Content Factory — ${name}</div>
-    <div class="print-sub" id="printSub-${name}"></div>
-    <div class="cards" id="cards-${name}"></div>
-    <div class="charts-grid" id="charts-${name}"></div>
-    <div class="section-title">Динамика по дням</div>
-    <div class="stats-row" id="tlStats-${name}"></div>
-    <div class="timeline-controls">
-      <div class="toggle-group">
-        <button class="toggle-btn active" onclick="setTLMode('delta')">Новых за день</button>
-        <button class="toggle-btn" onclick="setTLMode('cumulative')">Накопленные</button>
-      </div>
-      <div style="display:flex;gap:7px">
-        <button class="pf-btn all active" style="border-color:${p.color};color:${p.color}" onclick="setTLPlatform('all')">Все</button>
-        <button class="pf-btn ig" onclick="setTLPlatform('INSTAGRAM')">Instagram</button>
-        <button class="pf-btn tt" onclick="setTLPlatform('TIKTOK')">TikTok</button>
-        <button class="pf-btn yt" onclick="setTLPlatform('YOUTUBE')">YouTube</button>
-      </div>
-    </div>
-    <div class="timeline-box"><canvas id="chartTimeline"></canvas></div>
-    <div class="section-title">CPV в динамике</div>
-    <div id="cpvSection-${name}"></div>
-    <div class="section-title">По месяцам</div>
-    <div id="monthlySection-${name}"></div>
-    <div class="section-title">Каналы</div>
-    <div class="table-box">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th>Платформа</th>
-            <th class="sort-th" onclick="sortTable('channel')">Канал ↕</th>
-            <th class="sort-th" onclick="sortTable('total_videos')">Видео ↕</th>
-            <th class="sort-th" onclick="sortTable('total_views')">Просмотры ↕</th>
-            <th class="sort-th" onclick="sortTable('avg_views')">Ср. охват/пост ↕</th>
-            <th>Охват</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-    <div id="adeskSection-${name}"></div>`;
-  document.getElementById('projectContent').innerHTML = html;
-
-  buildCards(p);
-  buildMiniCharts(p);
-  buildTLStats(p);
-  buildTimeline(p);
-  buildCPVChart(p);
-  buildMonthly(p);
-  renderTable(p.channels_data);
-  if(!_clientProject) buildAdeskSection(p);
-}
-
-// ─── CARDS ───
-function buildCards(p){
-  const dd = p.daily_data;
-  const last = dd[dd.length-1] || {};
-  const total = last.total_views || 0;
-  const channels = p.channels_data.length;
-  const ig = p.channels_data.filter(c=>c.social_network==='INSTAGRAM').length;
-  const tt = p.channels_data.filter(c=>c.social_network==='TIKTOK').length;
-  const yt = p.channels_data.filter(c=>c.social_network==='YOUTUBE').length;
-  const budget = p.budget || 0;
-  const cpvRub = (budget > 0 && total > 0) ? (budget / total).toFixed(2) : '—';
-  const budgetStr = budget > 0 ? budget.toLocaleString('ru') + ' ₽' : '—';
-  const totalVideos = p.channels_data.reduce((s,c)=>s+c.total_videos,0);
-  const igVid = p.channels_data.filter(c=>c.social_network==='INSTAGRAM').reduce((s,c)=>s+c.total_videos,0);
-  const ttVid = p.channels_data.filter(c=>c.social_network==='TIKTOK').reduce((s,c)=>s+c.total_videos,0);
-  const ytVid = p.channels_data.filter(c=>c.social_network==='YOUTUBE').reduce((s,c)=>s+c.total_videos,0);
-
-  document.getElementById('cards-'+p.name).innerHTML = [
-    {label:'Всего просмотров', value:total.toLocaleString('ru'),         sub:`на ${fmtDate(last.date)}`},
-    {label:'Всего видео',      value:totalVideos.toLocaleString('ru'),   sub:`${igVid} ig · ${ttVid} tt · ${ytVid} yt`},
-    {label:'Каналов',          value:channels,                           sub:`${ig} ig · ${tt} tt · ${yt} yt`},
-    {label:'Бюджет кампании',  value:budgetStr,                          sub:`CPV: ${cpvRub} руб. за просмотр`},
-    {label:'Дней данных',      value:dd.length,                          sub:`${fmtDate(dd[0]?.date)} — ${fmtDate(last.date)}`},
-  ].map(c=>`<div class="card">
-    <div class="label">${c.label}</div>
-    <div class="value" style="color:${p.color}">${c.value}</div>
-    <div class="sub">${c.sub}</div>
-  </div>`).join('');
-}
-
-// ─── MINI CHARTS ───
-function buildMiniCharts(p){
-  const ig = p.channels_data.filter(c=>c.social_network==='INSTAGRAM');
-  const tt = p.channels_data.filter(c=>c.social_network==='TIKTOK');
-  const yt = p.channels_data.filter(c=>c.social_network==='YOUTUBE');
-  const sumV = arr => arr.reduce((s,c)=>s+c.total_views,0);
-  const sumVid = arr => arr.reduce((s,c)=>s+c.total_videos,0);
-  const colors = ['#e1306c','#69c9d0','#ff4e45'];
-  const labels = ['Instagram','TikTok','YouTube'];
-
-  document.getElementById('charts-'+p.name).innerHTML = `
-    <div class="chart-box"><h3>Просмотры по платформам</h3><canvas id="cPlatViews"></canvas></div>
-    <div class="chart-box"><h3>Топ-8 каналов</h3><canvas id="cTopCh"></canvas></div>`;
-
-  new Chart(document.getElementById('cPlatViews'),{
-    type:'doughnut',
-    data:{labels,datasets:[{data:[sumV(ig),sumV(tt),sumV(yt)],backgroundColor:colors,borderWidth:0}]},
-    options:{plugins:{legend:{labels:{color:'#888',font:{size:11}}}}}
-  });
-
-  const top8 = [...p.channels_data].sort((a,b)=>b.total_views-a.total_views).slice(0,8);
-  const bColors = top8.map(c=>c.social_network==='INSTAGRAM'?'#e1306c':c.social_network==='TIKTOK'?'#69c9d0':'#ff4e45');
-  new Chart(document.getElementById('cTopCh'),{
-    type:'bar',
-    data:{
-      labels:top8.map(c=>channelName(c.channel_url)),
-      datasets:[{data:top8.map(c=>c.total_views),backgroundColor:bColors,borderRadius:4}]
-    },
-    options:{
-      indexAxis:'y',
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{ticks:{color:'#555',callback:v=>fmt(v)},grid:{color:'#1e1e28'}},
-        y:{ticks:{color:'#aaa',font:{size:10}},grid:{display:false}}
-      }
-    }
-  });
-}
-
-// ─── TIMELINE STATS ───
-function buildTLStats(p){
-  const dd = p.daily_data;
-  if(!dd.length) return;
-  const last = dd[dd.length-1];
-  const prev = dd[dd.length-2]||last;
-  const todayD = last.delta||0;
-  const prevD  = prev.delta||0;
-  const diff   = todayD - prevD;
-  const pct    = prevD ? Math.round(diff/prevD*100) : 0;
-  const week7  = dd.slice(-7).reduce((s,r)=>s+(r.delta||0),0);
-  const sign   = diff>=0?'+':'';
-  const cls    = diff>=0?'up':'down';
-
-  // Week-over-week growth
-  const thisWeek = dd.slice(-7).reduce((s,r)=>s+(r.delta||0),0);
-  const prevWeek = dd.slice(-14,-7).reduce((s,r)=>s+(r.delta||0),0);
-  const wowPct   = prevWeek ? Math.round((thisWeek-prevWeek)/prevWeek*100) : 0;
-  const wowSign  = wowPct>=0?'+':'';
-  const wowCls   = wowPct>=0?'up':'down';
-
-  document.getElementById('tlStats-'+p.name).innerHTML = `
-    <div class="stat-mini">
-      <div class="label">Итого (нарастающим)</div>
-      <div class="value" style="color:${p.color}">${fmt(last.total_views)}</div>
-      <div class="trend">${fmtDate(last.date)}</div>
-    </div>
-    <div class="stat-mini">
-      <div class="label">Новых за последний день</div>
-      <div class="value">${fmt(todayD)}</div>
-      <div class="trend ${cls}">${sign}${fmt(diff)} vs пред. день (${sign}${pct}%)</div>
-    </div>
-    <div class="stat-mini">
-      <div class="label">Среднее за 7 дней</div>
-      <div class="value">${fmt(Math.round(week7/7))}</div>
-      <div class="trend">сумма за неделю: ${fmt(week7)}</div>
-    </div>
-    <div class="stat-mini">
-      <div class="label">Скорость роста (WoW)</div>
-      <div class="value ${wowCls}">${wowSign}${wowPct}%</div>
-      <div class="trend">эта неделя vs прошлая</div>
-    </div>`;
-}
-
-// ─── TIMELINE ───
-function setTLMode(m){
-  tlMode=m;
-  document.querySelectorAll('.toggle-btn').forEach((b,i)=>b.classList.toggle('active',(m==='delta'&&i===0)||(m==='cumulative'&&i===1)));
-  if(currentProject) buildTimeline(PROJECTS_DATA[currentProject]);
-}
-function setTLPlatform(pl){
-  tlPlatform=pl;
-  document.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('active'));
-  const map={all:'all',INSTAGRAM:'ig',TIKTOK:'tt',YOUTUBE:'yt'};
-  document.querySelector('.pf-btn.'+map[pl])?.classList.add('active');
-  if(currentProject) buildTimeline(PROJECTS_DATA[currentProject]);
-}
-
-function buildTimeline(p){
-  const dd = p.daily_data;
-  if(!dd.length) return;
-  const labels = dd.map(r=>{
-    const d=new Date(r.date);
-    return `${d.getDate()} ${['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'][d.getMonth()]}`;
-  });
-  const isBar = tlMode==='delta';
-  const c = p.color;
-
-  let datasets;
-  if(tlPlatform==='all' && isBar){
-    datasets=[
-      {label:'Instagram',data:dd.map(r=>(r.delta_by_platform?.INSTAGRAM)||0),backgroundColor:'#e1306c',borderRadius:2,stack:'a'},
-      {label:'TikTok',   data:dd.map(r=>(r.delta_by_platform?.TIKTOK)||0),  backgroundColor:'#69c9d0',borderRadius:2,stack:'a'},
-      {label:'YouTube',  data:dd.map(r=>(r.delta_by_platform?.YOUTUBE)||0), backgroundColor:'#ff4e45',borderRadius:2,stack:'a'},
-    ];
-  } else {
-    const getData = r => {
-      const src = isBar ? r.delta_by_platform : r.by_platform;
-      const tot = isBar ? r.delta : r.total_views;
-      return tlPlatform==='all' ? (tot||0) : ((src&&src[tlPlatform])||0);
-    };
-    const platColor = {INSTAGRAM:'#e1306c',TIKTOK:'#69c9d0',YOUTUBE:'#ff4e45',all:c};
-    const col = platColor[tlPlatform]||c;
-    datasets=[{
-      label: tlPlatform==='all' ? 'Все' : tlPlatform,
-      data: dd.map(getData),
-      backgroundColor: isBar ? col+'cc' : col+'22',
-      borderColor: col, borderWidth: isBar?0:2,
-      fill:!isBar, tension:0.3, pointRadius:1.5,
-      borderRadius: isBar?2:0, stack:'a'
-    }];
-  }
-
-  if(timelineChart){ timelineChart.destroy(); timelineChart=null; }
-  timelineChart = new Chart(document.getElementById('chartTimeline'),{
-    type: isBar?'bar':'line',
-    data:{labels,datasets},
-    options:{
-      responsive:true,
-      interaction:{mode:'index',intersect:false},
-      plugins:{
-        legend:{display:tlPlatform==='all'&&isBar,labels:{color:'#666',boxWidth:10,font:{size:11}}},
-        tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('ru')}`}}
-      },
-      scales:{
-        x:{ticks:{color:'#444',font:{size:10},maxRotation:45},grid:{color:'#181820'},stacked:isBar},
-        y:{ticks:{color:'#444',callback:v=>fmt(v)},grid:{color:'#181820'},stacked:isBar}
-      }
-    }
-  });
-}
-
-// ─── MONTHLY ───
-function buildMonthly(p){
-  const monthNames = {
-    '01':'Январь','02':'Февраль','03':'Март','04':'Апрель',
-    '05':'Май','06':'Июнь','07':'Июль','08':'Август',
-    '09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'
-  };
-
-  // Агрегируем дельты по месяцам + последний cumulative для CPV
-  const byMonth = {};
-  for (const row of p.daily_data) {
-    const month = row.date.slice(0, 7); // YYYY-MM
-    if (!byMonth[month]) byMonth[month] = { total:0, INSTAGRAM:0, TIKTOK:0, YOUTUBE:0, cumulative:0 };
-    byMonth[month].total      += row.delta || 0;
-    byMonth[month].INSTAGRAM  += (row.delta_by_platform?.INSTAGRAM) || 0;
-    byMonth[month].TIKTOK     += (row.delta_by_platform?.TIKTOK)    || 0;
-    byMonth[month].YOUTUBE    += (row.delta_by_platform?.YOUTUBE)   || 0;
-    byMonth[month].cumulative  = row.total_views; // перезаписываем — остаётся последний день месяца
-  }
-  const budget = p.budget || 0;
-
-  const months = Object.keys(byMonth).sort();
-  const labels = months.map(m => {
-    const [y, mo] = m.split('-');
-    return `${monthNames[mo]} ${y}`;
-  });
-
-  const container = document.getElementById('monthlySection-' + p.name);
-  if (!container) return;
-
-  // Chart canvas + table
-  container.innerHTML = `
-    <div class="chart-box" style="margin-bottom:16px">
-      <canvas id="chartMonthly" style="max-height:220px"></canvas>
-    </div>
-    <div class="table-box" style="margin-bottom:0">
-      <table>
-        <thead>
-          <tr>
-            <th>Месяц</th>
-            <th style="text-align:right">Новых просмотров</th>
-            <th style="text-align:right;color:#e1306c">Instagram</th>
-            <th style="text-align:right;color:#69c9d0">TikTok</th>
-            <th style="text-align:right;color:#ff4e45">YouTube</th>
-            ${budget>0?'<th style="text-align:right;color:#aaa">CPV</th>':''}
-          </tr>
-        </thead>
-        <tbody>
-          ${months.map((m, i) => {
-            const d = byMonth[m];
-            const label = labels[i];
-            const cpv = (budget>0 && d.cumulative>0) ? (budget/d.cumulative).toFixed(2)+' руб.' : '—';
-            return `<tr>
-              <td style="font-weight:600">${label}</td>
-              <td class="num" style="text-align:right;color:${p.color};font-weight:700">${d.total.toLocaleString('ru')}</td>
-              <td class="num" style="text-align:right;color:#888">${d.INSTAGRAM.toLocaleString('ru')}</td>
-              <td class="num" style="text-align:right;color:#888">${d.TIKTOK.toLocaleString('ru')}</td>
-              <td class="num" style="text-align:right;color:#888">${d.YOUTUBE.toLocaleString('ru')}</td>
-              ${budget>0?`<td class="num" style="text-align:right;color:#666;font-size:12px">${cpv}</td>`:''}
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`;
-
-  new Chart(document.getElementById('chartMonthly'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        { label:'Instagram', data: months.map(m=>byMonth[m].INSTAGRAM), backgroundColor:'#e1306c', borderRadius:4, stack:'a' },
-        { label:'TikTok',    data: months.map(m=>byMonth[m].TIKTOK),    backgroundColor:'#69c9d0', borderRadius:4, stack:'a' },
-        { label:'YouTube',   data: months.map(m=>byMonth[m].YOUTUBE),   backgroundColor:'#ff4e45', borderRadius:4, stack:'a' },
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { labels: { color:'#888', boxWidth:10, font:{size:11} } },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('ru')}` } }
-      },
-      scales: {
-        x: { ticks:{color:'#555'}, grid:{color:'#181820'}, stacked:true },
-        y: { ticks:{color:'#555', callback: v=>fmt(v)}, grid:{color:'#181820'}, stacked:true }
-      }
-    }
-  });
-}
-
-// ─── TABLE ───
-function sortTable(f){
-  if(sortField===f) sortAsc=!sortAsc; else{sortField=f;sortAsc=false;}
-  if(currentProject) renderTable(PROJECTS_DATA[currentProject].channels_data);
-}
-function renderTable(data){
-  const max = Math.max(...data.map(r=>r.total_views));
-  const sorted = [...data].sort((a,b)=>{
-    const avgA = a.total_videos>0 ? a.total_views/a.total_videos : 0;
-    const avgB = b.total_videos>0 ? b.total_views/b.total_videos : 0;
-    const av = sortField==='channel' ? channelName(a.channel_url) : sortField==='avg_views' ? avgA : a[sortField]||0;
-    const bv = sortField==='channel' ? channelName(b.channel_url) : sortField==='avg_views' ? avgB : b[sortField]||0;
-    return typeof av==='string' ? (sortAsc?av.localeCompare(bv):bv.localeCompare(av)) : (sortAsc?av-bv:bv-av);
-  });
-  document.getElementById('tableBody').innerHTML = sorted.map((r,i)=>{
-    const pct = Math.round(r.total_views/max*100);
-    const avg = r.total_videos>0 ? Math.round(r.total_views/r.total_videos) : 0;
-    const url = r.channel_url?.startsWith('http') ? r.channel_url : 'https://'+r.channel_url;
-    return `<tr>
-      <td style="color:#333">${i+1}</td>
-      <td><span class="badge badge-${r.social_network}">${r.social_network}</span></td>
-      <td><a class="ch-link" href="${url}" target="_blank">${channelName(r.channel_url)}</a></td>
-      <td class="num">${r.total_videos.toLocaleString('ru')}</td>
-      <td class="num">${r.total_views.toLocaleString('ru')}</td>
-      <td class="num" style="color:#888">${avg.toLocaleString('ru')}</td>
-      <td><div style="display:flex;align-items:center;gap:7px">
-        <div class="bar-track"><div class="bar-fill bar-${r.social_network}" style="width:${pct}%"></div></div>
-        <span style="font-size:11px;color:#444;min-width:28px">${pct}%</span>
-      </div></td>
-    </tr>`;
-  }).join('');
-}
-
-// ─── CPV CHART ───
-function buildCPVChart(p){
-  const container = document.getElementById('cpvSection-'+p.name);
-  if(!container || !p.budget) return;
-  const budget = p.budget;
-
-  // CPV по неделям: группируем по 7 дней, берём последний total_views недели
-  const mn = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-  const weeks = [];
-  const dd = p.daily_data;
-  for(let i=0; i<dd.length; i+=7){
-    const chunk = dd.slice(i, i+7);
-    const last = chunk[chunk.length-1];
-    const d = new Date(chunk[0].date);
-    weeks.push({
-      label: `${d.getDate()} ${mn[d.getMonth()]}`,
-      total_views: last.total_views
-    });
-  }
-  const labels = weeks.map(w=>w.label);
-  const cpvData = weeks.map(w=>
-    w.total_views>0 ? +(budget/w.total_views).toFixed(2) : null
-  );
-
-  container.innerHTML = `<div class="timeline-box"><canvas id="chartCPV-${p.name}" style="max-height:220px"></canvas></div>`;
-  new Chart(document.getElementById('chartCPV-'+p.name),{
-    type:'line',
-    data:{
-      labels,
-      datasets:[{
-        label:'CPV',
-        data:cpvData,
-        borderColor:p.color,
-        backgroundColor:p.color+'22',
-        fill:true,
-        tension:0.4,
-        pointRadius:5,
-        pointBackgroundColor:p.color,
-        borderWidth:2,
-      }]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{label:ctx=>` CPV: ${ctx.parsed.y} руб.`}}
-      },
-      scales:{
-        x:{ticks:{color:'#555'},grid:{color:'#181820'}},
-        y:{
-          type:'logarithmic',
-          ticks:{color:'#555',callback:v=>v+' руб.'},
-          grid:{color:'#181820'}
-        }
-      }
-    }
-  });
-}
-
-// ─── PDF EXPORT ───
-let pdfProject = null;
-function openPdfModal(name){
-  pdfProject = name;
-  const p = PROJECTS_DATA[name];
-  document.body.style.setProperty('--proj-color', p.color);
-
-  // Собираем месяцы
-  const months = [...new Set(p.daily_data.map(r=>r.date.slice(0,7)))].sort();
-  const monthNames = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
-
-  let opts = `<div class="modal-opt full" onclick="exportPdf('all')">Вся кампания</div>`;
-  for(const m of months){
-    const [y,mo] = m.split('-');
-    opts += `<div class="modal-opt" onclick="exportPdf('${m}')">${monthNames[mo]} ${y}</div>`;
-  }
-  document.getElementById('pdfOptions').innerHTML = opts;
-  document.getElementById('pdfModal').classList.add('open');
-}
-function closePdfModal(){
-  document.getElementById('pdfModal').classList.remove('open');
-}
-function exportPdf(period){
-  closePdfModal();
-  const p = PROJECTS_DATA[pdfProject];
-  const MN = {'01':'Январь','02':'Февраль','03':'Март','04':'Апрель','05':'Май','06':'Июнь','07':'Июль','08':'Август','09':'Сентябрь','10':'Октябрь','11':'Ноябрь','12':'Декабрь'};
-
-  let subtitle = 'Вся кампания';
-  let filename = `${pdfProject}_вся_кампания.pdf`;
-  if(period !== 'all'){
-    const [y,mo] = period.split('-');
-    subtitle = `${MN[mo]} ${y}`;
-    filename = `${pdfProject}_${MN[mo]}_${y}.pdf`;
-  }
-
-  const allDd  = p.daily_data;
-  const dd     = period === 'all' ? allDd : allDd.filter(r=>r.date.startsWith(period));
-  const last   = dd[dd.length-1] || {};
-  const budget = p.budget || 0;
-  const total  = last.total_views || 0;
-  const cpv    = (budget>0 && total>0) ? (budget/total).toFixed(2)+' руб.' : '—';
-
-  // Каналы
-  const chAll = p.channels_data;
-  const ig  = chAll.filter(c=>c.social_network==='INSTAGRAM');
-  const tt  = chAll.filter(c=>c.social_network==='TIKTOK');
-  const yt  = chAll.filter(c=>c.social_network==='YOUTUBE');
-  const sumV   = arr=>arr.reduce((s,c)=>s+c.total_views,0);
-  const sumVid = arr=>arr.reduce((s,c)=>s+c.total_videos,0);
-  const igV=sumV(ig), ttV=sumV(tt), ytV=sumV(yt);
-  const totalViews = igV+ttV+ytV || 1;
-  const pct = v=>totalViews>0?Math.round(v/totalViews*100):0;
-
-  // WoW + daily stats (по всем данным)
-  const todayD  = (allDd[allDd.length-1]?.delta)||0;
-  const prevD   = (allDd[allDd.length-2]?.delta)||0;
-  const diff    = todayD - prevD;
-  const diffPct = prevD ? Math.round(diff/prevD*100) : 0;
-  const week7   = allDd.slice(-7).reduce((s,r)=>s+(r.delta||0),0);
-  const prevWk  = allDd.slice(-14,-7).reduce((s,r)=>s+(r.delta||0),0);
-  const wow     = prevWk ? Math.round((week7-prevWk)/prevWk*100) : 0;
-  const fmtN    = v=>v.toLocaleString('ru');
-
-  // Месячная таблица
-  const byMonth = {};
-  for(const row of dd){
-    const m = row.date.slice(0,7);
-    if(!byMonth[m]) byMonth[m]={total:0,IG:0,TT:0,YT:0,cum:0};
-    byMonth[m].total += row.delta||0;
-    byMonth[m].IG    += row.delta_by_platform?.INSTAGRAM||0;
-    byMonth[m].TT    += row.delta_by_platform?.TIKTOK||0;
-    byMonth[m].YT    += row.delta_by_platform?.YOUTUBE||0;
-    byMonth[m].cum    = row.total_views;
-  }
-  const mRows = Object.keys(byMonth).sort().map(m=>{
-    const d=byMonth[m]; const[y,mo]=m.split('-');
-    const mcpv=(budget>0&&d.cum>0)?(budget/d.cum).toFixed(2)+' руб.':'—';
-    return `<tr style="border-bottom:1px solid #eee">
-      <td style="padding:7px 8px;font-weight:600">${MN[mo]} ${y}</td>
-      <td style="padding:7px 8px;text-align:right;font-weight:700;color:${p.color}">${fmtN(d.total)}</td>
-      <td style="padding:7px 8px;text-align:right;color:#c0004e">${fmtN(d.IG)}</td>
-      <td style="padding:7px 8px;text-align:right;color:#007a80">${fmtN(d.TT)}</td>
-      <td style="padding:7px 8px;text-align:right;color:#c00000">${fmtN(d.YT)}</td>
-      ${budget>0?`<td style="padding:7px 8px;text-align:right;color:#666">${mcpv}</td>`:''}
-    </tr>`;
-  }).join('');
-
-  // Таблица каналов
-  const sorted = [...chAll].sort((a,b)=>b.total_views-a.total_views);
-  const chRows = sorted.map((c,i)=>{
-    const platColor = c.social_network==='INSTAGRAM'?'#c0004e':c.social_network==='TIKTOK'?'#007a80':'#c00000';
-    const name = channelName(c.channel_url);
-    const shareW = chAll.length>0 ? Math.round(c.total_views/(Math.max(...chAll.map(x=>x.total_views))||1)*80) : 0;
-    return `<tr style="border-bottom:1px solid #eee">
-      <td style="padding:6px 8px;color:#aaa;font-size:11px">${i+1}</td>
-      <td style="padding:6px 8px"><span style="display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;background:${platColor}22;color:${platColor}">${c.social_network}</span></td>
-      <td style="padding:6px 8px;font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name}</td>
-      <td style="padding:6px 8px;text-align:right;font-size:12px;color:#666">${fmtN(c.total_videos)}</td>
-      <td style="padding:6px 8px;text-align:right;font-size:12px;font-weight:600">${fmtN(c.total_views)}</td>
-      <td style="padding:6px 8px"><div style="height:5px;background:#eee;border-radius:3px"><div style="height:5px;width:${shareW}%;background:${platColor};border-radius:3px"></div></div></td>
-    </tr>`;
-  }).join('');
-
-  const card = (label,value,sub='',color='#111')=>`
-    <div style="border:1px solid #e0e0e0;border-radius:10px;padding:14px 16px">
-      <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">${label}</div>
-      <div style="font-size:20px;font-weight:700;color:${color};line-height:1.1">${value}</div>
-      ${sub?`<div style="font-size:11px;color:#aaa;margin-top:3px">${sub}</div>`:''}
-    </div>`;
-
-  const statBox = (label,value,trend='',cls='')=>`
-    <div style="border:1px solid #e0e0e0;border-radius:10px;padding:12px 14px">
-      <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div>
-      <div style="font-size:18px;font-weight:700;color:${cls==='up'?'#16a34a':cls==='down'?'#dc2626':'#111'}">${value}</div>
-      ${trend?`<div style="font-size:11px;color:#aaa;margin-top:2px">${trend}</div>`:''}
-    </div>`;
-
-  const html = `
-    <div style="padding:0;color:#111;background:#fff">
-
-      <!-- Заголовок -->
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;border-bottom:3px solid ${p.color};padding-bottom:14px">
-        <div>
-          <div style="font-size:22px;font-weight:800;color:#111">Content Factory</div>
-          <div style="font-size:16px;font-weight:700;color:${p.color};margin-top:4px">${pdfProject}</div>
-          <div style="font-size:11px;color:#999;margin-top:2px">${subtitle}</div>
-        </div>
-        <div style="text-align:right;font-size:11px;color:#999;padding-top:4px">Данные на ${fmtDate(last.date)}</div>
-      </div>
-
-      <!-- Карточки: строка 1 (3 штуки) -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
-        ${card('Всего просмотров', fmtN(total), `на ${fmtDate(last.date)}`, p.color)}
-        ${card('Всего видео', fmtN(sumVid(chAll)), `${sumVid(ig)} ig · ${sumVid(tt)} tt · ${sumVid(yt)} yt`, p.color)}
-        ${card('Каналов', chAll.length, `${ig.length} ig · ${tt.length} tt · ${yt.length} yt`, p.color)}
-      </div>
-      <!-- Карточки: строка 2 (2 штуки) -->
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px">
-        ${card('Бюджет кампании', budget>0?fmtN(budget)+' ₽':'—', `CPV: ${cpv}`, p.color)}
-        ${card('Дней данных', dd.length, `${fmtDate(dd[0]?.date)} — ${fmtDate(last.date)}`, p.color)}
-      </div>
-
-      <!-- Статистика активности -->
-      <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">Динамика</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">
-        ${statBox('Итого (нарастающим)', fmtN(total), fmtDate(last.date))}
-        ${statBox('Новых за последний день', fmtN(todayD), `${diff>=0?'+':''}${fmtN(diff)} vs пред. день (${diff>=0?'+':''}${diffPct}%)`, diff>=0?'up':'down')}
-        ${statBox('Среднее за 7 дней', fmtN(Math.round(week7/7)), `сумма за неделю: ${fmtN(week7)}`)}
-        ${statBox('Скорость роста (WoW)', `${wow>=0?'+':''}${wow}%`, 'эта неделя vs прошлая', wow>=0?'up':'down')}
-      </div>
-
-      <!-- Разбивка по платформам -->
-      <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">Просмотры по платформам</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px">
-        <thead>
-          <tr style="background:#f7f7f7">
-            <th style="padding:8px;text-align:left;border-bottom:2px solid #e0e0e0">Платформа</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Просмотров</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Доля</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Каналов</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Видео</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #eee">
-            <td style="padding:7px 8px;font-weight:600;color:#c0004e">Instagram</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(igV)}</td>
-            <td style="padding:7px 8px;text-align:right;color:#999">${pct(igV)}%</td>
-            <td style="padding:7px 8px;text-align:right">${ig.length}</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(ig))}</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee">
-            <td style="padding:7px 8px;font-weight:600;color:#007a80">TikTok</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(ttV)}</td>
-            <td style="padding:7px 8px;text-align:right;color:#999">${pct(ttV)}%</td>
-            <td style="padding:7px 8px;text-align:right">${tt.length}</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(tt))}</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee">
-            <td style="padding:7px 8px;font-weight:600;color:#c00000">YouTube</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(ytV)}</td>
-            <td style="padding:7px 8px;text-align:right;color:#999">${pct(ytV)}%</td>
-            <td style="padding:7px 8px;text-align:right">${yt.length}</td>
-            <td style="padding:7px 8px;text-align:right">${fmtN(sumVid(yt))}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Таблица по месяцам -->
-      <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">По месяцам</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px">
-        <thead>
-          <tr style="background:#f7f7f7">
-            <th style="padding:8px;text-align:left;border-bottom:2px solid #e0e0e0">Месяц</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">Новых просмотров</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#c0004e">Instagram</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#007a80">TikTok</th>
-            <th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0;color:#c00000">YouTube</th>
-            ${budget>0?'<th style="padding:8px;text-align:right;border-bottom:2px solid #e0e0e0">CPV</th>':''}
-          </tr>
-        </thead>
-        <tbody>${mRows}</tbody>
-      </table>
-
-      <!-- Таблица каналов -->
-      <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">Каналы (${chAll.length})</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
-        <thead>
-          <tr style="background:#f7f7f7">
-            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">#</th>
-            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">Платформа</th>
-            <th style="padding:7px 8px;text-align:left;border-bottom:2px solid #e0e0e0">Канал</th>
-            <th style="padding:7px 8px;text-align:right;border-bottom:2px solid #e0e0e0">Видео</th>
-            <th style="padding:7px 8px;text-align:right;border-bottom:2px solid #e0e0e0">Просмотры</th>
-            <th style="padding:7px 8px;border-bottom:2px solid #e0e0e0">Охват</th>
-          </tr>
-        </thead>
-        <tbody>${chRows}</tbody>
-      </table>
-    </div>`;
-
-  // Открываем чистое popup-окно без стилей дашборда — единственный надёжный способ
-  const popup = window.open('', '_blank', 'width=760,height=600,left=100,top=100');
-  if (!popup) {
-    alert('Разрешите всплывающие окна в браузере для скачивания PDF');
-    return;
-  }
-
-  const safeFilename = filename.replace(/'/g, "\\'");
-  popup.document.write(`<!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
-</head>
-<body style="margin:0;padding:0;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-<div id="pdfContent" style="width:680px;padding:20px;box-sizing:border-box;">${html}</div>
-<script>
-window.onload = function() {
-  html2pdf().set({
-    margin: 10,
-    filename: '${safeFilename}',
-    image: {type:'jpeg', quality:0.98},
-    html2canvas: {scale:2, useCORS:true},
-    jsPDF: {unit:'mm', format:'a4', orientation:'portrait'}
-  }).from(document.getElementById('pdfContent')).save().then(function(){ window.close(); });
-};
-<\/script>
-</body></html>`);
-  popup.document.close();
-}
-
-// ─── ADESK ФИНАНСЫ (ВНУТРЕННЕЕ) ───
-const ADESK_DATA = {"Twinby":{"updated_at":"2026-02-25","transactions":[{"date":"2026-01-14","type":2,"category":"UGC-креаторы","amount":20100.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-01-14","type":2,"category":"UGC-креаторы","amount":8400.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-01-14","type":2,"category":"UGC-креаторы","amount":1500.0,"desc":"Перевод средств по договору № 5185826368 Газизова Аделя Азатовна НДС не облагает"},{"date":"2026-01-19","type":1,"category":"Выручка от оказания услуг","amount":250000.0,"desc":"Оплата по Счет на оплату No 3 от 16 января 2026 г.,Услуги по аналитике трендов и"},{"date":"2026-01-19","type":2,"category":"Налог на прибыль","amount":15000.0,"desc":"Перевод собственных средств в фонд Налоги с операции на сумму 250 000 RUB без НД"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":13300.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"}]},"Luvu":{"updated_at":"2026-02-25","transactions":[{"date":"2025-11-27","type":1,"category":"Выручка от оказания услуг","amount":500000.0,"desc":"Оплата по договору 07-11-2025-1 от 07.11.2025 за услуги по аналитике трендов. Су"},{"date":"2026-01-12","type":2,"category":"UGC-креаторы","amount":39500.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-01-12","type":2,"category":"UGC-креаторы","amount":30100.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-01-12","type":2,"category":"UGC-креаторы","amount":31000.0,"desc":"Перевод средств по договору № 5324881807 Бочкарёва Ева Маратовна НДС не облагает"},{"date":"2026-01-12","type":2,"category":"UGC-креаторы","amount":30100.0,"desc":"Оплата по договору за услуги Сумма 30100-00 Без налога (НДС)"},{"date":"2026-01-12","type":2,"category":"UGC-креаторы","amount":30600.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-01-16","type":2,"category":"UGC-креаторы","amount":9500.0,"desc":"Оплата по счету 3 от 15.01.2026 за услуги в качестве специалиста по контролю кач"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":19500.0,"desc":"Оплата по счету 8 от 12.02.2026 за услуги в качестве специалиста по контролю кач"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":18700.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":20000.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":18500.0,"desc":"Оплата по договору за услуги Сумма 18500-00 Без налога (НДС)"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":30100.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":25000.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"}]},"Ocomplex":{"updated_at":"2026-02-25","transactions":[{"date":"2025-12-29","type":1,"category":"Выручка от оказания услуг","amount":460000.0,"desc":"Перевод собственных средств. Без НДС."},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":2000.0,"desc":"Оплата по счету 8 от 12.02.2026 за услуги в качестве специалиста по контролю кач"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":4500.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"},{"date":"2026-02-12","type":2,"category":"UGC-креаторы","amount":18500.0,"desc":"Выплата самозанятому. Оплата плательщику НПД за рекламныеуслуги. НДС и НДФЛ не о"}]}};
-
-function buildAdeskSection(p){
-  const container = document.getElementById('adeskSection-'+p.name);
-  if(!container) return;
-  const ad = ADESK_DATA[p.name];
-  if(!ad) return; // нет данных для этого проекта
-
-  const txns    = ad.transactions;
-  const income  = txns.filter(t=>t.type===1).reduce((s,t)=>s+t.amount, 0);
-  const allCost = txns.filter(t=>t.type===2).reduce((s,t)=>s+t.amount, 0);
-  const budget  = p.budget || 0;
-
-  const dd = p.daily_data;
-  const totalViews = dd.length ? dd[dd.length-1].total_views : 0;
-  const factCPV   = (allCost>0 && totalViews>0) ? (allCost/totalViews).toFixed(2)  : '—';
-  const clientCPV = (budget>0  && totalViews>0) ? (budget/totalViews).toFixed(2)   : '—';
-  const profit    = income - allCost;
-
-  const fmtN = n => n.toLocaleString('ru');
-
-  const txRows = [...txns].sort((a,b)=>b.date.localeCompare(a.date)).map(t=>{
-    const isInc = t.type===1;
-    const clr   = isInc ? '#4ade80' : '#f87171';
-    const bg    = isInc ? '#0d2e1a' : '#2e0d0d';
-    const sign  = isInc ? '+' : '−';
-    return `<tr style="border-bottom:1px solid #1e1e28">
-      <td style="padding:8px 10px;color:#555;font-size:12px">${fmtDate(t.date)}</td>
-      <td style="padding:8px 10px"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:${bg};color:${clr}">${isInc?'доход':'расход'}</span></td>
-      <td style="padding:8px 10px;font-size:12px;color:#888">${t.category}</td>
-      <td style="padding:8px 10px;text-align:right;font-size:14px;font-weight:700;color:${clr}">${sign}${fmtN(t.amount)} ₽</td>
-      <td style="padding:8px 10px;font-size:11px;color:#444;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.desc}</td>
-    </tr>`;
-  }).join('');
-
-  container.innerHTML = `
-    <div class="adesk-sep">
-      <div class="adesk-header">
-        <div class="section-title" style="margin:0">Финансы <span style="color:#666">(Adesk)</span></div>
-        <span class="adesk-badge">ВНУТРЕННЕЕ</span>
-      </div>
-      <div class="cards" style="margin-bottom:18px">
-        <div class="card">
-          <div class="label">Расходы на проект</div>
-          <div class="value" style="color:#f87171;font-size:22px">${fmtN(allCost)} ₽</div>
-          <div class="sub">из ${fmtN(budget)} ₽ бюджета</div>
-        </div>
-        <div class="card">
-          <div class="label">Поступление от клиента</div>
-          <div class="value" style="color:#4ade80;font-size:22px">${fmtN(income)} ₽</div>
-          <div class="sub">фактически оплачено</div>
-        </div>
-        <div class="card">
-          <div class="label">Себестоимость CPV</div>
-          <div class="value" style="color:#a78bfa;font-size:22px">${factCPV} ₽</div>
-          <div class="sub">за 1 просмотр · клиент видит: ${clientCPV} ₽</div>
-        </div>
-        <div class="card">
-          <div class="label">Прибыль с проекта <span style="color:#444;font-size:10px;font-weight:400">(без пост. расходов)</span></div>
-          <div class="value" style="color:${profit>=0?'#4ade80':'#f87171'};font-size:22px">${profit>=0?'+':''}${fmtN(profit)} ₽</div>
-          <div class="sub">${fmtN(income)} − ${fmtN(allCost)}</div>
+        <div class="lbl">Наша миссия</div>
+        <h2 class="sh">Мы помогаем брендам увеличивать продажи</h2>
+        <p class="sp">И получать многомиллионные охваты в социальных сетях за счёт вирусного контента, создаваемого в больших объёмах.</p>
+        <div class="social-logos">
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.88a8.27 8.27 0 004.84 1.56V7a4.85 4.85 0 01-1.07-.31z"/></svg>
+            TikTok
+          </div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube Shorts
+          </div>
+          <div class="soc-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.523-2.049-1.712-1.033-1.033-1.49-.985-1.49.197v1.122c0 .348-.232.553-.923.553-1.26 0-2.652-.078-3.942-1.447-1.544-1.632-2.99-4.892-2.99-5.238 0-.197.098-.392.492-.392h1.744c.392 0 .512.196.66.524.655 1.448 1.743 2.783 2.196 2.783.196 0 .294-.099.294-.588V9.832c-.065-1.032-.588-1.12-.588-1.49 0-.196.197-.392.458-.392h2.668c.36 0 .458.196.458.59v3.16c0 .36.163.458.294.458.197 0 .36-.098.69-.426 1.064-1.194 1.81-3.028 1.81-3.028.098-.197.295-.393.687-.393h1.744c.524 0 .624.262.524.59-.196.916-2.098 3.59-2.098 3.59-.163.262-.23.36 0 .654.163.196.719.719 1.09 1.154.655.786 1.155 1.44 1.286 1.9.13.39-.065.59-.524.59z"/></svg>
+            VK Видео
+          </div>
         </div>
       </div>
-      <div class="table-box">
-        <h3>Транзакции (Adesk · ${p.name})</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Дата</th><th>Тип</th><th>Категория</th>
-              <th style="text-align:right">Сумма</th><th>Описание</th>
-            </tr>
-          </thead>
-          <tbody>${txRows}</tbody>
-        </table>
+      <div class="il-img">
+        <img src="img/il_shift.jpg" alt="Социальные сети"/>
+        <div class="il-fade-l"></div>
       </div>
-      <div class="adesk-note">Данные из Adesk · обновлено ${fmtDate(ad.updated_at)}</div>
-    </div>`;
-}
+    </div>
+  </div>
+</section>
 
-// ─── PASSWORD ───
-const _PW = atob('MjAyMw=='); // 2023
-function checkPassword(){
-  const val = document.getElementById('pwInput').value;
-  if(val === _PW){
-    sessionStorage.setItem('cf_auth','1');
-    document.getElementById('pwScreen').style.display = 'none';
-    document.getElementById('pwInput').classList.remove('error');
-  } else {
-    const inp = document.getElementById('pwInput');
-    inp.classList.add('error');
-    document.getElementById('pwErr').textContent = 'Неверный пароль';
-    inp.value = '';
-    setTimeout(()=> inp.classList.remove('error'), 400);
-  }
-}
+<div class="divider"></div>
 
-// ─── ТОКЕНЫ ДЛЯ КЛИЕНТСКИХ ССЫЛОК ───
-// Каждый токен привязан к проекту. Менять не нужно — они стабильны.
-const CLIENT_TOKENS = {
-  'rZOGzMTU43w': 'Twinby',
-  'h17xhtosyU0': 'Luvu',
-  'JN9SA9vTeAI': 'Ocomplex'
-};
+<!-- BLOCK 2: Механика контент-завода -->
+<section>
+  <div class="w">
+    <div class="il rev">
+      <div>
+        <div class="lbl">Наша технология</div>
+        <h2 class="sh">Механика контент-завода — наиболее эффективная и вирусная стратегия для развития бренда</h2>
+        <div class="il-list" style="margin-top:24px">
+          <div class="il-item">Массовое производство креативов</div>
+          <div class="il-item">Быстрый тест гипотез</div>
+          <div class="il-item">Опора на эмоции, а не постановку</div>
+          <div class="il-item">Контент-заводы — ядро новой маркетинговой экосистемы</div>
+        </div>
+      </div>
+      <div class="il-img">
+        <img src="img/il_grid.jpg" alt="Механика контент-завода"/>
+        <div class="il-fade-r"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-// ─── CLIENT LINK ───
-function copyClientLink(name){
-  const token = Object.keys(CLIENT_TOKENS).find(t => CLIENT_TOKENS[t] === name);
-  const url = location.origin + location.pathname + '?t=' + token;
-  navigator.clipboard.writeText(url).then(()=>{
-    showToast('Ссылка скопирована в буфер');
-  }).catch(()=>{
-    prompt('Скопируйте ссылку:', url);
-  });
-}
+<div class="divider"></div>
 
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=> t.classList.remove('show'), 3000);
-}
+<!-- CASE -->
+<section id="case">
+  <div class="w">
+    <div class="lbl">Кейсы · Доказательство</div>
+    <h2 class="sh">Реальные результаты клиентов</h2>
+    <p class="sp" style="margin-bottom:28px;max-width:540px">Снижаем стоимость охвата в десятки раз. Результаты зафиксированы в отчётах.</p>
+    <div class="cases-grid">
+      <div class="case-box">
+        <div class="case-top" style="grid-template-columns:1fr">
+          <div>
+            <div class="case-tag">Кейс</div>
+            <div class="case-h">Премиальный бренд зубной пасты</div>
+            <p class="case-p">UGC-кампания для премиального бренда на российском рынке. Рекордно низкий CPV и массовый охват.</p>
+          </div>
+        </div>
+        <div class="case-nums" style="grid-template-columns:1fr 1fr">
+          <div class="cn"><div class="cn-n">0,03<span class="r">₽</span></div><div class="cn-l">За охват</div></div>
+          <div class="cn"><div class="cn-n">40<span class="r">млн</span></div><div class="cn-l">Охват</div></div>
+        </div>
+      </div>
+      <div class="case-box">
+        <div class="case-top" style="grid-template-columns:1fr">
+          <div>
+            <div class="case-tag">Кейс</div>
+            <div class="case-h">Косметика LUVU</div>
+            <p class="case-p">Запуск UGC-контента для косметического бренда. Массовый охват через нативные ролики авторов.</p>
+          </div>
+        </div>
+        <div class="case-nums" style="grid-template-columns:1fr 1fr">
+          <div class="cn"><div class="cn-n">0,09<span class="r">₽</span></div><div class="cn-l">За охват</div></div>
+          <div class="cn"><div class="cn-n">10<span class="r">млн</span></div><div class="cn-l">Охват</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-// ─── INIT ───
-const genAt = new Date("2026-02-25T21:06:43.144460");
-document.getElementById('updatedAt').textContent = 'Обновлено: ' + genAt.toLocaleString('ru-RU');
+<div class="divider"></div>
 
-// Проверяем client mode (?t=TOKEN)
-const _urlParams = new URLSearchParams(window.location.search);
-const _token = _urlParams.get('t');
-const _clientProject = _token ? CLIENT_TOKENS[_token] : null;
+<!-- HOW IT WORKS -->
+<section>
+  <div class="w">
+    <div class="lbl">Как работаем</div>
+    <h2 class="sh">Один поток — от брифа до результата</h2>
+    <p class="sp" style="max-width:520px">Анализируем тренды 24/7, кастингуем авторов, снимаем, монтируем, размещаем и оптимизируем — каждый день, без выходных.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="sn">01</div>
+        <h3>Бриф</h3>
+        <p>Изучаем бренд и аудиторию, определяем форматы и тональность</p>
+      </div>
+      <div class="step">
+        <div class="sn">02</div>
+        <h3>Кастинг</h3>
+        <p>Подбираем авторов из базы 138+ creators под ваш продукт</p>
+      </div>
+      <div class="step">
+        <div class="sn">03</div>
+        <h3>Производство</h3>
+        <p>UGC + монтаж + AI-ролики. До 5000 видео в месяц в едином потоке</p>
+      </div>
+      <div class="step">
+        <div class="sn">04</div>
+        <h3>Аналитика</h3>
+        <p>Следим за CPV в реальном времени, масштабируем рабочее</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-if(_clientProject && PROJECTS_DATA[_clientProject]){
-  // Клиентский режим — пароль не нужен
-  document.getElementById('pwScreen').style.display = 'none';
-  document.getElementById('projectTabs').style.display = 'none';
-  switchProject(_clientProject);
-  setTimeout(()=>{
-    const btn = document.querySelector('.client-link-btn');
-    if(btn) btn.style.display = 'none';
-  }, 50);
-} else {
-  // Основной режим — проверяем пароль
-  if(sessionStorage.getItem('cf_auth') === '1'){
-    document.getElementById('pwScreen').style.display = 'none';
-  }
-  // Если пароль не введён — экран уже виден (показан по умолчанию)
-  buildTabs();
-}
-</script>
+<div class="divider"></div>
+
+<!-- GUARANTEES -->
+<section>
+  <div class="w">
+    <div class="il rev">
+      <div>
+        <div class="lbl">Гарантии</div>
+        <h2 class="sh">Результат прописан в договоре</h2>
+        <p class="sp" style="margin-bottom:24px">Единственное агентство на рынке, которое фиксирует CPV в контракте. Не выполняем — возвращаем деньги.</p>
+        <div class="guar" style="grid-template-columns:1fr;gap:12px">
+          <div class="gc" style="padding:20px 24px">
+            <h3>Объём зафиксирован и гарантирован договором</h3>
+            <p>Количество роликов в месяц прописано в контракте. Выполняем или возвращаем деньги.</p>
+          </div>
+          <div class="gc" style="padding:20px 24px">
+            <h3>Результат прописан в договоре</h3>
+            <p>CPV и охват фиксируем в контракте. Не выполняем — возвращаем деньги.</p>
+          </div>
+          <div class="gc" style="display:flex;align-items:center;gap:16px;padding:20px 24px">
+            <div class="gn" style="font-size:32px;margin:0;flex-shrink:0">↓</div>
+            <div>
+              <h3>Цена снижается каждый месяц</h3>
+              <p>Находим рабочие связки — гарантированная цена уменьшается.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="il-img">
+        <img src="img/figma_guar.jpg" alt="Договор Names"/>
+        <div class="il-fade-l"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section style="padding-bottom:72px">
+  <div class="w">
+    <div class="cta-box">
+      <div class="cta-in">
+        <div class="lbl">Старт за 3 дня</div>
+        <div class="cta-h">Запустим производство уже на этой неделе</div>
+        <p class="cta-p">Расскажите о бренде — рассчитаем CPV и объём под ваши задачи. Бесплатно, без обязательств. Ответим в течение часа.</p>
+        <div class="cta-btns">
+          <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Написать Илье →</a>
+          <a href="https://t.me/stshkvchyn" class="btn btn-g">Написать Яну</a>
+        </div>
+        <div class="cta-note">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
+      </div>
+      <div class="cta-img">
+        <img src="img/il_founders.jpg" alt="Основатели"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Names — Завод контента</p>
+  <div>
+    <a href="https://t.me/ilya_goncharenko1">@ilya_goncharenko1</a>
+    <a href="https://t.me/stshkvchyn">@stshkvchyn</a>
+  </div>
+</footer>
+
 </body>
 </html>
