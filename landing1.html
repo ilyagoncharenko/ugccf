@@ -241,7 +241,7 @@
 <!-- NAV -->
 <nav>
   <div class="logo">Names<span>.</span></div>
-  <a href="https://t.me/ilya_goncharenko1" class="nav-cta">Получить расчёт →</a>
+  <a href="#" class="nav-cta" onclick="openModal();return false;">Запустить кампанию →</a>
 </nav>
 
 <!-- HERO -->
@@ -256,8 +256,7 @@
       <p class="sub">Системное производство вирусного UGC-контента в Instagram, TikTok, YouTube Shorts, VK Видео</p>
       <p class="note">Стоимость просмотра от 0.028₽ зафиксирована в контракте</p>
       <div class="btns">
-        <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Запустить кампанию →</a>
-        <a href="#case" class="btn btn-g">Смотреть кейс</a>
+        <a href="#" class="btn btn-r" onclick="openModal();return false;">Запустить кампанию →</a>
       </div>
     </div>
   </div>
@@ -449,13 +448,9 @@
         <div class="lbl">Старт за 3 дня</div>
         <div class="cta-h">Запустим производство уже на этой неделе</div>
         <p class="cta-p">Расскажите о бренде — рассчитаем CPV и объём под ваши задачи. Бесплатно, без обязательств. Ответим в течение часа.</p>
-        <form class="lead-form" id="leadForm">
-          <input type="text" id="f-name" placeholder="Имя" required/>
-          <input type="tel" id="f-phone" placeholder="Телефон" required/>
-          <input type="text" id="f-company" placeholder="Название компании" required/>
-          <button type="submit" class="btn btn-r" style="border:none;cursor:pointer;justify-content:center">Отправить заявку →</button>
-        </form>
-        <div class="form-success" id="formSuccess">✓ Заявка отправлена — свяжемся в течение часа</div>
+        <div class="cta-btns">
+          <a href="#" class="btn btn-r" onclick="openModal();return false;">Запустить кампанию →</a>
+        </div>
         <div class="cta-note" style="margin-top:12px">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
       </div>
       <div class="cta-img">
@@ -474,12 +469,43 @@
   </div>
 </footer>
 
+<!-- MODAL -->
+<div id="modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#111;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:40px;max-width:420px;width:100%;position:relative">
+    <button onclick="closeModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;line-height:1">✕</button>
+    <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#E8000A;margin-bottom:12px">Старт за 3 дня</div>
+    <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:8px">Запустим кампанию</div>
+    <p style="font-size:13px;color:#6B7280;margin-bottom:24px;line-height:1.5">Рассчитаем CPV и объём под ваши задачи. Ответим в течение часа.</p>
+    <form class="lead-form" id="modalForm">
+      <input type="text" id="m-name" placeholder="Имя" required/>
+      <input type="tel" id="m-phone" placeholder="Телефон" required/>
+      <input type="text" id="m-company" placeholder="Название компании" required/>
+      <button type="submit" class="btn btn-r" style="border:none;cursor:pointer;justify-content:center">Отправить заявку →</button>
+    </form>
+    <div class="form-success" id="modalSuccess">✓ Заявка отправлена — свяжемся в течение часа</div>
+  </div>
+</div>
+
 <script>
-document.getElementById('leadForm').addEventListener('submit', async function(e) {
+function openModal(){
+  const m=document.getElementById('modal');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+  document.body.style.overflow='';
+}
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape') closeModal();});
+
+document.getElementById('modalForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const name    = document.getElementById('f-name').value.trim();
-  const phone   = document.getElementById('f-phone').value.trim();
-  const company = document.getElementById('f-company').value.trim();
+  const name    = document.getElementById('m-name').value.trim();
+  const phone   = document.getElementById('m-phone').value.trim();
+  const company = document.getElementById('m-company').value.trim();
   const text = `🔥 Новая заявка с сайта Names\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🏢 Компания: ${company}`;
   const btn = this.querySelector('button');
   btn.textContent = 'Отправка...';
@@ -491,7 +517,7 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
       body: JSON.stringify({chat_id: 154827967, text, parse_mode: 'HTML'})
     });
     this.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    document.getElementById('modalSuccess').style.display = 'block';
   } catch(err) {
     btn.textContent = 'Отправить заявку →';
     btn.disabled = false;
