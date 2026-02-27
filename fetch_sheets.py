@@ -11,6 +11,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 # ─── КОНФИГ ПРОЕКТОВ ───────────────────────────────────────────────────────────
 PROJECTS = [
@@ -57,8 +58,23 @@ def get_service():
     return build('sheets', 'v4', credentials=creds)
 
 
+def api_call_with_retry(func, retries=4, delay=15):
+    for attempt in range(retries):
+        try:
+            return func()
+        except HttpError as e:
+            if e.resp.status in (429, 500, 503) and attempt < retries - 1:
+                wait = delay * (attempt + 1)
+                print(f"    API ошибка {e.resp.status}, повтор через {wait}с (попытка {attempt+1}/{retries})...")
+                time.sleep(wait)
+            else:
+                raise
+
+
 def get_all_sheets(service, spreadsheet_id):
-    spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    spreadsheet = api_call_with_retry(
+        lambda: service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    )
     return [
         {'title': s['properties']['title'], 'gid': s['properties']['sheetId']}
         for s in spreadsheet.get('sheets', [])
@@ -66,10 +82,12 @@ def get_all_sheets(service, spreadsheet_id):
 
 
 def fetch_sheet_rows(service, spreadsheet_id, sheet_title):
-    result = service.spreadsheets().values().get(
-        spreadsheetId=spreadsheet_id,
-        range=f"'{sheet_title}'"
-    ).execute()
+    result = api_call_with_retry(
+        lambda: service.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id,
+            range=f"'{sheet_title}'"
+        ).execute()
+    )
     return result.get('values', [])
 
 
