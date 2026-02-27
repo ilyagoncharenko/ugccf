@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://names.agency/sitemap.xml
+Sitemap: https://ugc.names-bloggers.ru/sitemap.xml
