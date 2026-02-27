@@ -20,6 +20,7 @@ PROJECTS = [
         "spreadsheet_id": "1DqVJAwEvxw7HoUrTNZNCw4jVAeK7_ow_beRiEiGVcHM",
         "color": "#a78bfa",   # фиолетовый
         "budget": 500000,     # бюджет кампании в рублях
+        "date_offset": 1,     # брать лист на N позиций раньше последнего
     },
     {
         "name": "Luvu",
@@ -150,17 +151,22 @@ def process_project(service, project):
     print(f"  Листов с датами: {len(date_sheets)}")
     print(f"  Прочих листов:   {len(other_sheets)}")
 
-    # Данные каналов — из последнего по дате листа
+    offset = project.get('date_offset', 0)
+    sorted_sheets = sorted(date_sheets, key=lambda s: s['title'])
+    if offset:
+        sorted_sheets = sorted_sheets[:len(sorted_sheets) - offset]
+
+    # Данные каналов — из последнего по дате листа (с учётом offset)
     channels_data = []
-    if date_sheets:
-        last_sheet = sorted(date_sheets, key=lambda s: s['title'])[-1]
+    if sorted_sheets:
+        last_sheet = sorted_sheets[-1]
         rows = fetch_sheet_rows(service, sid, last_sheet['title'])
         channels_data = parse_channels(rows)
         print(f"  Каналов (на {last_sheet['title']}): {len(channels_data)}")
 
     # Временной ряд
     daily_data = []
-    for s in sorted(date_sheets, key=lambda x: x['title']):
+    for s in sorted_sheets:
         title = s['title']
         try:
             rows  = fetch_sheet_rows(service, sid, title)
