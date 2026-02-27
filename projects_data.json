@@ -7,6 +7,12 @@
       "budget": 500000,
       "channels_data": [
         {
+          "social_network": "INSTAGRAM",
+          "channel_url": "https://www.instagram.com/chrisveum9?igsh=MWRrYWRlZTJjbnNkaQ%3D%3D&utm_source=qr",
+          "total_videos": 89,
+          "total_views": 1962863
+        },
+        {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@user9247771846859?_r=1&_t=ZM-92FbGVelETc",
           "total_videos": 28,
@@ -15,8 +21,14 @@
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@ronaldpinegar?si=UK-BEXcZvhXFAcRW",
-          "total_videos": 91,
-          "total_views": 37734
+          "total_videos": 87,
+          "total_views": 37118
+        },
+        {
+          "social_network": "INSTAGRAM",
+          "channel_url": "https://www.instagram.com/by_laura.zi?igsh=MTcyem1wamIzdWhjNg%3D%3D&utm_source=qr",
+          "total_videos": 89,
+          "total_views": 16133
         },
         {
           "social_network": "TIKTOK",
@@ -27,98 +39,98 @@
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@louisjustice-j4z?si=q1YFwNlPfQriVmkD",
-          "total_videos": 90,
-          "total_views": 41451
+          "total_videos": 88,
+          "total_views": 41068
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/jenny_twin_by",
-          "total_videos": 68,
-          "total_views": 85599
+          "total_videos": 66,
+          "total_views": 85396
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@nora_twin",
-          "total_videos": 56,
-          "total_views": 37079
+          "total_videos": 55,
+          "total_views": 36588
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/nora_twin_/",
-          "total_videos": 68,
-          "total_views": 141009
+          "total_videos": 67,
+          "total_views": 140815
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "www.tiktok.com/@jenny_twinby",
-          "total_videos": 56,
-          "total_views": 24732
+          "total_videos": 55,
+          "total_views": 23656
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/julia_pokeda?igsh=aGNienozZ25zZ3Zo&utm_source=qr",
-          "total_videos": 46,
-          "total_views": 17708
+          "total_videos": 45,
+          "total_views": 17541
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@julia_winslet?_r=1&_t=ZP-93PWYMveyH0",
-          "total_videos": 48,
-          "total_views": 83786
+          "total_videos": 46,
+          "total_views": 80374
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/julia_wins1et?igsh=MW1pMTN6OTlsaGdraw%3D%3D&utm_source=qr",
-          "total_videos": 52,
-          "total_views": 38871
+          "total_videos": 50,
+          "total_views": 38689
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/nastasiaaaa__?igsh=NnAyZDQzOGpvd2Ex&utm_source=qr",
-          "total_videos": 10,
-          "total_views": 1122
+          "total_videos": 9,
+          "total_views": 1107
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@nastasiaa111?_r=1&_t=ZS-93aGhE9vsYv",
-          "total_videos": 10,
-          "total_views": 18243
+          "total_videos": 9,
+          "total_views": 17861
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@nastasia_a-a?si=IQq_9xEmyVSMplBw",
           "total_videos": 9,
-          "total_views": 10384
+          "total_views": 9773
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@by.laura_zi?_r=1&_t=ZS-93nrQBs7Qn3",
-          "total_videos": 57,
-          "total_views": 201678
+          "total_videos": 52,
+          "total_views": 196122
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@laura_znak?_r=1&_t=ZS-93nrYPVlDdJ",
-          "total_videos": 26,
+          "total_videos": 21,
           "total_views": 7723
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/love_patterns1",
-          "total_videos": 52,
-          "total_views": 2614
+          "total_videos": 49,
+          "total_views": 2493
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/conscious_dating1",
-          "total_videos": 22,
-          "total_views": 476
+          "total_videos": 24,
+          "total_views": 604
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/love_without_games",
-          "total_videos": 52,
-          "total_views": 3773
+          "total_videos": 49,
+          "total_views": 3455
         },
         {
           "social_network": "INSTAGRAM",
@@ -129,26 +141,26 @@
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@realtalkdating4",
-          "total_videos": 49,
-          "total_views": 30104
+          "total_videos": 46,
+          "total_views": 28132
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@heartlogic12",
-          "total_videos": 50,
-          "total_views": 30141
+          "total_videos": 47,
+          "total_views": 27654
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@moderndates4",
-          "total_videos": 49,
-          "total_views": 24969
+          "total_videos": 46,
+          "total_views": 23727
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@datingdecoded12",
-          "total_videos": 50,
-          "total_views": 9701
+          "total_videos": 47,
+          "total_views": 9275
         },
         {
           "social_network": "YOUTUBE",
@@ -1229,25 +1241,9 @@
             "TIKTOK": 11630,
             "YOUTUBE": 2004
           }
-        },
-        {
-          "date": "2026-02-26",
-          "total_views": 851052,
-          "by_platform": {
-            "INSTAGRAM": 292508,
-            "TIKTOK": 468942,
-            "YOUTUBE": 89602
-          },
-          "channels": 25,
-          "delta": 0,
-          "delta_by_platform": {
-            "INSTAGRAM": 0,
-            "TIKTOK": 17044,
-            "YOUTUBE": 1610
-          }
         }
       ],
-      "updated_at": "2026-02-27T07:44:35.139548"
+      "updated_at": "2026-02-27T08:08:30.871569"
     },
     "Luvu": {
       "name": "Luvu",
@@ -3082,7 +3078,7 @@
           }
         }
       ],
-      "updated_at": "2026-02-27T07:46:33.317503"
+      "updated_at": "2026-02-27T08:10:24.479510"
     },
     "Ocomplex": {
       "name": "Ocomplex",
@@ -3769,8 +3765,8 @@
           }
         }
       ],
-      "updated_at": "2026-02-27T07:47:09.059756"
+      "updated_at": "2026-02-27T08:11:00.587578"
     }
   },
-  "generated_at": "2026-02-27T07:43:03.532268"
+  "generated_at": "2026-02-27T08:07:03.017788"
 }
