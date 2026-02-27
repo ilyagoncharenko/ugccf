@@ -221,6 +221,13 @@
     .cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     @media(max-width:700px){.cases-grid{grid-template-columns:1fr}}
 
+    /* FORM */
+    .lead-form{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+    .lead-form input{background:rgba(255,255,255,.06);border:1px solid var(--b2);border-radius:7px;padding:13px 16px;font-size:14px;color:#fff;outline:none;transition:.15s;font-family:inherit}
+    .lead-form input::placeholder{color:var(--m)}
+    .lead-form input:focus{border-color:rgba(232,0,10,.5);background:rgba(255,255,255,.09)}
+    .form-success{display:none;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:7px;padding:14px 18px;font-size:14px;color:#34d399;margin-top:8px}
+
     /* FOOTER */
     footer{padding:24px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--b)}
     footer p,footer a{font-size:12px;color:var(--m)}
@@ -442,11 +449,14 @@
         <div class="lbl">Старт за 3 дня</div>
         <div class="cta-h">Запустим производство уже на этой неделе</div>
         <p class="cta-p">Расскажите о бренде — рассчитаем CPV и объём под ваши задачи. Бесплатно, без обязательств. Ответим в течение часа.</p>
-        <div class="cta-btns">
-          <a href="https://t.me/ilya_goncharenko1" class="btn btn-r">Написать Илье →</a>
-          <a href="https://t.me/stshkvchyn" class="btn btn-g">Написать Яну</a>
-        </div>
-        <div class="cta-note">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
+        <form class="lead-form" id="leadForm">
+          <input type="text" id="f-name" placeholder="Имя" required/>
+          <input type="tel" id="f-phone" placeholder="Телефон" required/>
+          <input type="text" id="f-company" placeholder="Название компании" required/>
+          <button type="submit" class="btn btn-r" style="border:none;cursor:pointer;justify-content:center">Отправить заявку →</button>
+        </form>
+        <div class="form-success" id="formSuccess">✓ Заявка отправлена — свяжемся в течение часа</div>
+        <div class="cta-note" style="margin-top:12px">@ilya_goncharenko1 · @stshkvchyn — основатели Names</div>
       </div>
       <div class="cta-img">
         <img src="img/il_founders.jpg" alt="Основатели"/>
@@ -464,5 +474,29 @@
   </div>
 </footer>
 
+<script>
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name    = document.getElementById('f-name').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const company = document.getElementById('f-company').value.trim();
+  const text = `🔥 Новая заявка с сайта Names\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🏢 Компания: ${company}`;
+  const btn = this.querySelector('button');
+  btn.textContent = 'Отправка...';
+  btn.disabled = true;
+  try {
+    await fetch('https://api.telegram.org/bot8451455019:AAHu7gDZRXzMm1bWwzblcIcSk8YxiwsAdsg/sendMessage', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({chat_id: 154827967, text, parse_mode: 'HTML'})
+    });
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  } catch(err) {
+    btn.textContent = 'Отправить заявку →';
+    btn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
