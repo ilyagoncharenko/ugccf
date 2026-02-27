@@ -268,7 +268,8 @@
     .il-item::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:7px;flex-shrink:0}
 
     /* CASE */
-    .case-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden}
+    .case-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+    .case-top{flex:1}
     .case-top{padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
     @media(max-width:700px){.case-top{grid-template-columns:1fr;padding:28px 24px}}
     .case-tag{background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;display:inline-block;margin-bottom:12px}
@@ -457,7 +458,7 @@
 <!-- CASE -->
 <section id="case">
   <div class="w">
-    <div class="lbl">Кейсы · Доказательство</div>
+    <div class="lbl">Кейсы</div>
     <h2 class="sh">Реальные результаты клиентов</h2>
     <p class="sp" style="margin-bottom:28px;max-width:540px">Снижаем стоимость охвата в десятки раз. Результаты зафиксированы в отчётах.</p>
     <div class="cases-grid">
@@ -478,7 +479,7 @@
         <div class="case-top" style="grid-template-columns:1fr">
           <div>
             <div class="case-tag">Кейс</div>
-            <div class="case-h">Косметика LUVU</div>
+            <div class="case-h">Бренд косметики</div>
             <p class="case-p">Запуск UGC-контента для косметического бренда. Массовый охват через нативные ролики авторов.</p>
           </div>
         </div>
@@ -487,6 +488,9 @@
           <div class="cn"><div class="cn-n">10<span class="r">млн</span></div><div class="cn-l">Охват</div></div>
         </div>
       </div>
+    </div>
+    <div style="margin-top:28px;text-align:center">
+      <a href="#" class="btn btn-r" onclick="openCaseModal();return false;">Запросить кейсы →</a>
     </div>
   </div>
 </section>
@@ -623,6 +627,23 @@
   </div>
 </footer>
 
+<!-- MODAL CASES -->
+<div id="modal-cases" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#111;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:40px;max-width:420px;width:100%;position:relative">
+    <button onclick="closeCaseModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;line-height:1">✕</button>
+    <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#E8000A;margin-bottom:12px">Кейсы</div>
+    <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:8px">Запросить кейсы</div>
+    <p style="font-size:13px;color:#6B7280;margin-bottom:24px;line-height:1.5">Пришлём подробные кейсы с цифрами под ваш рынок.</p>
+    <form class="lead-form" id="caseForm">
+      <input type="text" id="c-name" placeholder="Имя" required/>
+      <input type="tel" id="c-phone" placeholder="Телефон" required/>
+      <input type="text" id="c-company" placeholder="Название компании" required/>
+      <button type="submit" class="btn btn-r" style="border:none;cursor:pointer;justify-content:center">Получить кейсы →</button>
+    </form>
+    <div class="form-success" id="caseSuccess">✓ Отправлено — пришлём кейсы в ближайшее время</div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div id="modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px">
   <div style="background:#111;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:40px;max-width:420px;width:100%;position:relative">
@@ -641,6 +662,19 @@
 </div>
 
 <script>
+function openCaseModal(){
+  const m=document.getElementById('modal-cases');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeCaseModal(){
+  document.getElementById('modal-cases').style.display='none';
+  document.body.style.overflow='';
+}
+document.getElementById('modal-cases').addEventListener('click',function(e){
+  if(e.target===this) closeCaseModal();
+});
+
 function openModal(){
   const m=document.getElementById('modal');
   m.style.display='flex';
@@ -683,6 +717,29 @@ document.getElementById('modalForm').addEventListener('submit', async function(e
     document.getElementById('modalSuccess').style.display = 'block';
   } catch(err) {
     btn.textContent = 'Отправить заявку →';
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('caseForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name    = document.getElementById('c-name').value.trim();
+  const phone   = document.getElementById('c-phone').value.trim();
+  const company = document.getElementById('c-company').value.trim();
+  const text = `📂 Запрос кейсов — Names\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🏢 Компания: ${company}`;
+  const btn = this.querySelector('button');
+  btn.textContent = 'Отправка...';
+  btn.disabled = true;
+  try {
+    await fetch('https://api.telegram.org/bot8451455019:AAHu7gDZRXzMm1bWwzblcIcSk8YxiwsAdsg/sendMessage', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({chat_id: 154827967, text, parse_mode: 'HTML'})
+    });
+    this.style.display = 'none';
+    document.getElementById('caseSuccess').style.display = 'block';
+  } catch(err) {
+    btn.textContent = 'Получить кейсы →';
     btn.disabled = false;
   }
 });
