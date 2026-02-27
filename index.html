@@ -44,6 +44,64 @@
   }
   </script>
 
+  <!-- Schema.org: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Что такое UGC контент-завод?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UGC контент-завод — это системное производство вирусного пользовательского контента в промышленных объёмах. Вместо 10–20 роликов в месяц от обычного агентства, мы производим до 10 000 роликов, охватывая Instagram, TikTok, YouTube Shorts и VK Видео."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Сколько стоит UGC-контент?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Стоимость рассчитывается индивидуально. Мы работаем по модели CPV (стоимость за просмотр) — от 0,02₽ за охват. Итоговая цена зависит от объёма, платформ и продукта. Результат и стоимость фиксируются в договоре."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "На каких платформах вы работаете?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Мы производим UGC-контент для Instagram, TikTok, YouTube Shorts и VK Видео. Можем работать как на всех платформах одновременно, так и сфокусироваться на одной."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Как быстро можно запустить кампанию?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Первые ролики выходят уже через 3 дня после подписания договора. Полный конвейер разворачивается в течение первой недели."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Гарантируете ли вы результат?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Да. Мы единственное агентство на рынке, которое фиксирует CPV и объём производства в договоре. Если не выполняем условия — возвращаем деньги."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Чем вы отличаетесь от обычного UGC-агентства?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Обычное агентство производит 10–20 роликов в месяц вручную. Мы — контент-завод с 1000+ креаторами и собственным аналитическим софтом. Производим до 10 000 роликов в месяц, отслеживаем тренды 24/7 и гарантируем результат договором."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Schema.org: Service -->
   <script type="application/ld+json">
   {
@@ -227,6 +285,17 @@
     .lead-form input::placeholder{color:var(--m)}
     .lead-form input:focus{border-color:rgba(232,0,10,.5);background:rgba(255,255,255,.09)}
     .form-success{display:none;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:7px;padding:14px 18px;font-size:14px;color:#34d399;margin-top:8px}
+
+    /* FAQ */
+    .faq-list{margin-top:32px;display:flex;flex-direction:column;gap:8px}
+    .faq-item{background:var(--bg2);border:1px solid var(--b);border-radius:10px;overflow:hidden;transition:.18s}
+    .faq-item:hover{border-color:rgba(232,0,10,.25)}
+    .faq-q{padding:20px 24px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none}
+    .faq-q::after{content:"+";font-size:20px;font-weight:300;color:var(--red);flex-shrink:0;transition:.2s}
+    .faq-item.open .faq-q::after{transform:rotate(45deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+    .faq-item.open .faq-a{max-height:200px}
+    .faq-a p{padding:0 24px 20px;font-size:14px;color:var(--m2);line-height:1.6}
 
     /* FOOTER */
     footer{padding:24px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--b)}
@@ -440,6 +509,42 @@
 
 <div class="divider"></div>
 
+<!-- FAQ -->
+<section>
+  <div class="w">
+    <div class="lbl">FAQ</div>
+    <h2 class="sh">Частые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Что такое UGC контент-завод?</div>
+        <div class="faq-a"><p>UGC контент-завод — это системное производство вирусного пользовательского контента в промышленных объёмах. Вместо 10–20 роликов в месяц от обычного агентства, мы производим до 10 000 роликов, охватывая Instagram, TikTok, YouTube Shorts и VK Видео.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Сколько стоит UGC-контент?</div>
+        <div class="faq-a"><p>Стоимость рассчитывается индивидуально. Мы работаем по модели CPV (стоимость за просмотр) — от 0,02₽ за охват. Итоговая цена зависит от объёма, платформ и продукта. Результат и стоимость фиксируются в договоре.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">На каких платформах вы работаете?</div>
+        <div class="faq-a"><p>Мы производим UGC-контент для Instagram, TikTok, YouTube Shorts и VK Видео. Можем работать как на всех платформах одновременно, так и сфокусироваться на одной.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Как быстро можно запустить кампанию?</div>
+        <div class="faq-a"><p>Первые ролики выходят уже через 3 дня после подписания договора. Полный конвейер разворачивается в течение первой недели.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Гарантируете ли вы результат?</div>
+        <div class="faq-a"><p>Да. Мы единственное агентство на рынке, которое фиксирует CPV и объём производства в договоре. Если не выполняем условия — возвращаем деньги.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Чем вы отличаетесь от обычного UGC-агентства?</div>
+        <div class="faq-a"><p>Обычное агентство производит 10–20 роликов в месяц вручную. Мы — контент-завод с 1000+ креаторами и собственным аналитическим софтом. Производим до 10 000 роликов в месяц, отслеживаем тренды 24/7 и гарантируем результат договором.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- CTA -->
 <section style="padding-bottom:72px">
   <div class="w">
@@ -500,6 +605,15 @@ document.getElementById('modal').addEventListener('click',function(e){
   if(e.target===this) closeModal();
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape') closeModal();});
+
+document.querySelectorAll('.faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    const item=this.parentElement;
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
 
 document.getElementById('modalForm').addEventListener('submit', async function(e) {
   e.preventDefault();
