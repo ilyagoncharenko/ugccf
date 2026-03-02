@@ -357,6 +357,18 @@
     footer div{display:flex;gap:20px}
     @media(max-width:500px){footer{flex-direction:column;gap:12px;padding:24px 20px;text-align:center}}
   </style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=107067493', 'ym');
+    ym(107067493, 'init', {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/107067493" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 
@@ -622,8 +634,8 @@
 <footer>
   <p>© 2026 Names — Завод контента · ОГРН 323774600732376</p>
   <div>
-    <a href="https://t.me/ilya_goncharenko1" target="_blank" rel="noopener noreferrer">@ilya_goncharenko1</a>
-    <a href="https://t.me/stshkvchyn" target="_blank" rel="noopener noreferrer">@stshkvchyn</a>
+    <a href="https://t.me/ilya_goncharenko1" target="_blank" rel="noopener noreferrer" onclick="ym(107067493,'reachGoal','click_telegram',{contact:'ilya_goncharenko1'})">@ilya_goncharenko1</a>
+    <a href="https://t.me/stshkvchyn" target="_blank" rel="noopener noreferrer" onclick="ym(107067493,'reachGoal','click_telegram',{contact:'stshkvchyn'})">@stshkvchyn</a>
   </div>
 </footer>
 
@@ -666,6 +678,7 @@ function openCaseModal(){
   const m=document.getElementById('modal-cases');
   m.style.display='flex';
   document.body.style.overflow='hidden';
+  ym(107067493, 'reachGoal', 'click_request_cases');
 }
 function closeCaseModal(){
   document.getElementById('modal-cases').style.display='none';
@@ -679,6 +692,7 @@ function openModal(){
   const m=document.getElementById('modal');
   m.style.display='flex';
   document.body.style.overflow='hidden';
+  ym(107067493, 'reachGoal', 'click_launch_campaign');
 }
 function closeModal(){
   document.getElementById('modal').style.display='none';
@@ -713,6 +727,7 @@ document.getElementById('modalForm').addEventListener('submit', async function(e
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({chat_id: 154827967, text, parse_mode: 'HTML'})
     });
+    ym(107067493, 'reachGoal', 'form_launch_campaign', {name: name, company: company});
     this.style.display = 'none';
     document.getElementById('modalSuccess').style.display = 'block';
   } catch(err) {
@@ -736,6 +751,7 @@ document.getElementById('caseForm').addEventListener('submit', async function(e)
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({chat_id: 154827967, text, parse_mode: 'HTML'})
     });
+    ym(107067493, 'reachGoal', 'form_request_cases', {name: name, company: company});
     this.style.display = 'none';
     document.getElementById('caseSuccess').style.display = 'block';
   } catch(err) {
