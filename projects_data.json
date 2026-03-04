@@ -9,68 +9,68 @@
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/chrisveum9?igsh=MWRrYWRlZTJjbnNkaQ%3D%3D&utm_source=qr",
-          "total_videos": 99,
-          "total_views": 2170368
+          "total_videos": 101,
+          "total_views": 2201465
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@ronaldpinegar?si=UK-BEXcZvhXFAcRW",
-          "total_videos": 98,
-          "total_views": 40472
+          "total_videos": 99,
+          "total_views": 41757
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/by_laura.zi?igsh=MTcyem1wamIzdWhjNg%3D%3D&utm_source=qr",
-          "total_videos": 99,
-          "total_views": 19875
+          "total_videos": 100,
+          "total_views": 20185
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@louisjustice-j4z?si=q1YFwNlPfQriVmkD",
-          "total_videos": 98,
-          "total_views": 43899
+          "total_videos": 100,
+          "total_views": 45585
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/jenny_twin_by",
-          "total_videos": 72,
-          "total_views": 86351
+          "total_videos": 73,
+          "total_views": 86561
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@nora_twin",
-          "total_videos": 61,
-          "total_views": 40020
+          "total_videos": 62,
+          "total_views": 40369
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/nora_twin_/",
           "total_videos": 73,
-          "total_views": 145308
+          "total_views": 148929
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "www.tiktok.com/@jenny_twinby",
-          "total_videos": 61,
-          "total_views": 27419
+          "total_videos": 10,
+          "total_views": 5459
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/julia_pokeda?igsh=aGNienozZ25zZ3Zo&utm_source=qr",
           "total_videos": 48,
-          "total_views": 17955
+          "total_views": 17958
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@julia_winslet?_r=1&_t=ZP-93PWYMveyH0",
           "total_videos": 48,
-          "total_views": 165732
+          "total_views": 169135
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/julia_wins1et?igsh=MW1pMTN6OTlsaGdraw%3D%3D&utm_source=qr",
           "total_videos": 53,
-          "total_views": 39039
+          "total_views": 39042
         },
         {
           "social_network": "INSTAGRAM",
@@ -82,7 +82,7 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@nastasiaa111?_r=1&_t=ZS-93aGhE9vsYv",
           "total_videos": 9,
-          "total_views": 18481
+          "total_views": 18505
         },
         {
           "social_network": "YOUTUBE",
@@ -93,14 +93,14 @@
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@by.laura_zi?_r=1&_t=ZS-93nrQBs7Qn3",
-          "total_videos": 61,
-          "total_views": 215484
+          "total_videos": 64,
+          "total_views": 220260
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@laura_znak?_r=1&_t=ZS-93nrYPVlDdJ",
-          "total_videos": 27,
-          "total_views": 7724
+          "total_videos": 10,
+          "total_views": 0
         },
         {
           "social_network": "INSTAGRAM",
@@ -130,25 +130,25 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@realtalkdating4",
           "total_videos": 52,
-          "total_views": 32314
+          "total_views": 32316
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@heartlogic12",
           "total_videos": 53,
-          "total_views": 33227
+          "total_views": 33238
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@moderndates4",
           "total_videos": 52,
-          "total_views": 27002
+          "total_views": 27007
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@datingdecoded12",
-          "total_videos": 53,
-          "total_views": 11046
+          "total_videos": 10,
+          "total_views": 2579
         },
         {
           "social_network": "YOUTUBE",
@@ -1309,9 +1309,25 @@
             "TIKTOK": 10322,
             "YOUTUBE": 1495
           }
+        },
+        {
+          "date": "2026-03-03",
+          "total_views": 3171507,
+          "by_platform": {
+            "INSTAGRAM": 2524357,
+            "TIKTOK": 548868,
+            "YOUTUBE": 98282
+          },
+          "channels": 25,
+          "delta": 8634,
+          "delta_by_platform": {
+            "INSTAGRAM": 35244,
+            "TIKTOK": 0,
+            "YOUTUBE": 2971
+          }
         }
       ],
-      "updated_at": "2026-03-03T20:59:36.121957"
+      "updated_at": "2026-03-04T20:59:23.293881"
     },
     "Luvu": {
       "name": "Luvu",
@@ -1335,25 +1351,25 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/linaluvubeauty?igsh=OXZ0Z2drcjNjYWE2",
           "total_videos": 86,
-          "total_views": 75446
+          "total_views": 75453
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@lina.probeauty?si=RXUbTaE2SqmXbZp0",
-          "total_videos": 161,
-          "total_views": 724139
+          "total_videos": 162,
+          "total_views": 724398
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/_beautyliana_?igsh=MXB4dmRwOHVwd3ZpYw%3D%3D&utm_source=qr",
           "total_videos": 120,
-          "total_views": 22650
+          "total_views": 22658
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@_beautyliana_?_r=1&_t=ZN-91du6WrZV3e",
           "total_videos": 137,
-          "total_views": 62089
+          "total_views": 68503
         },
         {
           "social_network": "YOUTUBE",
@@ -1383,13 +1399,13 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/amalliiyyaaa__aa?igsh=cXN4aXAyMzgycTV0&utm_source=qr",
           "total_videos": 192,
-          "total_views": 71027
+          "total_views": 71034
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@amalliiyyaaluvu?si=BYSNdzuznco9KqoS",
           "total_videos": 129,
-          "total_views": 80675
+          "total_views": 80685
         },
         {
           "social_network": "INSTAGRAM",
@@ -1401,7 +1417,7 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@evaluvu1?_r=1&_t=ZS-91usW1r7XN2",
           "total_videos": 102,
-          "total_views": 76305
+          "total_views": 76318
         },
         {
           "social_network": "YOUTUBE",
@@ -1413,7 +1429,7 @@
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@dariabeautylifestyle?si=Arn-P59H8TqPP4cx",
           "total_videos": 91,
-          "total_views": 137425
+          "total_views": 137428
         },
         {
           "social_network": "INSTAGRAM",
@@ -1424,14 +1440,14 @@
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@evaluvu2?_r=1&_t=ZS-91y53b8C4HY",
-          "total_videos": 70,
-          "total_views": 42299
+          "total_videos": 103,
+          "total_views": 54104
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@evaluvu1?si=nsuJ-g20_a3XURR5",
           "total_videos": 103,
-          "total_views": 238107
+          "total_views": 238112
         },
         {
           "social_network": "TIKTOK",
@@ -1443,7 +1459,7 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/beautygirl_046?igsh=MWtuZ2o0b3NmNGlweg%3D%3D&utm_source=qr",
           "total_videos": 111,
-          "total_views": 45959
+          "total_views": 45960
         },
         {
           "social_network": "YOUTUBE",
@@ -1461,7 +1477,7 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@linaluvubeauty2?_r=1&_t=ZN-92HCNKN0hBG",
           "total_videos": 125,
-          "total_views": 91001
+          "total_views": 91055
         },
         {
           "social_network": "YOUTUBE",
@@ -1476,6 +1492,12 @@
           "total_views": 7915
         },
         {
+          "social_network": "TIKTOK",
+          "channel_url": "https://www.tiktok.com/@jutaluyehucize5389?_r=1&_t=ZN-92FBLgly3IU",
+          "total_videos": 9,
+          "total_views": 3474
+        },
+        {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@tatianamartynova-b6h?si=v5FM8Gp_TSqoAANP",
           "total_videos": 7,
@@ -1485,25 +1507,25 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/amalliiyyaabyluvu?igsh=YWticTJzZTUzYngw&utm_source=qr",
           "total_videos": 178,
-          "total_views": 4600303
+          "total_views": 4616875
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@linaluvubeauty?_r=1&_t=ZN-92HCKXHOY5e",
           "total_videos": 128,
-          "total_views": 2395012
+          "total_views": 2406251
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@linuvbeauty?si=kgHvyEG9ALbb1jCu",
           "total_videos": 75,
-          "total_views": 22768
+          "total_views": 22793
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@amalliiyyaaa_luvu?_r=1&_t=ZS-92Lo5LRMnRZ",
-          "total_videos": 40,
-          "total_views": 20743
+          "total_videos": 175,
+          "total_views": 104668
         },
         {
           "social_network": "YOUTUBE",
@@ -1514,38 +1536,38 @@
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@amalliiyyaa_luvu?_r=1&_t=ZN-92RUqawQqve",
-          "total_videos": 20,
-          "total_views": 11356
+          "total_videos": 52,
+          "total_views": 22453
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/krisxbeauty_?igsh=bzF6ZHI2N2tydjRy",
-          "total_videos": 100,
-          "total_views": 38745
+          "total_videos": 102,
+          "total_views": 39487
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@krisprobeauty_?_r=1&_t=ZN-930RWRf481e",
-          "total_videos": 20,
-          "total_views": 19713
+          "total_videos": 102,
+          "total_views": 73646
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@kris.luv.makeup?si=VidDoEnB1gVyw3tM",
-          "total_videos": 94,
-          "total_views": 56530
+          "total_videos": 95,
+          "total_views": 58861
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/xristinaluv.beauty?igsh=bmR4eG4xcDllMmtu",
-          "total_videos": 95,
-          "total_views": 24282
+          "total_videos": 98,
+          "total_views": 25136
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@beauty_kriis?_r=1&_t=ZS-930RZRMy4yF",
-          "total_videos": 20,
-          "total_views": 12686
+          "total_videos": 104,
+          "total_views": 79443
         },
         {
           "social_network": "YOUTUBE",
@@ -1556,26 +1578,26 @@
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@beautyliana045?si=W7j7-N0qSJC8W1fi",
-          "total_videos": 131,
-          "total_views": 60840
+          "total_videos": 133,
+          "total_views": 60975
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@beautygirl_045?si=pdK1scPPwZZYHn-K",
-          "total_videos": 132,
-          "total_views": 37844
+          "total_videos": 134,
+          "total_views": 38342
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@_beautygirl_046?_r=1&_t=ZM-935z7RzYcOm",
-          "total_videos": 140,
-          "total_views": 237206
+          "total_videos": 142,
+          "total_views": 246742
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@dariabeauty5?_r=1&_t=ZG-92uqhx41o37",
           "total_videos": 45,
-          "total_views": 22643
+          "total_views": 22647
         },
         {
           "social_network": "TIKTOK",
@@ -1587,13 +1609,13 @@
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@beautyaria_luvu?si=tpgub4_Eo3T8kDUw",
           "total_videos": 41,
-          "total_views": 38869
+          "total_views": 38870
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@arialuvu2?_r=1&_t=ZG-93HYvXSlpaq",
           "total_videos": 25,
-          "total_views": 7025
+          "total_views": 7027
         },
         {
           "social_network": "YOUTUBE",
@@ -1604,44 +1626,44 @@
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@krisxluvu?si=h2WC5kYtl40vMXdK",
-          "total_videos": 94,
-          "total_views": 13669
+          "total_videos": 97,
+          "total_views": 13974
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/alicecreateee?igsh=MWJrYTJ0bnNzenUzMg==",
           "total_videos": 10,
-          "total_views": 89123
+          "total_views": 89134
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@alice.makeup96?_r=1&_t=ZN-943XaC8wRWc",
           "total_videos": 9,
-          "total_views": 2591
+          "total_views": 2600
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@alice.makeup.create?si=6fmOStuXcJyEE9pS",
           "total_videos": 9,
-          "total_views": 12138
+          "total_views": 12171
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/beautyviksi?igsh=NXFmc2l2MWx5cG45&utm_source=qr",
           "total_videos": 108,
-          "total_views": 1449
+          "total_views": 1450
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@vikaloveyou01?_r=1&_t=ZP-93rfYaBCqIZ",
           "total_videos": 102,
-          "total_views": 38062
+          "total_views": 39058
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@vikabeautycontent?si=vrkNmVmaXWXjlS9e",
           "total_videos": 102,
-          "total_views": 110012
+          "total_views": 110411
         },
         {
           "social_network": "INSTAGRAM",
@@ -1652,14 +1674,14 @@
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@vika.luvu?_r=1&_t=ZS-93o0eUHNsdl",
-          "total_videos": 10,
-          "total_views": 7699
+          "total_videos": 51,
+          "total_views": 24255
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@vikaluvu?si=Iucsq_1x_iTzOHU3",
           "total_videos": 54,
-          "total_views": 58217
+          "total_views": 58222
         },
         {
           "social_network": "INSTAGRAM",
@@ -1671,31 +1693,37 @@
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@viictorialuvu?si=9vA0HdoNMp6JD4Id",
           "total_videos": 50,
-          "total_views": 16579
+          "total_views": 16580
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/linaluvbeautyy?igsh=MWtic3BuYWhweTN3cg==",
           "total_videos": 36,
-          "total_views": 43584
+          "total_views": 43665
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/beautyli_luvu?igsh=MTZucmRjcTR1eTBhaA%3D%3D&utm_source=qr",
-          "total_videos": 52,
-          "total_views": 19258
+          "total_videos": 54,
+          "total_views": 19470
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/liana_beauty45?igsh=bzdzeHdueWtrN2Fl&utm_source=qr",
-          "total_videos": 52,
-          "total_views": 33393
+          "total_videos": 54,
+          "total_views": 33799
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/ale.aly_luvu?igsh=Y3prNGNnNHg1aWZt&utm_source=qr",
           "total_videos": 100,
-          "total_views": 14431
+          "total_views": 14432
+        },
+        {
+          "social_network": "TIKTOK",
+          "channel_url": "https://www.tiktok.com/@ale.alya_luvu?_r=1&_t=ZG-93ixigxJbPc",
+          "total_videos": 59,
+          "total_views": 22099
         },
         {
           "social_network": "YOUTUBE",
@@ -1707,31 +1735,31 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/ale.alya_ugc.luvu?igsh=MW9leDd4MDMwdnFt&utm_source=qr",
           "total_videos": 100,
-          "total_views": 31167
+          "total_views": 31178
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@ale.alya_ugc.luvu?_r=1&_t=ZG-93ixkSIaqBc",
           "total_videos": 59,
-          "total_views": 24173
+          "total_views": 24198
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://www.youtube.com/@ale.alya_ugc",
-          "total_videos": 55,
-          "total_views": 27017
+          "total_videos": 51,
+          "total_views": 27053
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/viktorilove22?igsh=ZjFjMmt4bTR1cDZn&utm_source=qr",
           "total_videos": 115,
-          "total_views": 4240
+          "total_views": 4252
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@lovelovevika",
           "total_videos": 65,
-          "total_views": 143743
+          "total_views": 144796
         },
         {
           "social_network": "YOUTUBE",
@@ -3212,9 +3240,25 @@
             "TIKTOK": 0,
             "YOUTUBE": 2453
           }
+        },
+        {
+          "date": "2026-03-04",
+          "total_views": 10512202,
+          "by_platform": {
+            "INSTAGRAM": 5204108,
+            "TIKTOK": 3521974,
+            "YOUTUBE": 1786120
+          },
+          "channels": 72,
+          "delta": 321963,
+          "delta_by_platform": {
+            "INSTAGRAM": 18926,
+            "TIKTOK": 298991,
+            "YOUTUBE": 4046
+          }
         }
       ],
-      "updated_at": "2026-03-03T21:01:37.230656"
+      "updated_at": "2026-03-04T21:01:36.422432"
     },
     "Ocomplex": {
       "name": "Ocomplex",
@@ -3232,67 +3276,67 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/nastia_pro_zozh?igsh=ZmU4OWdibDR2NW1z&utm_source=qr",
           "total_videos": 73,
-          "total_views": 10405
+          "total_views": 10412
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@timkuffuzph?_r=1&_t=ZS-93GaGLacjWk",
           "total_videos": 71,
-          "total_views": 43952
+          "total_views": 43979
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/nastyazdorov_e?igsh=MTB1ajlrN2pyMWZ1eQ%3D%3D&utm_source=qr",
           "total_videos": 72,
-          "total_views": 3327
+          "total_views": 3330
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@nastyzncogs?_r=1&_t=ZS-93GXBDqfCok",
-          "total_videos": 69,
-          "total_views": 36206
+          "total_videos": 71,
+          "total_views": 36838
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/vikaprooteki",
-          "total_videos": 75,
-          "total_views": 11243
+          "total_videos": 78,
+          "total_views": 11306
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@vikaxydeyu",
-          "total_videos": 67,
-          "total_views": 40120
+          "total_videos": 75,
+          "total_views": 41003
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@vikaprooteki",
-          "total_videos": 56,
-          "total_views": 29172
+          "total_videos": 59,
+          "total_views": 29999
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/vikaxydeyu",
-          "total_videos": 75,
-          "total_views": 10203
+          "total_videos": 78,
+          "total_views": 10218
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@vikaprooteki",
-          "total_videos": 74,
-          "total_views": 30265
+          "total_videos": 76,
+          "total_views": 31008
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@vikaxydeyu",
-          "total_videos": 71,
-          "total_views": 23917
+          "total_videos": 74,
+          "total_views": 23922
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/o.zdorov.di?igsh=MTBsN3Zqa2RkMnZraQ==",
-          "total_videos": 24,
-          "total_views": 5174
+          "total_videos": 25,
+          "total_views": 5190
         },
         {
           "social_network": "TIKTOK",
@@ -3309,14 +3353,14 @@
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/mari_zdorovie?igsh=cWMyZmw0emQ2ejNy&utm_source=qr",
-          "total_videos": 62,
-          "total_views": 142557
+          "total_videos": 66,
+          "total_views": 157604
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@mari_zdorovie?si=CnEXhS3-L8WamrYY",
-          "total_videos": 60,
-          "total_views": 41538
+          "total_videos": 64,
+          "total_views": 42266
         },
         {
           "social_network": "TIKTOK",
@@ -3327,32 +3371,32 @@
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@dasha_zdorovie?si=CsW5xFxPvdpVh65f",
-          "total_videos": 59,
-          "total_views": 24132
+          "total_videos": 62,
+          "total_views": 25136
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@daria_zdorovie?si=KF1ukeidrpOFoODC",
-          "total_videos": 43,
-          "total_views": 5707
+          "total_videos": 44,
+          "total_views": 5755
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/yulya.wellness?igsh=NmF1enpoMWczMG03&utm_source=qr",
-          "total_videos": 66,
-          "total_views": 71128
+          "total_videos": 68,
+          "total_views": 73644
         },
         {
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@annfran826?_r=1&_t=ZT-93TEYGvwNJ1",
-          "total_videos": 64,
-          "total_views": 18730
+          "total_videos": 66,
+          "total_views": 18849
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/yulya.selfcare?igsh=cHdzdHBpMXpxOGI4&utm_source=qr",
-          "total_videos": 101,
-          "total_views": 69592
+          "total_videos": 65,
+          "total_views": 35490
         },
         {
           "social_network": "INSTAGRAM",
@@ -3364,13 +3408,13 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@eva_wellness15?_r=1&_t=ZN-93U4qmN15VO",
           "total_videos": 40,
-          "total_views": 19582
+          "total_views": 19598
         },
         {
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@evawellness15?si=1e-Ctj6-mwu305Hr",
           "total_videos": 26,
-          "total_views": 16468
+          "total_views": 16477
         },
         {
           "social_network": "INSTAGRAM",
@@ -3382,7 +3426,7 @@
           "social_network": "TIKTOK",
           "channel_url": "https://www.tiktok.com/@o.poleznom6?_r=1&_t=ZN-93UyJGd4ES6",
           "total_videos": 13,
-          "total_views": 5433
+          "total_views": 5435
         },
         {
           "social_network": "YOUTUBE",
@@ -3424,7 +3468,7 @@
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/zeolite_o_complex?igsh=MXNya2xkN2l0NDFzNw%3D%3D&utm_source=qr",
           "total_videos": 14,
-          "total_views": 4080
+          "total_views": 4086
         },
         {
           "social_network": "TIKTOK",
@@ -3436,13 +3480,13 @@
           "social_network": "YOUTUBE",
           "channel_url": "https://youtube.com/@valensiya.zeolite?si=pIFKJPoTr30-pL7r",
           "total_videos": 13,
-          "total_views": 10141
+          "total_views": 10273
         },
         {
           "social_network": "INSTAGRAM",
           "channel_url": "https://www.instagram.com/valya_zeolite?igsh=M3FjdWhwZzdtZGVx&utm_source=qr",
           "total_videos": 14,
-          "total_views": 1786
+          "total_views": 1824
         },
         {
           "social_network": "TIKTOK",
@@ -3979,10 +4023,26 @@
             "TIKTOK": 22092,
             "YOUTUBE": 4271
           }
+        },
+        {
+          "date": "2026-03-04",
+          "total_views": 689557,
+          "by_platform": {
+            "INSTAGRAM": 321849,
+            "TIKTOK": 204066,
+            "YOUTUBE": 163642
+          },
+          "channels": 38,
+          "delta": 0,
+          "delta_by_platform": {
+            "INSTAGRAM": 0,
+            "TIKTOK": 2422,
+            "YOUTUBE": 2753
+          }
         }
       ],
-      "updated_at": "2026-03-03T21:02:20.372860"
+      "updated_at": "2026-03-04T21:02:19.680786"
     }
   },
-  "generated_at": "2026-03-03T20:57:49.245655"
+  "generated_at": "2026-03-04T20:57:46.357658"
 }
