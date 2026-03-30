@@ -34,6 +34,24 @@ PROJECTS = [
         "color": "#f59e0b",   # оранжевый
         "budget": 500000,     # бюджет кампании в рублях
     },
+    {
+        "name": "ART&FACT",
+        "spreadsheet_id": "1ey4KUMacGLeC_d_UEtL3MT_6u2vy6KO_z_8EldB3F8s",
+        "color": "#ef4444",   # красный
+        "budget": 480000,     # бюджет кампании в рублях
+    },
+    {
+        "name": "GRASS",
+        "spreadsheet_id": "1vfEtYWb6gIhiUZeL1tsr6RdfwTGufW26veUAWEVuZzY",
+        "color": "#22c55e",   # зелёный
+        "budget": 550000,     # бюджет кампании в рублях
+    },
+    {
+        "name": "LIC",
+        "spreadsheet_id": "1iFt_LQzuv8u0XdUC8gV7dU_U72w-iMUXeM1jxsAlPns",
+        "color": "#3b82f6",   # синий
+        "budget": 1000000,    # бюджет кампании в рублях
+    },
 ]
 # ────────────────────────────────────────────────────────────────────────────────
 
