@@ -3,15 +3,73 @@
 Строит JSON с финансовой аналитикой агентства из данных Adesk.
 Результат: finance_dashboard_data.json → используется в finance.html
 """
-import json, os, datetime
+import json, os, datetime, urllib.request, urllib.parse
 from collections import defaultdict
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ADESK_TOKEN = os.environ.get('ADESK_TOKEN', 'cd1d78b8839a49db9557f2e9d3f9fd62c142678a05ad482883278f4811d2daa0')
+ADESK_BASE = 'https://api.adesk.ru/v1'
+
+
+def adesk_get(endpoint, params=None):
+    p = {'api_token': ADESK_TOKEN}
+    if params:
+        p.update(params)
+    url = f'{ADESK_BASE}/{endpoint}?{urllib.parse.urlencode(p)}'
+    with urllib.request.urlopen(url, timeout=30) as r:
+        return json.loads(r.read().decode())
+
+
+def fetch_and_flatten():
+    """Получает все транзакции из Adesk и разворачивает сплиты в плоский список."""
+    print('Загружаю транзакции из Adesk API...')
+    data = adesk_get('transactions')
+    txns = data.get('transactions', [])
+    print(f'  Получено: {len(txns)} транзакций')
+
+    flat = []
+    for t in txns:
+        base = {
+            'id': t['id'],
+            'date': t['dateIso'],
+            'type': 'income' if t['type'] == 1 else 'expense',
+            'amount': float(t['amount']),
+            'description': t.get('description', ''),
+            'contractor': t.get('contractor', {}).get('name', '') if t.get('contractor') else '',
+            'is_split': t.get('isSplitted', False),
+            'is_transfer': t.get('isTransfer', False),
+        }
+
+        if t.get('isSplitted') and t.get('parts'):
+            for i, p in enumerate(t['parts']):
+                row = dict(base)
+                row['part_index'] = i
+                row['part_amount'] = float(p['amount'])
+                row['category'] = p.get('category', {}).get('name', '') if p.get('category') else ''
+                row['category_id'] = p.get('category', {}).get('id', None) if p.get('category') else None
+                row['project'] = p.get('project', {}).get('name', '') if p.get('project') else ''
+                row['project_id'] = p.get('project', {}).get('id', None) if p.get('project') else None
+                flat.append(row)
+        else:
+            row = dict(base)
+            row['part_index'] = None
+            row['part_amount'] = float(t['amount'])
+            row['category'] = t.get('category', {}).get('name', '') if t.get('category') else ''
+            row['category_id'] = t.get('category', {}).get('id', None) if t.get('category') else None
+            row['project'] = t.get('project', {}).get('name', '') if t.get('project') else ''
+            row['project_id'] = t.get('project', {}).get('id', None) if t.get('project') else None
+            flat.append(row)
+
+    # Сохраняем для дебага
+    with open(os.path.join(BASE_DIR, 'adesk_flat.json'), 'w', encoding='utf-8') as f:
+        json.dump(flat, f, ensure_ascii=False, indent=2)
+    print(f'  Развёрнуто: {len(flat)} строк')
+    return flat
 
 # ── Конфигурация проектов ──────────────────────────────────────────
 # status: active / completed / ignore / withdrawal
 PROJECTS_CONFIG = {
-    'Twinby':      {'id': 740235, 'status': 'active'},
+    'Twinby':      {'id': 740235, 'status': 'completed'},
     'Luvu':        {'id': 740234, 'status': 'active'},
     'О-Комплекс':  {'id': 740240, 'status': 'active'},
     'Trebute':     {'id': 740236, 'status': 'ignore'},
@@ -42,8 +100,7 @@ SHARED_CATEGORIES = {
 
 
 def load_flat():
-    with open(os.path.join(BASE_DIR, 'adesk_flat.json'), 'r', encoding='utf-8') as f:
-        return json.load(f)
+    return fetch_and_flatten()
 
 
 def month_key(date_str):
@@ -334,5 +391,29 @@ def build():
     print(f'  Вывод (Приложение): {withdrawal_total:,.0f} ₽')
 
 
+def inline_into_html():
+    """Встраивает JSON-данные прямо в finance.html (для работы без сервера)."""
+    import re
+    html_path = os.path.join(BASE_DIR, 'finance.html')
+    json_path = os.path.join(BASE_DIR, 'finance_dashboard_data.json')
+
+    with open(json_path, 'r', encoding='utf-8') as f:
+        json_str = f.read().strip()
+
+    with open(html_path, 'r', encoding='utf-8') as f:
+        html = f.read()
+
+    # Заменяем инлайн-данные между маркерами
+    pattern = r'const data = \{.*?\};\n\{'
+    replacement_start = f'const data = {json_str};\n{{'
+    html = re.sub(pattern, replacement_start, html, count=1, flags=re.DOTALL)
+
+    with open(html_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    print(f'✓ Данные встроены в {html_path}')
+
+
 if __name__ == '__main__':
     build()
+    inline_into_html()

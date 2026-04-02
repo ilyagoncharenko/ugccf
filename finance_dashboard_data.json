@@ -11,16 +11,16 @@
   "projects": {
     "Twinby": {
       "id": 740235,
-      "status": "active",
+      "status": "completed",
       "start": "2026-01-14",
-      "end": "2026-04-02",
+      "end": "2026-03-20",
       "total_income": 500000.0,
       "total_direct_expense": 218400.0,
-      "total_shared_expense": 467632.58,
-      "total_expense": 686032.58,
+      "total_shared_expense": 430044.25,
+      "total_expense": 648444.25,
       "forecast_expense": 0,
-      "profit": -186032.58,
-      "profit_with_forecast": -186032.58,
+      "profit": -148444.25,
+      "profit_with_forecast": -148444.25,
       "monthly": {
         "2026-01": {
           "income": 250000.0,
@@ -42,13 +42,6 @@
           "shared_expense": 233617.94,
           "total_expense": 374217.94,
           "profit": -124217.94
-        },
-        "2026-04": {
-          "income": 0,
-          "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
         }
       }
     },
@@ -59,11 +52,11 @@
       "end": "2026-04-02",
       "total_income": 1500000.0,
       "total_direct_expense": 562739.0,
-      "total_shared_expense": 723982.1,
-      "total_expense": 1286721.1,
+      "total_shared_expense": 731499.77,
+      "total_expense": 1294238.77,
       "forecast_expense": 0,
-      "profit": 213278.9,
-      "profit_with_forecast": 213278.9,
+      "profit": 205761.23,
+      "profit_with_forecast": 205761.23,
       "monthly": {
         "2025-11": {
           "income": 500000.0,
@@ -103,9 +96,9 @@
         "2026-04": {
           "income": 0,
           "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
+          "shared_expense": 45106.0,
+          "total_expense": 45106.0,
+          "profit": -45106.0
         }
       }
     },
@@ -116,11 +109,11 @@
       "end": "2026-04-02",
       "total_income": 930000.0,
       "total_direct_expense": 201400.0,
-      "total_shared_expense": 563314.76,
-      "total_expense": 764714.76,
+      "total_shared_expense": 570832.43,
+      "total_expense": 772232.43,
       "forecast_expense": 0,
-      "profit": 165285.24,
-      "profit_with_forecast": 165285.24,
+      "profit": 157767.57,
+      "profit_with_forecast": 157767.57,
       "monthly": {
         "2025-12": {
           "income": 460000.0,
@@ -153,9 +146,9 @@
         "2026-04": {
           "income": 0,
           "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
+          "shared_expense": 45106.0,
+          "total_expense": 45106.0,
+          "profit": -45106.0
         }
       }
     },
@@ -345,11 +338,11 @@
       "end": "2026-04-02",
       "total_income": 480000.0,
       "total_direct_expense": 28800.0,
-      "total_shared_expense": 271206.27,
-      "total_expense": 300006.27,
+      "total_shared_expense": 278723.94,
+      "total_expense": 307523.94,
       "forecast_expense": 211200.0,
-      "profit": 179993.73,
-      "profit_with_forecast": -31206.27,
+      "profit": 172476.06,
+      "profit_with_forecast": -38723.94,
       "monthly": {
         "2026-03": {
           "income": 480000.0,
@@ -361,9 +354,9 @@
         "2026-04": {
           "income": 0,
           "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
+          "shared_expense": 45106.0,
+          "total_expense": 45106.0,
+          "profit": -45106.0
         }
       }
     },
@@ -374,11 +367,11 @@
       "end": "2026-04-02",
       "total_income": 550000.0,
       "total_direct_expense": 33000.0,
-      "total_shared_expense": 271206.27,
-      "total_expense": 304206.27,
+      "total_shared_expense": 278723.94,
+      "total_expense": 311723.94,
       "forecast_expense": 242000.0,
-      "profit": 245793.73,
-      "profit_with_forecast": 3793.73,
+      "profit": 238276.06,
+      "profit_with_forecast": -3723.94,
       "monthly": {
         "2026-03": {
           "income": 550000.0,
@@ -390,9 +383,9 @@
         "2026-04": {
           "income": 0,
           "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
+          "shared_expense": 45106.0,
+          "total_expense": 45106.0,
+          "profit": -45106.0
         }
       }
     },
@@ -403,11 +396,11 @@
       "end": "2026-04-02",
       "total_income": 1000000.0,
       "total_direct_expense": 60000.0,
-      "total_shared_expense": 271206.27,
-      "total_expense": 331206.27,
+      "total_shared_expense": 278723.94,
+      "total_expense": 338723.94,
       "forecast_expense": 440000.0,
-      "profit": 668793.73,
-      "profit_with_forecast": 228793.73,
+      "profit": 661276.06,
+      "profit_with_forecast": 221276.06,
       "monthly": {
         "2026-03": {
           "income": 1000000.0,
@@ -419,9 +412,9 @@
         "2026-04": {
           "income": 0,
           "direct_expense": 0,
-          "shared_expense": 37588.33,
-          "total_expense": 37588.33,
-          "profit": -37588.33
+          "shared_expense": 45106.0,
+          "total_expense": 45106.0,
+          "profit": -45106.0
         }
       }
     },
