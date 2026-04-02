@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Names Content Factory — Финансы</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e4e4e7;
+    --muted: #8b8d98;
+    --green: #22c55e;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --orange: #f59e0b;
+    --purple: #a855f7;
+    --cyan: #06b6d4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+
+  /* ── KPI Cards ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .kpi-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.blue { color: var(--blue); }
+  .kpi-value.orange { color: var(--orange); }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ── Charts ── */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-card h3 { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+  .chart-card canvas { width: 100% !important; }
+
+  /* ── Table ── */
+  .table-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 12px 16px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  th {
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  td { border-top: 1px solid var(--border); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-active { background: rgba(34,197,94,0.15); color: var(--green); }
+  .tag-completed { background: rgba(139,141,152,0.15); color: var(--muted); }
+  .tag-withdrawal { background: rgba(245,158,11,0.15); color: var(--orange); }
+
+  /* ── Shared costs breakdown ── */
+  .shared-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+  }
+  .shared-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .shared-item .name { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .shared-item .value { font-size: 20px; font-weight: 600; }
+  .bar-bg {
+    height: 4px; background: var(--border); border-radius: 2px; margin-top: 8px;
+  }
+  .bar-fill {
+    height: 4px; border-radius: 2px; background: var(--blue);
+  }
+
+  /* ── Forecast banner ── */
+  .forecast-banner {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(239,68,68,0.1));
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .forecast-banner h3 { font-size: 15px; color: var(--orange); margin-bottom: 8px; }
+  .forecast-banner p { font-size: 13px; color: var(--muted); }
+  .forecast-list { margin-top: 12px; }
+  .forecast-list .fl-row {
+    display: flex; justify-content: space-between; padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 16px; }
+    .chart-row { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Names Content Factory</h1>
+<p class="subtitle">Финансовая аналитика агентства &middot; обновлено <span id="updated"></span></p>
+
+<!-- KPI -->
+<div class="kpi-grid" id="kpi"></div>
+
+<!-- Forecast -->
+<div class="forecast-banner" id="forecast-banner" style="display:none">
+  <h3>Прогноз предстоящих расходов на реализацию</h3>
+  <p>Проекты с низким % прямых расходов — ожидаемые затраты ~50% от бюджета</p>
+  <div class="forecast-list" id="forecast-list"></div>
+</div>
+
+<!-- Charts -->
+<div class="chart-row">
+  <div class="chart-card">
+    <h3>Доходы и расходы по месяцам</h3>
+    <canvas id="chartMonthly" height="260"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Прибыль по месяцам</h3>
+    <canvas id="chartProfit" height="260"></canvas>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-card">
+    <h3>Доход по проектам</h3>
+    <canvas id="chartProjectIncome" height="260"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Прибыль по проектам (с учетом общих расходов)</h3>
+    <canvas id="chartProjectProfit" height="260"></canvas>
+  </div>
+</div>
+
+<!-- Projects table -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:var(--blue)"></span> Проекты</div>
+  <div class="table-wrapper">
+    <table id="projects-table">
+      <thead>
+        <tr>
+          <th>Проект</th>
+          <th>Статус</th>
+          <th>Период</th>
+          <th>Доход</th>
+          <th>Прямые расходы</th>
+          <th>Доля общих</th>
+          <th>Итого расход</th>
+          <th>Прибыль (без общих)</th>
+          <th>Прибыль</th>
+          <th>Прогноз расх.</th>
+          <th>Прибыль (прогноз)</th>
+        </tr>
+      </thead>
+      <tbody id="projects-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Monthly detail per project -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:var(--purple)"></span> Помесячная детализация по проектам</div>
+  <div class="table-wrapper">
+    <table id="monthly-table">
+      <thead id="monthly-head"></thead>
+      <tbody id="monthly-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Shared costs -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:var(--orange)"></span> Общие расходы агентства</div>
+  <div class="shared-grid" id="shared-grid"></div>
+</div>
+
+<!-- Agency monthly -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:var(--cyan)"></span> Итоги агентства по месяцам</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Месяц</th>
+          <th>Доход</th>
+          <th>Прямые расходы</th>
+          <th>Общие расходы</th>
+          <th>Итого расход</th>
+          <th>Прибыль</th>
+        </tr>
+      </thead>
+      <tbody id="agency-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const fmt = (n) => {
+  if (n === 0) return '0';
+  const abs = Math.abs(n);
+  const s = abs >= 1000000
+    ? (abs / 1000000).toFixed(1) + 'M'
+    : abs >= 1000
+    ? Math.round(abs).toLocaleString('ru-RU')
+    : abs.toFixed(0);
+  return (n < 0 ? '-' : '') + s + ' \u20BD';
+};
+
+const fmtFull = (n) => Math.round(n).toLocaleString('ru-RU') + ' \u20BD';
+const cls = (n) => n >= 0 ? 'positive' : 'negative';
+
+const monthName = (m) => {
+  const [y, mo] = m.split('-');
+  const names = ['','Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+  return names[parseInt(mo)] + ' ' + y.slice(2);
+};
+
+const statusTag = (s) => {
+  const map = {active:'Активный', completed:'Завершён', withdrawal:'Вывод'};
+  return `<span class="tag tag-${s}">${map[s] || s}</span>`;
+};
+
+const data = {"updated_at": "2026-04-02", "months": ["2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04"], "projects": {"Twinby": {"id": 740235, "status": "active", "start": "2026-01-14", "end": "2026-04-02", "total_income": 500000.0, "total_direct_expense": 218400.0, "total_shared_expense": 467632.58, "total_expense": 686032.58, "forecast_expense": 0, "profit": -186032.58, "profit_with_forecast": -186032.58, "monthly": {"2026-01": {"income": 250000.0, "direct_expense": 45000.0, "shared_expense": 79733.69, "total_expense": 124733.69, "profit": 125266.31}, "2026-02": {"income": 0, "direct_expense": 32800.0, "shared_expense": 116692.62, "total_expense": 149492.62, "profit": -149492.62}, "2026-03": {"income": 250000.0, "direct_expense": 140600.0, "shared_expense": 233617.94, "total_expense": 374217.94, "profit": -124217.94}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "Luvu": {"id": 740234, "status": "active", "start": "2025-11-27", "end": "2026-04-02", "total_income": 1500000.0, "total_direct_expense": 562739.0, "total_shared_expense": 723982.1, "total_expense": 1286721.1, "forecast_expense": 0, "profit": 213278.9, "profit_with_forecast": 213278.9, "monthly": {"2025-11": {"income": 500000.0, "direct_expense": 0, "shared_expense": 160667.34, "total_expense": 160667.34, "profit": 339332.66}, "2025-12": {"income": 0, "direct_expense": 0, "shared_expense": 95682.18, "total_expense": 95682.18, "profit": -95682.18}, "2026-01": {"income": 0, "direct_expense": 170800.0, "shared_expense": 79733.69, "total_expense": 250533.69, "profit": -250533.69}, "2026-02": {"income": 500000.0, "direct_expense": 207000.0, "shared_expense": 116692.62, "total_expense": 323692.62, "profit": 176307.38}, "2026-03": {"income": 500000.0, "direct_expense": 184939.0, "shared_expense": 233617.94, "total_expense": 418556.94, "profit": 81443.06}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "О-Комплекс": {"id": 740240, "status": "active", "start": "2025-12-29", "end": "2026-04-02", "total_income": 930000.0, "total_direct_expense": 201400.0, "total_shared_expense": 563314.76, "total_expense": 764714.76, "forecast_expense": 0, "profit": 165285.24, "profit_with_forecast": 165285.24, "monthly": {"2025-12": {"income": 460000.0, "direct_expense": 0, "shared_expense": 95682.18, "total_expense": 95682.18, "profit": 364317.82}, "2026-01": {"income": 0, "direct_expense": 0, "shared_expense": 79733.69, "total_expense": 79733.69, "profit": -79733.69}, "2026-02": {"income": 0, "direct_expense": 38000.0, "shared_expense": 116692.62, "total_expense": 154692.62, "profit": -154692.62}, "2026-03": {"income": 470000.0, "direct_expense": 163400.0, "shared_expense": 233617.94, "total_expense": 397017.94, "profit": 72982.06}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "Quick-Пицца": {"id": 740239, "status": "completed", "start": "2025-12-05", "end": "2026-02-03", "total_income": 0, "total_direct_expense": 158400.0, "total_shared_expense": 292108.49, "total_expense": 450508.49, "forecast_expense": 0, "profit": -450508.49, "profit_with_forecast": -450508.49, "monthly": {"2025-12": {"income": 0, "direct_expense": 122900.0, "shared_expense": 95682.18, "total_expense": 218582.18, "profit": -218582.18}, "2026-01": {"income": 0, "direct_expense": 34500.0, "shared_expense": 79733.69, "total_expense": 114233.69, "profit": -114233.69}, "2026-02": {"income": 0, "direct_expense": 1000.0, "shared_expense": 116692.62, "total_expense": 117692.62, "profit": -117692.62}}}, "Банктоты": {"id": 740238, "status": "completed", "start": "2025-11-17", "end": "2026-03-04", "total_income": 445000.0, "total_direct_expense": 209400.0, "total_shared_expense": 686393.77, "total_expense": 895793.77, "forecast_expense": 0, "profit": -450793.77, "profit_with_forecast": -450793.77, "monthly": {"2025-11": {"income": 445000.0, "direct_expense": 0, "shared_expense": 160667.34, "total_expense": 160667.34, "profit": 284332.66}, "2025-12": {"income": 0, "direct_expense": 140700.0, "shared_expense": 95682.18, "total_expense": 236382.18, "profit": -236382.18}, "2026-01": {"income": 0, "direct_expense": 53000.0, "shared_expense": 79733.69, "total_expense": 132733.69, "profit": -132733.69}, "2026-02": {"income": 0, "direct_expense": 9200.0, "shared_expense": 116692.62, "total_expense": 125892.62, "profit": -125892.62}, "2026-03": {"income": 0, "direct_expense": 6500.0, "shared_expense": 233617.94, "total_expense": 240117.94, "profit": -240117.94}}}, "Biorepair": {"id": 740233, "status": "completed", "start": "2025-11-20", "end": "2026-03-04", "total_income": 1710000.0, "total_direct_expense": 667683.33, "total_shared_expense": 686393.77, "total_expense": 1354077.1, "forecast_expense": 0, "profit": 355922.9, "profit_with_forecast": 355922.9, "monthly": {"2025-11": {"income": 0, "direct_expense": 297583.33, "shared_expense": 160667.34, "total_expense": 458250.67, "profit": -458250.67}, "2025-12": {"income": 960000.0, "direct_expense": 151200.0, "shared_expense": 95682.18, "total_expense": 246882.18, "profit": 713117.82}, "2026-01": {"income": 0, "direct_expense": 94000.0, "shared_expense": 79733.69, "total_expense": 173733.69, "profit": -173733.69}, "2026-02": {"income": 500000.0, "direct_expense": 94200.0, "shared_expense": 116692.62, "total_expense": 210892.62, "profit": 289107.38}, "2026-03": {"income": 250000.0, "direct_expense": 30700.0, "shared_expense": 233617.94, "total_expense": 264317.94, "profit": -14317.94}}}, "YouDo": {"id": 740241, "status": "completed", "start": "2025-12-05", "end": "2026-03-04", "total_income": 460000.0, "total_direct_expense": 275500.0, "total_shared_expense": 525726.43, "total_expense": 801226.43, "forecast_expense": 0, "profit": -341226.43, "profit_with_forecast": -341226.43, "monthly": {"2025-12": {"income": 460000.0, "direct_expense": 0, "shared_expense": 95682.18, "total_expense": 95682.18, "profit": 364317.82}, "2026-01": {"income": 0, "direct_expense": 71500.0, "shared_expense": 79733.69, "total_expense": 151233.69, "profit": -151233.69}, "2026-02": {"income": 0, "direct_expense": 4000.0, "shared_expense": 116692.62, "total_expense": 120692.62, "profit": -120692.62}, "2026-03": {"income": 0, "direct_expense": 200000.0, "shared_expense": 233617.94, "total_expense": 433617.94, "profit": -433617.94}}}, "ART FACT": {"id": 775597, "status": "active", "start": "2026-03-03", "end": "2026-04-02", "total_income": 480000.0, "total_direct_expense": 28800.0, "total_shared_expense": 271206.27, "total_expense": 300006.27, "forecast_expense": 211200.0, "profit": 179993.73, "profit_with_forecast": -31206.27, "monthly": {"2026-03": {"income": 480000.0, "direct_expense": 28800.0, "shared_expense": 233617.94, "total_expense": 262417.94, "profit": 217582.06}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "Grass": {"id": 778807, "status": "active", "start": "2026-03-16", "end": "2026-04-02", "total_income": 550000.0, "total_direct_expense": 33000.0, "total_shared_expense": 271206.27, "total_expense": 304206.27, "forecast_expense": 242000.0, "profit": 245793.73, "profit_with_forecast": 3793.73, "monthly": {"2026-03": {"income": 550000.0, "direct_expense": 33000.0, "shared_expense": 233617.94, "total_expense": 266617.94, "profit": 283382.06}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "Lic": {"id": 778808, "status": "active", "start": "2026-03-13", "end": "2026-04-02", "total_income": 1000000.0, "total_direct_expense": 60000.0, "total_shared_expense": 271206.27, "total_expense": 331206.27, "forecast_expense": 440000.0, "profit": 668793.73, "profit_with_forecast": 228793.73, "monthly": {"2026-03": {"income": 1000000.0, "direct_expense": 60000.0, "shared_expense": 233617.94, "total_expense": 293617.94, "profit": 706382.06}, "2026-04": {"income": 0, "direct_expense": 0, "shared_expense": 37588.33, "total_expense": 37588.33, "profit": -37588.33}}}, "Приложение": {"id": 829554, "status": "withdrawal", "start": "2026-03-25", "end": "2026-03-26", "total_income": 0, "total_direct_expense": 0, "total_shared_expense": 0, "total_expense": 0, "forecast_expense": 0, "profit": 0, "profit_with_forecast": 0, "monthly": {"2026-03": {"income": 0, "direct_expense": 0, "shared_expense": 0, "total_expense": 0, "profit": 0}}}}, "agency_monthly": {"2025-11": {"income": 945000.0, "direct_expense": 297583.33, "shared_expense": 482002.02, "total_expense": 779585.35, "profit": 165414.65}, "2025-12": {"income": 1880000.0, "direct_expense": 414800.0, "shared_expense": 574093.07, "total_expense": 988893.07, "profit": 891106.93}, "2026-01": {"income": 310000.0, "direct_expense": 468800.0, "shared_expense": 558135.81, "total_expense": 1026935.81, "profit": -716935.81}, "2026-02": {"income": 1230000.0, "direct_expense": 386200.0, "shared_expense": 816848.32, "total_expense": 1203048.32, "profit": 26951.68}, "2026-03": {"income": 3648000.0, "direct_expense": 847939.0, "shared_expense": 2102561.48, "total_expense": 2950500.48, "profit": 697499.52}, "2026-04": {"income": 175000.0, "direct_expense": 0, "shared_expense": 225530.0, "total_expense": 225530.0, "profit": -50530.0}}, "shared_by_category": {"Аренда офиса": {"total": 749929.7, "monthly": {"2025-11": 132788.02, "2025-12": 49003.07, "2026-01": 205325.81, "2026-02": 167473.32, "2026-03": 189339.48, "2026-04": 6000.0}}, "Зарплата": {"total": 40000.0, "monthly": {"2026-04": 40000.0}}, "банковские услуги": {"total": 5900.0, "monthly": {"2026-03": 5900.0}}, "Монтажеры": {"total": 47000.0, "monthly": {"2026-01": 3000.0, "2026-02": 15500.0, "2026-03": 28500.0}}, "Комиссия банка": {"total": 16500.0, "monthly": {"2025-11": 3300.0, "2025-12": 6600.0, "2026-03": 6600.0}}, "Сервисы": {"total": 50238.0, "monthly": {"2026-01": 30610.0, "2026-02": 4000.0, "2026-03": 15628.0}}, "дизайн": {"total": 44200.0, "monthly": {"2026-02": 20000.0, "2026-03": 24200.0}}, "PR-менеджеры": {"total": 125000.0, "monthly": {"2026-02": 79200.0, "2026-03": 45800.0}}, "ЗП Основа": {"total": 1651400.0, "monthly": {"2025-11": 270000.0, "2025-12": 336600.0, "2026-01": 110000.0, "2026-02": 487300.0, "2026-03": 447500.0}}, "UGC-креаторы": {"total": 40993.0, "monthly": {"2026-01": 27200.0, "2026-02": 13793.0}}, "Лицензии и программное обеспечение": {"total": 17000.0, "monthly": {"2026-01": 17000.0}}, "Подрядчики": {"total": 52500.0, "monthly": {"2025-12": 52500.0}}, "Сценаристы": {"total": 17800.0, "monthly": {"2025-12": 17800.0}}, "Неразнесённые": {"total": 1900710.0, "monthly": {"2025-11": 75914.0, "2025-12": 111590.0, "2026-01": 165000.0, "2026-02": 29582.0, "2026-03": 1339094.0, "2026-04": 179530.0}}}, "non_operational_total": 164415.0, "withdrawal_total": 57600.0, "total_forecast": 893200.0, "agency_totals": {"income": 8188000.0, "expense": 7174493.03, "profit": 1013506.97}};
+{
+(function(data) {
+    document.getElementById('updated').textContent = data.updated_at;
+
+    // ── KPI ──
+    const t = data.agency_totals;
+    const profitWithForecast = t.profit - data.total_forecast;
+    document.getElementById('kpi').innerHTML = `
+      <div class="kpi"><div class="kpi-label">Доход</div><div class="kpi-value blue">${fmt(t.income)}</div></div>
+      <div class="kpi"><div class="kpi-label">Расход</div><div class="kpi-value">${fmt(t.expense)}</div></div>
+      <div class="kpi"><div class="kpi-label">Прибыль</div><div class="kpi-value ${cls(t.profit)}">${fmt(t.profit)}</div>
+        <div class="kpi-sub">без прогноза</div></div>
+      <div class="kpi"><div class="kpi-label">Прибыль (с прогнозом)</div><div class="kpi-value ${cls(profitWithForecast)}">${fmt(profitWithForecast)}</div>
+        <div class="kpi-sub">с учётом предстоящих расходов</div></div>
+      <div class="kpi"><div class="kpi-label">Предстоящие расходы</div><div class="kpi-value orange">${fmt(data.total_forecast)}</div>
+        <div class="kpi-sub">прогноз 50% от бюджета</div></div>
+      <div class="kpi"><div class="kpi-label">Неоперационные</div><div class="kpi-value">${fmt(data.non_operational_total)}</div>
+        <div class="kpi-sub">вывод, переводы, возвраты</div></div>
+    `;
+
+    // ── Forecast banner ──
+    const forecastProjects = Object.entries(data.projects).filter(([,p]) => p.forecast_expense > 0);
+    if (forecastProjects.length > 0) {
+      document.getElementById('forecast-banner').style.display = 'block';
+      document.getElementById('forecast-list').innerHTML = forecastProjects
+        .map(([name, p]) => `<div class="fl-row"><span>${name}</span><span class="negative">${fmtFull(p.forecast_expense)}</span></div>`)
+        .join('');
+    }
+
+    // ── Monthly chart ──
+    const months = data.months;
+    const mLabels = months.map(monthName);
+
+    new Chart(document.getElementById('chartMonthly'), {
+      type: 'bar',
+      data: {
+        labels: mLabels,
+        datasets: [
+          {label:'Доход', data: months.map(m => data.agency_monthly[m]?.income || 0), backgroundColor:'rgba(59,130,246,0.7)', borderRadius: 4},
+          {label:'Расход', data: months.map(m => data.agency_monthly[m]?.total_expense || 0), backgroundColor:'rgba(239,68,68,0.5)', borderRadius: 4},
+        ]
+      },
+      options: {responsive:true, plugins:{legend:{labels:{color:'#8b8d98'}}}, scales:{x:{ticks:{color:'#8b8d98'}}, y:{ticks:{color:'#8b8d98', callback:v=>fmt(v)}}}}
+    });
+
+    new Chart(document.getElementById('chartProfit'), {
+      type: 'bar',
+      data: {
+        labels: mLabels,
+        datasets: [{
+          label:'Прибыль',
+          data: months.map(m => data.agency_monthly[m]?.profit || 0),
+          backgroundColor: months.map(m => (data.agency_monthly[m]?.profit || 0) >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'),
+          borderRadius: 4,
+        }]
+      },
+      options: {responsive:true, plugins:{legend:{labels:{color:'#8b8d98'}}}, scales:{x:{ticks:{color:'#8b8d98'}}, y:{ticks:{color:'#8b8d98', callback:v=>fmt(v)}}}}
+    });
+
+    // ── Project charts ──
+    const projEntries = Object.entries(data.projects).filter(([,p]) => p.status !== 'withdrawal').sort((a,b) => b[1].total_income - a[1].total_income);
+    const projNames = projEntries.map(([n]) => n);
+    const projColors = ['#3b82f6','#22c55e','#f59e0b','#a855f7','#06b6d4','#ef4444','#ec4899','#84cc16','#f97316','#6366f1','#14b8a6'];
+
+    new Chart(document.getElementById('chartProjectIncome'), {
+      type: 'doughnut',
+      data: {
+        labels: projNames,
+        datasets: [{data: projEntries.map(([,p]) => p.total_income), backgroundColor: projColors}]
+      },
+      options: {responsive:true, plugins:{legend:{position:'right', labels:{color:'#8b8d98', font:{size:11}}}}}
+    });
+
+    new Chart(document.getElementById('chartProjectProfit'), {
+      type: 'bar',
+      data: {
+        labels: projNames,
+        datasets: [{
+          label:'Прибыль',
+          data: projEntries.map(([,p]) => p.profit),
+          backgroundColor: projEntries.map(([,p]) => p.profit >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'),
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive:true,
+        plugins:{legend:{display:false}},
+        scales:{x:{ticks:{color:'#8b8d98', callback:v=>fmt(v)}}, y:{ticks:{color:'#e4e4e7', font:{size:11}}}}
+      }
+    });
+
+    // ── Projects table ──
+    const tbody = document.getElementById('projects-body');
+    projEntries.forEach(([name, p]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${name}</strong></td>
+        <td>${statusTag(p.status)}</td>
+        <td style="font-size:11px;color:var(--muted)">${p.start.slice(0,7)} — ${p.end.slice(0,7)}</td>
+        <td>${fmtFull(p.total_income)}</td>
+        <td>${fmtFull(p.total_direct_expense)}</td>
+        <td>${fmtFull(p.total_shared_expense)}</td>
+        <td>${fmtFull(p.total_expense)}</td>
+        <td class="${cls(p.total_income - p.total_direct_expense)}">${fmtFull(p.total_income - p.total_direct_expense)}</td>
+        <td class="${cls(p.profit)}">${fmtFull(p.profit)}</td>
+        <td>${p.forecast_expense > 0 ? '<span class="negative">' + fmtFull(p.forecast_expense) + '</span>' : '—'}</td>
+        <td class="${cls(p.profit_with_forecast)}">${fmtFull(p.profit_with_forecast)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Totals row
+    const totInc = projEntries.reduce((s,[,p]) => s + p.total_income, 0);
+    const totDir = projEntries.reduce((s,[,p]) => s + p.total_direct_expense, 0);
+    const totSh = projEntries.reduce((s,[,p]) => s + p.total_shared_expense, 0);
+    const totExp = projEntries.reduce((s,[,p]) => s + p.total_expense, 0);
+    const totProf = projEntries.reduce((s,[,p]) => s + p.profit, 0);
+    const totFc = projEntries.reduce((s,[,p]) => s + p.forecast_expense, 0);
+    const totProfFc = projEntries.reduce((s,[,p]) => s + p.profit_with_forecast, 0);
+    const trf = document.createElement('tr');
+    trf.style.fontWeight = '700';
+    trf.style.borderTop = '2px solid var(--border)';
+    trf.innerHTML = `
+      <td>ИТОГО</td><td></td><td></td>
+      <td>${fmtFull(totInc)}</td><td>${fmtFull(totDir)}</td><td>${fmtFull(totSh)}</td><td>${fmtFull(totExp)}</td>
+      <td class="${cls(totInc - totDir)}">${fmtFull(totInc - totDir)}</td>
+      <td class="${cls(totProf)}">${fmtFull(totProf)}</td>
+      <td class="negative">${totFc > 0 ? fmtFull(totFc) : '—'}</td>
+      <td class="${cls(totProfFc)}">${fmtFull(totProfFc)}</td>
+    `;
+    tbody.appendChild(trf);
+
+    // ── Monthly detail per project ──
+    const mhead = document.getElementById('monthly-head');
+    const mbody = document.getElementById('monthly-body');
+    let headRow = '<tr><th>Проект</th><th>Показатель</th>';
+    months.forEach(m => headRow += `<th>${monthName(m)}</th>`);
+    headRow += '<th>Итого</th></tr>';
+    mhead.innerHTML = headRow;
+
+    projEntries.forEach(([name, p]) => {
+      const metrics = [
+        {label:'Доход', key:'income', cssClass:'positive'},
+        {label:'Прямые расх.', key:'direct_expense', cssClass:''},
+        {label:'Общие расх.', key:'shared_expense', cssClass:''},
+        {label:'Прибыль', key:'profit', cssClass:null},
+      ];
+      metrics.forEach((met, i) => {
+        const tr = document.createElement('tr');
+        if (i === 0) tr.style.borderTop = '2px solid var(--border)';
+        let cells = i === 0
+          ? `<td rowspan="4" style="font-weight:600;vertical-align:top">${name}</td>`
+          : '';
+        cells += `<td style="color:var(--muted);font-size:11px">${met.label}</td>`;
+        let total = 0;
+        months.forEach(m => {
+          const v = p.monthly[m] ? p.monthly[m][met.key] || 0 : 0;
+          total += v;
+          const c = met.cssClass === null ? cls(v) : met.cssClass;
+          cells += `<td class="${c}">${v ? fmtFull(v) : '—'}</td>`;
+        });
+        const tc = met.cssClass === null ? cls(total) : met.cssClass;
+        cells += `<td style="font-weight:600" class="${tc}">${fmtFull(total)}</td>`;
+        tr.innerHTML = cells;
+        mbody.appendChild(tr);
+      });
+    });
+
+    // ── Shared costs grid ──
+    const sharedGrid = document.getElementById('shared-grid');
+    const sharedEntries = Object.entries(data.shared_by_category).sort((a,b) => b[1].total - a[1].total);
+    const maxShared = sharedEntries.length > 0 ? sharedEntries[0][1].total : 1;
+    sharedEntries.forEach(([cat, d]) => {
+      const pct = (d.total / maxShared * 100).toFixed(0);
+      sharedGrid.innerHTML += `
+        <div class="shared-item">
+          <div class="name">${cat}</div>
+          <div class="value">${fmtFull(d.total)}</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+        </div>`;
+    });
+
+    // ── Agency monthly table ──
+    const abody = document.getElementById('agency-body');
+    let cumProfit = 0;
+    months.forEach(m => {
+      const d = data.agency_monthly[m] || {};
+      cumProfit += d.profit || 0;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${monthName(m)}</strong></td>
+        <td>${fmtFull(d.income || 0)}</td>
+        <td>${fmtFull(d.direct_expense || 0)}</td>
+        <td>${fmtFull(d.shared_expense || 0)}</td>
+        <td>${fmtFull(d.total_expense || 0)}</td>
+        <td class="${cls(d.profit || 0)}">${fmtFull(d.profit || 0)}</td>
+      `;
+      abody.appendChild(tr);
+    });
+    // Total
+    const atr = document.createElement('tr');
+    atr.style.fontWeight = '700';
+    atr.style.borderTop = '2px solid var(--border)';
+    atr.innerHTML = `
+      <td>ИТОГО</td>
+      <td>${fmtFull(t.income)}</td>
+      <td>${fmtFull(Object.values(data.agency_monthly).reduce((s,d) => s + d.direct_expense, 0))}</td>
+      <td>${fmtFull(Object.values(data.agency_monthly).reduce((s,d) => s + d.shared_expense, 0))}</td>
+      <td>${fmtFull(t.expense)}</td>
+      <td class="${cls(t.profit)}">${fmtFull(t.profit)}</td>
+    `;
+    abody.appendChild(atr);
+  })(data);
+}
+</script>
+</body>
+</html>

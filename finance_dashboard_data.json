@@ -1,0 +1,612 @@
+{
+  "updated_at": "2026-04-02",
+  "months": [
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04"
+  ],
+  "projects": {
+    "Twinby": {
+      "id": 740235,
+      "status": "active",
+      "start": "2026-01-14",
+      "end": "2026-04-02",
+      "total_income": 500000.0,
+      "total_direct_expense": 218400.0,
+      "total_shared_expense": 467632.58,
+      "total_expense": 686032.58,
+      "forecast_expense": 0,
+      "profit": -186032.58,
+      "profit_with_forecast": -186032.58,
+      "monthly": {
+        "2026-01": {
+          "income": 250000.0,
+          "direct_expense": 45000.0,
+          "shared_expense": 79733.69,
+          "total_expense": 124733.69,
+          "profit": 125266.31
+        },
+        "2026-02": {
+          "income": 0,
+          "direct_expense": 32800.0,
+          "shared_expense": 116692.62,
+          "total_expense": 149492.62,
+          "profit": -149492.62
+        },
+        "2026-03": {
+          "income": 250000.0,
+          "direct_expense": 140600.0,
+          "shared_expense": 233617.94,
+          "total_expense": 374217.94,
+          "profit": -124217.94
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "Luvu": {
+      "id": 740234,
+      "status": "active",
+      "start": "2025-11-27",
+      "end": "2026-04-02",
+      "total_income": 1500000.0,
+      "total_direct_expense": 562739.0,
+      "total_shared_expense": 723982.1,
+      "total_expense": 1286721.1,
+      "forecast_expense": 0,
+      "profit": 213278.9,
+      "profit_with_forecast": 213278.9,
+      "monthly": {
+        "2025-11": {
+          "income": 500000.0,
+          "direct_expense": 0,
+          "shared_expense": 160667.34,
+          "total_expense": 160667.34,
+          "profit": 339332.66
+        },
+        "2025-12": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 95682.18,
+          "total_expense": 95682.18,
+          "profit": -95682.18
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 170800.0,
+          "shared_expense": 79733.69,
+          "total_expense": 250533.69,
+          "profit": -250533.69
+        },
+        "2026-02": {
+          "income": 500000.0,
+          "direct_expense": 207000.0,
+          "shared_expense": 116692.62,
+          "total_expense": 323692.62,
+          "profit": 176307.38
+        },
+        "2026-03": {
+          "income": 500000.0,
+          "direct_expense": 184939.0,
+          "shared_expense": 233617.94,
+          "total_expense": 418556.94,
+          "profit": 81443.06
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "О-Комплекс": {
+      "id": 740240,
+      "status": "active",
+      "start": "2025-12-29",
+      "end": "2026-04-02",
+      "total_income": 930000.0,
+      "total_direct_expense": 201400.0,
+      "total_shared_expense": 563314.76,
+      "total_expense": 764714.76,
+      "forecast_expense": 0,
+      "profit": 165285.24,
+      "profit_with_forecast": 165285.24,
+      "monthly": {
+        "2025-12": {
+          "income": 460000.0,
+          "direct_expense": 0,
+          "shared_expense": 95682.18,
+          "total_expense": 95682.18,
+          "profit": 364317.82
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 79733.69,
+          "total_expense": 79733.69,
+          "profit": -79733.69
+        },
+        "2026-02": {
+          "income": 0,
+          "direct_expense": 38000.0,
+          "shared_expense": 116692.62,
+          "total_expense": 154692.62,
+          "profit": -154692.62
+        },
+        "2026-03": {
+          "income": 470000.0,
+          "direct_expense": 163400.0,
+          "shared_expense": 233617.94,
+          "total_expense": 397017.94,
+          "profit": 72982.06
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "Quick-Пицца": {
+      "id": 740239,
+      "status": "completed",
+      "start": "2025-12-05",
+      "end": "2026-02-03",
+      "total_income": 0,
+      "total_direct_expense": 158400.0,
+      "total_shared_expense": 292108.49,
+      "total_expense": 450508.49,
+      "forecast_expense": 0,
+      "profit": -450508.49,
+      "profit_with_forecast": -450508.49,
+      "monthly": {
+        "2025-12": {
+          "income": 0,
+          "direct_expense": 122900.0,
+          "shared_expense": 95682.18,
+          "total_expense": 218582.18,
+          "profit": -218582.18
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 34500.0,
+          "shared_expense": 79733.69,
+          "total_expense": 114233.69,
+          "profit": -114233.69
+        },
+        "2026-02": {
+          "income": 0,
+          "direct_expense": 1000.0,
+          "shared_expense": 116692.62,
+          "total_expense": 117692.62,
+          "profit": -117692.62
+        }
+      }
+    },
+    "Банктоты": {
+      "id": 740238,
+      "status": "completed",
+      "start": "2025-11-17",
+      "end": "2026-03-04",
+      "total_income": 445000.0,
+      "total_direct_expense": 209400.0,
+      "total_shared_expense": 686393.77,
+      "total_expense": 895793.77,
+      "forecast_expense": 0,
+      "profit": -450793.77,
+      "profit_with_forecast": -450793.77,
+      "monthly": {
+        "2025-11": {
+          "income": 445000.0,
+          "direct_expense": 0,
+          "shared_expense": 160667.34,
+          "total_expense": 160667.34,
+          "profit": 284332.66
+        },
+        "2025-12": {
+          "income": 0,
+          "direct_expense": 140700.0,
+          "shared_expense": 95682.18,
+          "total_expense": 236382.18,
+          "profit": -236382.18
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 53000.0,
+          "shared_expense": 79733.69,
+          "total_expense": 132733.69,
+          "profit": -132733.69
+        },
+        "2026-02": {
+          "income": 0,
+          "direct_expense": 9200.0,
+          "shared_expense": 116692.62,
+          "total_expense": 125892.62,
+          "profit": -125892.62
+        },
+        "2026-03": {
+          "income": 0,
+          "direct_expense": 6500.0,
+          "shared_expense": 233617.94,
+          "total_expense": 240117.94,
+          "profit": -240117.94
+        }
+      }
+    },
+    "Biorepair": {
+      "id": 740233,
+      "status": "completed",
+      "start": "2025-11-20",
+      "end": "2026-03-04",
+      "total_income": 1710000.0,
+      "total_direct_expense": 667683.33,
+      "total_shared_expense": 686393.77,
+      "total_expense": 1354077.1,
+      "forecast_expense": 0,
+      "profit": 355922.9,
+      "profit_with_forecast": 355922.9,
+      "monthly": {
+        "2025-11": {
+          "income": 0,
+          "direct_expense": 297583.33,
+          "shared_expense": 160667.34,
+          "total_expense": 458250.67,
+          "profit": -458250.67
+        },
+        "2025-12": {
+          "income": 960000.0,
+          "direct_expense": 151200.0,
+          "shared_expense": 95682.18,
+          "total_expense": 246882.18,
+          "profit": 713117.82
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 94000.0,
+          "shared_expense": 79733.69,
+          "total_expense": 173733.69,
+          "profit": -173733.69
+        },
+        "2026-02": {
+          "income": 500000.0,
+          "direct_expense": 94200.0,
+          "shared_expense": 116692.62,
+          "total_expense": 210892.62,
+          "profit": 289107.38
+        },
+        "2026-03": {
+          "income": 250000.0,
+          "direct_expense": 30700.0,
+          "shared_expense": 233617.94,
+          "total_expense": 264317.94,
+          "profit": -14317.94
+        }
+      }
+    },
+    "YouDo": {
+      "id": 740241,
+      "status": "completed",
+      "start": "2025-12-05",
+      "end": "2026-03-04",
+      "total_income": 460000.0,
+      "total_direct_expense": 275500.0,
+      "total_shared_expense": 525726.43,
+      "total_expense": 801226.43,
+      "forecast_expense": 0,
+      "profit": -341226.43,
+      "profit_with_forecast": -341226.43,
+      "monthly": {
+        "2025-12": {
+          "income": 460000.0,
+          "direct_expense": 0,
+          "shared_expense": 95682.18,
+          "total_expense": 95682.18,
+          "profit": 364317.82
+        },
+        "2026-01": {
+          "income": 0,
+          "direct_expense": 71500.0,
+          "shared_expense": 79733.69,
+          "total_expense": 151233.69,
+          "profit": -151233.69
+        },
+        "2026-02": {
+          "income": 0,
+          "direct_expense": 4000.0,
+          "shared_expense": 116692.62,
+          "total_expense": 120692.62,
+          "profit": -120692.62
+        },
+        "2026-03": {
+          "income": 0,
+          "direct_expense": 200000.0,
+          "shared_expense": 233617.94,
+          "total_expense": 433617.94,
+          "profit": -433617.94
+        }
+      }
+    },
+    "ART FACT": {
+      "id": 775597,
+      "status": "active",
+      "start": "2026-03-03",
+      "end": "2026-04-02",
+      "total_income": 480000.0,
+      "total_direct_expense": 28800.0,
+      "total_shared_expense": 271206.27,
+      "total_expense": 300006.27,
+      "forecast_expense": 211200.0,
+      "profit": 179993.73,
+      "profit_with_forecast": -31206.27,
+      "monthly": {
+        "2026-03": {
+          "income": 480000.0,
+          "direct_expense": 28800.0,
+          "shared_expense": 233617.94,
+          "total_expense": 262417.94,
+          "profit": 217582.06
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "Grass": {
+      "id": 778807,
+      "status": "active",
+      "start": "2026-03-16",
+      "end": "2026-04-02",
+      "total_income": 550000.0,
+      "total_direct_expense": 33000.0,
+      "total_shared_expense": 271206.27,
+      "total_expense": 304206.27,
+      "forecast_expense": 242000.0,
+      "profit": 245793.73,
+      "profit_with_forecast": 3793.73,
+      "monthly": {
+        "2026-03": {
+          "income": 550000.0,
+          "direct_expense": 33000.0,
+          "shared_expense": 233617.94,
+          "total_expense": 266617.94,
+          "profit": 283382.06
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "Lic": {
+      "id": 778808,
+      "status": "active",
+      "start": "2026-03-13",
+      "end": "2026-04-02",
+      "total_income": 1000000.0,
+      "total_direct_expense": 60000.0,
+      "total_shared_expense": 271206.27,
+      "total_expense": 331206.27,
+      "forecast_expense": 440000.0,
+      "profit": 668793.73,
+      "profit_with_forecast": 228793.73,
+      "monthly": {
+        "2026-03": {
+          "income": 1000000.0,
+          "direct_expense": 60000.0,
+          "shared_expense": 233617.94,
+          "total_expense": 293617.94,
+          "profit": 706382.06
+        },
+        "2026-04": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 37588.33,
+          "total_expense": 37588.33,
+          "profit": -37588.33
+        }
+      }
+    },
+    "Приложение": {
+      "id": 829554,
+      "status": "withdrawal",
+      "start": "2026-03-25",
+      "end": "2026-03-26",
+      "total_income": 0,
+      "total_direct_expense": 0,
+      "total_shared_expense": 0,
+      "total_expense": 0,
+      "forecast_expense": 0,
+      "profit": 0,
+      "profit_with_forecast": 0,
+      "monthly": {
+        "2026-03": {
+          "income": 0,
+          "direct_expense": 0,
+          "shared_expense": 0,
+          "total_expense": 0,
+          "profit": 0
+        }
+      }
+    }
+  },
+  "agency_monthly": {
+    "2025-11": {
+      "income": 945000.0,
+      "direct_expense": 297583.33,
+      "shared_expense": 482002.02,
+      "total_expense": 779585.35,
+      "profit": 165414.65
+    },
+    "2025-12": {
+      "income": 1880000.0,
+      "direct_expense": 414800.0,
+      "shared_expense": 574093.07,
+      "total_expense": 988893.07,
+      "profit": 891106.93
+    },
+    "2026-01": {
+      "income": 310000.0,
+      "direct_expense": 468800.0,
+      "shared_expense": 558135.81,
+      "total_expense": 1026935.81,
+      "profit": -716935.81
+    },
+    "2026-02": {
+      "income": 1230000.0,
+      "direct_expense": 386200.0,
+      "shared_expense": 816848.32,
+      "total_expense": 1203048.32,
+      "profit": 26951.68
+    },
+    "2026-03": {
+      "income": 3648000.0,
+      "direct_expense": 847939.0,
+      "shared_expense": 2102561.48,
+      "total_expense": 2950500.48,
+      "profit": 697499.52
+    },
+    "2026-04": {
+      "income": 175000.0,
+      "direct_expense": 0,
+      "shared_expense": 225530.0,
+      "total_expense": 225530.0,
+      "profit": -50530.0
+    }
+  },
+  "shared_by_category": {
+    "Аренда офиса": {
+      "total": 749929.7,
+      "monthly": {
+        "2025-11": 132788.02,
+        "2025-12": 49003.07,
+        "2026-01": 205325.81,
+        "2026-02": 167473.32,
+        "2026-03": 189339.48,
+        "2026-04": 6000.0
+      }
+    },
+    "Зарплата": {
+      "total": 40000.0,
+      "monthly": {
+        "2026-04": 40000.0
+      }
+    },
+    "банковские услуги": {
+      "total": 5900.0,
+      "monthly": {
+        "2026-03": 5900.0
+      }
+    },
+    "Монтажеры": {
+      "total": 47000.0,
+      "monthly": {
+        "2026-01": 3000.0,
+        "2026-02": 15500.0,
+        "2026-03": 28500.0
+      }
+    },
+    "Комиссия банка": {
+      "total": 16500.0,
+      "monthly": {
+        "2025-11": 3300.0,
+        "2025-12": 6600.0,
+        "2026-03": 6600.0
+      }
+    },
+    "Сервисы": {
+      "total": 50238.0,
+      "monthly": {
+        "2026-01": 30610.0,
+        "2026-02": 4000.0,
+        "2026-03": 15628.0
+      }
+    },
+    "дизайн": {
+      "total": 44200.0,
+      "monthly": {
+        "2026-02": 20000.0,
+        "2026-03": 24200.0
+      }
+    },
+    "PR-менеджеры": {
+      "total": 125000.0,
+      "monthly": {
+        "2026-02": 79200.0,
+        "2026-03": 45800.0
+      }
+    },
+    "ЗП Основа": {
+      "total": 1651400.0,
+      "monthly": {
+        "2025-11": 270000.0,
+        "2025-12": 336600.0,
+        "2026-01": 110000.0,
+        "2026-02": 487300.0,
+        "2026-03": 447500.0
+      }
+    },
+    "UGC-креаторы": {
+      "total": 40993.0,
+      "monthly": {
+        "2026-01": 27200.0,
+        "2026-02": 13793.0
+      }
+    },
+    "Лицензии и программное обеспечение": {
+      "total": 17000.0,
+      "monthly": {
+        "2026-01": 17000.0
+      }
+    },
+    "Подрядчики": {
+      "total": 52500.0,
+      "monthly": {
+        "2025-12": 52500.0
+      }
+    },
+    "Сценаристы": {
+      "total": 17800.0,
+      "monthly": {
+        "2025-12": 17800.0
+      }
+    },
+    "Неразнесённые": {
+      "total": 1900710.0,
+      "monthly": {
+        "2025-11": 75914.0,
+        "2025-12": 111590.0,
+        "2026-01": 165000.0,
+        "2026-02": 29582.0,
+        "2026-03": 1339094.0,
+        "2026-04": 179530.0
+      }
+    }
+  },
+  "non_operational_total": 164415.0,
+  "withdrawal_total": 57600.0,
+  "total_forecast": 893200.0,
+  "agency_totals": {
+    "income": 8188000.0,
+    "expense": 7174493.03,
+    "profit": 1013506.97
+  }
+}
