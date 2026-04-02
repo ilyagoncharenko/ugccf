@@ -2,7 +2,7 @@ name: Update Dashboard
 
 on:
   schedule:
-    - cron: '30 20 * * *'   # 23:30 по Москве (UTC+3 = UTC 20:30)
+    - cron: '0 18 * * *'    # 21:00 по Москве (UTC+3 = UTC 18:00)
   workflow_dispatch:          # ручной запуск из GitHub UI
 
 jobs:
@@ -41,10 +41,15 @@ jobs:
       - name: Rebuild dashboard HTML
         run: python rebuild_html.py
 
+      - name: Build finance dashboard
+        env:
+          ADESK_TOKEN: ${{ secrets.ADESK_TOKEN }}
+        run: python build_finance_dashboard.py
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add projects_data.json adesk_data.json dashboard.html
+          git add projects_data.json adesk_data.json dashboard.html finance_dashboard_data.json finance.html adesk_flat.json
           git diff --staged --quiet || git commit -m "Auto-update dashboard $(date +'%d.%m.%Y %H:%M MSK')"
           git push
