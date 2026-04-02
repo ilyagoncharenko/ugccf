@@ -26,13 +26,13 @@ PROJECTS = [
         "name": "Luvu",
         "spreadsheet_id": "1j9DS35rRRmVjYGKBH3iEox1Ldk60k79qqSe2uyWL6-Y",
         "color": "#34d399",   # зелёный
-        "budget": 1000000,    # бюджет кампании в рублях
+        "budget": 1675000,    # бюджет кампании в рублях
     },
     {
         "name": "Ocomplex",
         "spreadsheet_id": "1YNe0e2EI_IzAjLDALptEa9ok3eAPb24cgnhTTwy1ikU",
         "color": "#f59e0b",   # оранжевый
-        "budget": 500000,     # бюджет кампании в рублях
+        "budget": 1000000,    # бюджет кампании в рублях
     },
     {
         "name": "ART&FACT",
