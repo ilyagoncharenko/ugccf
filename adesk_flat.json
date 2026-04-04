@@ -10,10 +10,10 @@
     "is_transfer": false,
     "part_index": null,
     "part_amount": 9337.0,
-    "category": "",
-    "category_id": null,
-    "project": "",
-    "project_id": null
+    "category": "Сервисы",
+    "category_id": 1815128,
+    "project": "Приложение",
+    "project_id": 829554
   },
   {
     "id": 119811807,
